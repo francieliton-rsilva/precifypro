@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>PrecifyPro — Precificação para Marketplaces</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -633,6 +633,95 @@ select {
 .tp-green .theme-preview-btn { background: #065f46; }
 .tp-green .theme-preview-input { background: #0a110d; border: 1px solid rgba(52,211,153,0.15); }
 .tp-green { background: #0a110d; }
+
+/* ============================================================
+   RESPONSIVO — MOBILE
+   ============================================================ */
+@media (max-width: 600px) {
+
+  /* Header */
+  header { padding: 0 14px; height: 48px; }
+  .logo-mark { width: 28px; height: 28px; font-size: 11px; }
+  .logo-name { font-size: 15px; }
+  .header-right { display: none; }
+
+  /* Página */
+  .page { padding: 16px 12px 60px; }
+
+  /* Tabs — scroll horizontal */
+  .tabs { padding: 3px; gap: 1px; overflow-x: auto; -webkit-overflow-scrolling: touch; flex-wrap: nowrap; }
+  .tab-btn { font-size: 11px; padding: 0 10px; height: 32px; flex: 0 0 auto; }
+
+  /* Cards */
+  .card { padding: 16px 14px; margin-bottom: 10px; }
+  .section-title { font-size: 9px; margin-bottom: 14px; }
+
+  /* Grids — coluna única */
+  .grid2 { grid-template-columns: 1fr !important; gap: 10px; }
+  .grid3 { grid-template-columns: 1fr !important; gap: 10px; }
+
+  /* Inputs */
+  input[type="number"], select { height: 42px; font-size: 16px; } /* 16px evita zoom no iOS */
+
+  /* Métricas — 1 coluna */
+  .metrics { grid-template-columns: 1fr; gap: 8px; }
+  .metric .m-val { font-size: 22px; }
+
+  /* Botão calcular */
+  .btn-calc { height: 52px; font-size: 16px; border-radius: 12px; }
+
+  /* Breakdown */
+  .br-row { font-size: 12px; padding: 8px 0; }
+  .br-row.total { font-size: 14px; }
+
+  /* Canal cards — 1 coluna */
+  .canal-cards { grid-template-columns: 1fr !important; gap: 10px; }
+  .canal-card { padding: 16px; text-align: left; }
+  .canal-badge { font-size: 8px; }
+  .mkt-logo-pill { margin-bottom: 10px; }
+  .canal-lucro { font-size: 22px; }
+  .canal-lucro-lbl { display: inline; margin-right: 6px; }
+
+  /* Tabela comparar — scroll horizontal */
+  .cmp-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .cmp-table { min-width: 480px; font-size: 11px; }
+  .cmp-table th, .cmp-table td { padding: 6px 8px; }
+
+  /* Tabela frete ML — scroll horizontal */
+  .cfg-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .cfg-table { min-width: 520px; }
+
+  /* Banner recalculo */
+  .banner-margem, .banner-basico { padding: 10px 12px; }
+  .bm-row, .bb-row { flex-wrap: wrap; gap: 4px; font-size: 12px; }
+
+  /* Intel box */
+  .intel-box { padding: 10px 12px; }
+  .intel-box .s { font-size: 11px; }
+
+  /* Configurações — tema grid 2 colunas */
+  .theme-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .cfg-mkt-name { font-size: 14px; }
+
+  /* Select row */
+  .select-row { flex-direction: column; gap: 8px; }
+  .select-row select { width: 100%; }
+
+  /* Hint centralizado */
+  .hint { font-size: 11px; }
+
+  /* Alertas */
+  .alert-box { font-size: 12px; padding: 10px 12px; }
+  .alert-box .at { font-size: 12px; }
+}
+
+/* Tablet — ajustes intermediários */
+@media (min-width: 601px) and (max-width: 860px) {
+  .page { max-width: 100%; padding: 20px 16px 60px; }
+  .canal-cards { grid-template-columns: repeat(3, 1fr); }
+  .metrics { grid-template-columns: 1fr 1fr 1fr; }
+  .theme-grid { grid-template-columns: repeat(4, 1fr); }
+}
 </style>
 </head>
 <body>
@@ -994,7 +1083,7 @@ select {
 
       <div class="card">
         <div class="section-title">Detalhamento Comparativo</div>
-        <div style="overflow-x:auto;">
+        <div class="cmp-table-wrap">
           <table class="cmp-table" id="cmp-tabela"></table>
         </div>
       </div>
