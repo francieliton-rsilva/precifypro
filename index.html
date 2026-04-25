@@ -1883,7 +1883,7 @@ function onPctDescontoChange() {
   const pct = parseFloat(document.getElementById('pct_desconto').value) || 0;
   if (cheio > 0) {
     const promo = cheio * (1 - pct / 100);
-    document.getElementById('preco_promo').value = promo.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}); document.getElementById('preco_promo').dataset.rawValue = promo.toFixed(2);
+    setMoeda('preco_promo', promo);
   }
   atualizarPrecoFinalDisplay();
   _syncLock = false;
@@ -1918,7 +1918,7 @@ function onAdsChange(campo) {
     const pct = parseFloat(document.getElementById('ads_pct').value) || 0;
     const cpc = pf * (pct / 100);
     const roas = pct > 0 ? pf / cpc : 0;
-    document.getElementById('ads_cpc').value = cpc > 0 ? cpc.toFixed(2) : '';
+    setMoeda('ads_cpc', cpc > 0 ? cpc : 0);
     document.getElementById('ads_roas').value = roas > 0 ? roas.toFixed(2) : '';
   } else if (campo === 'cpc') {
     const cpc = parseFloat(document.getElementById('ads_cpc').value) || 0;
@@ -1930,7 +1930,7 @@ function onAdsChange(campo) {
     const roas = parseFloat(document.getElementById('ads_roas').value) || 0;
     const cpc = roas > 0 ? pf / roas : 0;
     const pct = pf > 0 ? (cpc / pf) * 100 : 0;
-    document.getElementById('ads_cpc').value = cpc > 0 ? cpc.toFixed(2) : '';
+    setMoeda('ads_cpc', cpc > 0 ? cpc : 0);
     document.getElementById('ads_pct').value = pct > 0 ? pct.toFixed(2) : '';
   }
 
@@ -2093,7 +2093,7 @@ function calcular() {
 
     // atualiza campos visuais
     _syncLock = true;
-    document.getElementById('preco_promo').value = novoPrecoPromo.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}); document.getElementById('preco_promo').dataset.rawValue = novoPrecoPromo.toFixed(2);
+    setMoeda('preco_promo', novoPrecoPromo);
     document.getElementById('preco_promo').classList.add('recalc');
     const pctDesc = ((precioCheio - novoPrecoPromo) / precioCheio) * 100;
     document.getElementById('pct_desconto').value = pctDesc.toFixed(2);
@@ -2281,11 +2281,28 @@ document.getElementById('preco_promo').addEventListener('input', atualizarPrecoF
 // MÁSCARA MONETÁRIA — estilo calculadora
 // Digita apenas números, vírgula e ponto são inseridos auto
 // ============================================================
+
+// Escreve valor monetário em campo com máscara sem disparar re-processamento
+function setMoeda(id, valor) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el._mascaraAtiva = true;
+  el.value = valor > 0 ? valor.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}) : '';
+  el.dataset.rawValue = valor > 0 ? valor.toFixed(2) : '';
+  el._mascaraAtiva = false;
+}
 function aplicarMascaraMonetaria(el) {
+  el._mascaraAtiva = false; // flag para evitar loop
+
   el.addEventListener('input', function(e) {
+    if (this._mascaraAtiva) return; // sistema escreveu, ignora
+    
     // pega só os dígitos
     let digits = this.value.replace(/\D/g, '');
-    if (digits === '') { this.value = ''; return; }
+    if (digits === '') { 
+      this.dataset.rawValue = '';
+      return; 
+    }
 
     // limita a 10 dígitos (R$ 99.999.999,99)
     if (digits.length > 10) digits = digits.slice(-10);
@@ -2295,13 +2312,13 @@ function aplicarMascaraMonetaria(el) {
     const reais = num / 100;
 
     // formata pt-BR
+    this._mascaraAtiva = true;
     this.value = reais.toLocaleString('pt-BR', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     });
-
-    // dispara oninput manualmente para os cálculos (valor real para parse)
     this.dataset.rawValue = reais.toFixed(2);
+    this._mascaraAtiva = false;
   });
 
   // ao fazer blur, garante formatação
