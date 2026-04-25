@@ -335,7 +335,7 @@ header {
   font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace; pointer-events: none;
 }
 
-input[type="number"], select {
+input[type="number"], input[type="text"], select {
   width: 100%; max-width: 100%;
   height: 38px;
   background: var(--input-bg);
@@ -356,6 +356,7 @@ input[type="number"]::-webkit-inner-spin-button { display: none; }
 input::placeholder { color: var(--muted); opacity: 0.5; }
 
 input:focus, select:focus { border-color: var(--accent); }
+input[type="text"]:focus { border-color: var(--accent); }
 input.has-pre { padding-left: 26px; }
 input.has-suf { padding-right: 32px; }
 
@@ -363,6 +364,10 @@ input.error { border-color: var(--red) !important; background: var(--red-bg) !im
 input.synced { background: var(--blue-bg); border-color: var(--blue-border); }
 input.recalc { background: var(--green-bg); border-color: var(--green-border); font-weight: 700; }
 input.locked-input { background: var(--surface2) !important; border-style: dashed !important; color: var(--muted) !important; cursor: not-allowed; pointer-events: none; }
+
+/* Garantir que type=text monetário herde o mesmo visual */
+input[type="text"].has-pre,
+input[type="text"].has-suf { font-family: "DM Mono", monospace; font-size: 14px; font-weight: 500; }
 
 select {
   cursor: pointer; appearance: none;
@@ -661,7 +666,7 @@ select {
   .grid3 { grid-template-columns: 1fr !important; gap: 10px; }
 
   /* Inputs */
-  input[type="number"], select { height: 42px; font-size: 16px; } /* 16px evita zoom no iOS */
+  input[type="number"], input[type="text"], select { height: 42px; font-size: 16px; } /* 16px evita zoom no iOS */
 
   /* Métricas — 1 coluna */
   .metrics { grid-template-columns: 1fr; gap: 8px; }
@@ -755,7 +760,7 @@ select {
           <label>Custo do Produto <span class="req">*</span></label>
           <div class="input-wrap">
             <span class="pre">R$</span>
-            <input type="number" id="bas_custo" placeholder="0,00" min="0" step="any" class="has-pre" oninput="bas_limparResultado()">
+            <input type="text" inputmode="numeric" id="bas_custo" placeholder="0,00" min="0" step="any" class="has-pre" oninput="bas_limparResultado()">
           </div>
         </div>
         <div class="field">
@@ -772,7 +777,7 @@ select {
           <label>Embalagem / Outros <span class="badge badge-gray">Opcional</span></label>
           <div class="input-wrap">
             <span class="pre">R$</span>
-            <input type="number" id="bas_embalagem" placeholder="0,00" min="0" step="any" class="has-pre" oninput="bas_limparResultado()">
+            <input type="text" inputmode="numeric" id="bas_embalagem" placeholder="0,00" min="0" step="any" class="has-pre" oninput="bas_limparResultado()">
           </div>
         </div>
         <div class="field"></div>
@@ -783,7 +788,7 @@ select {
           <label>Preço de Venda <span style="font-size:10px;color:var(--muted);font-weight:400;">(ou preencha a Margem)</span></label>
           <div class="input-wrap">
             <span class="pre">R$</span>
-            <input type="number" id="bas_preco" placeholder="0,00" min="0" step="any" class="has-pre" oninput="bas_limparResultado(); document.getElementById('bas_margem').value=''; ">
+            <input type="text" inputmode="numeric" id="bas_preco" placeholder="0,00" min="0" step="any" class="has-pre" oninput="bas_limparResultado(); document.getElementById('bas_margem').value=''; ">
           </div>
         </div>
         <div class="field">
@@ -843,14 +848,14 @@ select {
         <label>Custo do Produto <span class="req">*</span></label>
         <div class="input-wrap">
           <span class="pre">R$</span>
-          <input type="number" id="custo" placeholder="0,00" min="0" step="any" class="has-pre" oninput="limparMargem()">
+          <input type="text" inputmode="numeric" id="custo" placeholder="0,00" min="0" step="any" class="has-pre" oninput="limparMargem()">
         </div>
       </div>
       <div class="field">
         <label>Preço de Venda <span class="req">*</span> <span class="badge badge-blue">Preço Cheio</span></label>
         <div class="input-wrap">
           <span class="pre">R$</span>
-          <input type="number" id="preco_cheio" placeholder="0,00" min="0" step="any" class="has-pre" oninput="limparMargem(); onPrecoCheioChange()">
+          <input type="text" inputmode="numeric" id="preco_cheio" placeholder="0,00" min="0" step="any" class="has-pre" oninput="limparMargem(); onPrecoCheioChange()">
         </div>
       </div>
     </div>
@@ -867,7 +872,7 @@ select {
         <label>Embalagem / Outros <span class="badge badge-gray">Opcional</span></label>
         <div class="input-wrap">
           <span class="pre">R$</span>
-          <input type="number" id="embalagem" placeholder="0,00" min="0" step="any" class="has-pre" oninput="limparMargem()">
+          <input type="text" inputmode="numeric" id="embalagem" placeholder="0,00" min="0" step="any" class="has-pre" oninput="limparMargem()">
         </div>
       </div>
     </div>
@@ -889,7 +894,7 @@ select {
         <label>Preço Promocional</label>
         <div class="input-wrap">
           <span class="pre">R$</span>
-          <input type="number" id="preco_promo" placeholder="—" min="0" step="any" class="has-pre synced" oninput="limparMargem(); zerarAds(); onPrecoPromoChange()">
+          <input type="text" inputmode="numeric" id="preco_promo" placeholder="—" min="0" step="any" class="has-pre synced" oninput="limparMargem(); zerarAds(); onPrecoPromoChange()">
         </div>
       </div>
     </div>
@@ -904,7 +909,7 @@ select {
           <option value="fixo">Valor Fixo (R$)</option>
         </select>
         <div class="input-wrap">
-          <input type="number" id="cupom_valor" placeholder="—" min="0" step="any" oninput="limparMargem(); zerarAds()">
+          <input type="text" inputmode="numeric" id="cupom_valor" placeholder="—" min="0" step="any" oninput="limparMargem(); zerarAds()">
         </div>
       </div>
     </div>
@@ -914,7 +919,7 @@ select {
       <label>Rebate da Campanha <span class="badge badge-green">ML</span></label>
       <div class="input-wrap">
         <span class="pre">R$</span>
-        <input type="number" id="rebate" placeholder="—" min="0" step="any" class="has-pre" oninput="limparMargem()">
+        <input type="text" inputmode="numeric" id="rebate" placeholder="—" min="0" step="any" class="has-pre" oninput="limparMargem()">
       </div>
       <div class="hint">Redução de tarifa concedida pelo ML em campanhas da central de promoções</div>
     </div>
@@ -973,7 +978,7 @@ select {
         <label>Custo por Conversão</label>
         <div class="input-wrap">
           <span class="pre">R$</span>
-          <input type="number" id="ads_cpc" placeholder="—" min="0" step="any" class="has-pre synced" oninput="limparMargem(); onAdsChange('cpc')">
+          <input type="text" inputmode="numeric" id="ads_cpc" placeholder="—" min="0" step="any" class="has-pre synced" oninput="limparMargem(); onAdsChange('cpc')">
         </div>
       </div>
       <div class="field">
@@ -1044,7 +1049,7 @@ select {
           <label>Custo do Produto <span class="req">*</span></label>
           <div class="input-wrap">
             <span class="pre">R$</span>
-            <input type="number" id="cmp_custo" placeholder="0,00" min="0" step="any" class="has-pre">
+            <input type="text" inputmode="numeric" id="cmp_custo" placeholder="0,00" min="0" step="any" class="has-pre">
           </div>
         </div>
         <div class="field">
@@ -1061,7 +1066,7 @@ select {
           <label>Preço de Venda</label>
           <div class="input-wrap">
             <span class="pre">R$</span>
-            <input type="number" id="cmp_preco" placeholder="0,00" min="0" step="any" class="has-pre">
+            <input type="text" inputmode="numeric" id="cmp_preco" placeholder="0,00" min="0" step="any" class="has-pre">
           </div>
         </div>
         <div class="field">
@@ -1168,7 +1173,7 @@ select {
           <label>Tarifa Fixa</label>
           <div class="input-wrap">
             <span class="pre">R$</span>
-            <input type="number" id="cfg_tiktok_fixa" value="4.00" min="0" step="any" class="has-pre">
+            <input type="text" inputmode="numeric" id="cfg_tiktok_fixa" value="4.00" min="0" step="any" class="has-pre">
           </div>
         </div>
       </div>
@@ -1220,7 +1225,7 @@ select {
           <label>Tarifa Fixa</label>
           <div class="input-wrap">
             <span class="pre">R$</span>
-            <input type="number" id="cfg_shein_fixa" value="6.00" min="0" step="any" class="has-pre">
+            <input type="text" inputmode="numeric" id="cfg_shein_fixa" value="6.00" min="0" step="any" class="has-pre">
           </div>
         </div>
       </div>
@@ -1314,13 +1319,13 @@ function bas_limparResultado() {
 }
 
 function calcularBasico() {
-  const custo  = parseFloat(document.getElementById('bas_custo').value) || 0;
+  const custo  = parseMoeda(document.getElementById('bas_custo'));
   const peso   = parseFloat(document.getElementById('bas_peso').value) || 0;
-  const emb    = parseFloat(document.getElementById('bas_embalagem').value) || 0;
+  const emb    = parseMoeda(document.getElementById('bas_embalagem'));
   const mkt    = document.getElementById('bas_marketplace').value;
   const aliq   = getAliquota();
 
-  let preco    = parseFloat(document.getElementById('bas_preco').value) || 0;
+  let preco    = parseMoeda(document.getElementById('bas_preco'));
   const margem = parseFloat(document.getElementById('bas_margem').value);
   const temMargem = !isNaN(margem) && margem > 0;
 
@@ -1472,9 +1477,9 @@ function calcularBasico() {
 // ============================================================
 // ============================================================
 function calcularComparativo() {
-  const custo  = parseFloat(document.getElementById('cmp_custo').value) || 0;
+  const custo  = parseMoeda(document.getElementById('cmp_custo'));
   const peso   = parseFloat(document.getElementById('cmp_peso').value) || 0;
-  const preco  = parseFloat(document.getElementById('cmp_preco').value) || 0;
+  const preco  = parseMoeda(document.getElementById('cmp_preco'));
   const margem = parseFloat(document.getElementById('cmp_margem').value);
   const aliq   = getAliquota();
   const temMargem = !isNaN(margem) && margem > 0;
@@ -1827,12 +1832,12 @@ function calcTarifaFrete(peso, precoFinal, mkt) {
 // CÁLCULO DO PREÇO FINAL
 // ============================================================
 function getPrecoFinal() {
-  const cheio = parseFloat(document.getElementById('preco_cheio').value) || 0;
-  const promo = parseFloat(document.getElementById('preco_promo').value);
+  const cheio = parseMoeda(document.getElementById('preco_cheio'));
+  const promo = parseMoeda(document.getElementById('preco_promo'));
   const base = (!isNaN(promo) && promo > 0) ? promo : cheio;
 
   const cupomTipo = document.getElementById('cupom_tipo').value;
-  const cupomVal = parseFloat(document.getElementById('cupom_valor').value) || 0;
+  const cupomVal = parseMoeda(document.getElementById('cupom_valor'));
 
   let descCupom = 0;
   if (cupomVal > 0) {
@@ -1845,7 +1850,7 @@ function getPrecoFinal() {
 function atualizarPrecoFinalDisplay() {
   const pf = getPrecoFinal();
   const el = document.getElementById('preco_final_display');
-  el.value = pf > 0 ? pf.toFixed(2) : '';
+  el.value = pf > 0 ? pf.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}) : '';
 
   // atualiza nota base ads
   const nota = document.getElementById('ads_base_note');
@@ -1859,8 +1864,8 @@ let _syncLock = false;
 
 function onPrecoCheioChange() {
   // se promo preenchido, recalcula %
-  const cheio = parseFloat(document.getElementById('preco_cheio').value) || 0;
-  const promo = parseFloat(document.getElementById('preco_promo').value);
+  const cheio = parseMoeda(document.getElementById('preco_cheio'));
+  const promo = parseMoeda(document.getElementById('preco_promo'));
   if (!isNaN(promo) && promo > 0 && cheio > 0) {
     const pct = ((cheio - promo) / cheio) * 100;
     document.getElementById('pct_desconto').value = pct.toFixed(2);
@@ -1871,11 +1876,11 @@ function onPrecoCheioChange() {
 function onPctDescontoChange() {
   if (_syncLock) return;
   _syncLock = true;
-  const cheio = parseFloat(document.getElementById('preco_cheio').value) || 0;
+  const cheio = parseMoeda(document.getElementById('preco_cheio'));
   const pct = parseFloat(document.getElementById('pct_desconto').value) || 0;
   if (cheio > 0) {
     const promo = cheio * (1 - pct / 100);
-    document.getElementById('preco_promo').value = promo.toFixed(2);
+    document.getElementById('preco_promo').value = promo.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}); document.getElementById('preco_promo').dataset.rawValue = promo.toFixed(2);
   }
   atualizarPrecoFinalDisplay();
   _syncLock = false;
@@ -1884,8 +1889,8 @@ function onPctDescontoChange() {
 function onPrecoPromoChange() {
   if (_syncLock) return;
   _syncLock = true;
-  const cheio = parseFloat(document.getElementById('preco_cheio').value) || 0;
-  const promo = parseFloat(document.getElementById('preco_promo').value) || 0;
+  const cheio = parseMoeda(document.getElementById('preco_cheio'));
+  const promo = parseMoeda(document.getElementById('preco_promo')) || 0;
   if (cheio > 0 && promo > 0) {
     const pct = ((cheio - promo) / cheio) * 100;
     document.getElementById('pct_desconto').value = pct.toFixed(2);
@@ -2005,10 +2010,10 @@ function calcular() {
   if (!validar()) return;
 
   const aliquota = getAliquota();
-  const custo = parseFloat(document.getElementById('custo').value);
-  const precioCheio = parseFloat(document.getElementById('preco_cheio').value);
+  const custo = parseMoeda(document.getElementById('custo'));
+  const precioCheio = parseMoeda(document.getElementById('preco_cheio'));
   const peso = parseFloat(document.getElementById('peso').value);
-  const emb = parseFloat(document.getElementById('embalagem').value) || 0;
+  const emb = parseMoeda(document.getElementById('embalagem'));
 
   const mkt = document.getElementById('marketplace').value;
   // comissão % será recalculada após ter o precoFinal — usamos placeholder aqui
@@ -2021,11 +2026,11 @@ function calcular() {
   const adsPct = (parseFloat(document.getElementById('ads_pct').value) || 0) / 100;
   const afilPct = (parseFloat(document.getElementById('afiliados').value) || 0) / 100;
 
-  const rebate = parseFloat(document.getElementById('rebate').value) || 0;
+  const rebate = parseMoeda(document.getElementById('rebate'));
   const cupomTipo = document.getElementById('cupom_tipo').value;
-  const cupomVal = parseFloat(document.getElementById('cupom_valor').value) || 0;
+  const cupomVal = parseMoeda(document.getElementById('cupom_valor'));
 
-  let precoPromoUsado = parseFloat(document.getElementById('preco_promo').value) || 0;
+  let precoPromoUsado = parseMoeda(document.getElementById('preco_promo')) || 0;
   const precoPromoAnterior = precoPromoUsado; // guarda para o banner
   const pctDescontoAnterior = parseFloat(document.getElementById('pct_desconto').value) || 0;
   let recalculado = false;
@@ -2085,7 +2090,7 @@ function calcular() {
 
     // atualiza campos visuais
     _syncLock = true;
-    document.getElementById('preco_promo').value = novoPrecoPromo.toFixed(2);
+    document.getElementById('preco_promo').value = novoPrecoPromo.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}); document.getElementById('preco_promo').dataset.rawValue = novoPrecoPromo.toFixed(2);
     document.getElementById('preco_promo').classList.add('recalc');
     const pctDesc = ((precioCheio - novoPrecoPromo) / precioCheio) * 100;
     document.getElementById('pct_desconto').value = pctDesc.toFixed(2);
@@ -2208,7 +2213,7 @@ function calcular() {
   tag.style.display = recalculado ? 'inline-block' : 'none';
 
   if (recalculado) {
-    const novoPromo = parseFloat(document.getElementById('preco_promo').value);
+    const novoPromo = parseMoeda(document.getElementById('preco_promo'));
     const novoPct = parseFloat(document.getElementById('pct_desconto').value);
 
     // valores "antes" — se não havia promo anterior, era o preço cheio
@@ -2236,16 +2241,7 @@ function calcular() {
 // ============================================================
 // MÁSCARA DE VALOR — formata para 2 casas decimais ao sair do campo
 // ============================================================
-const camposMonetarios = [
-  // Avançado
-  'custo', 'preco_cheio', 'embalagem', 'preco_promo', 'cupom_valor', 'rebate', 'ads_cpc',
-  // Básico
-  'bas_custo', 'bas_embalagem', 'bas_preco',
-  // Comparar
-  'cmp_custo', 'cmp_preco',
-  // Configurações
-  'cfg_tiktok_fixa', 'cfg_shein_fixa',
-];
+const camposMonetarios = []; // Máscara monetária agora gerenciada por aplicarMascaraMonetaria()
 
 const camposPct = [
   // Avançado
@@ -2278,6 +2274,78 @@ camposPct.forEach(id => formatarValor(id, 2));
 // atualiza preço final ao mudar cupom valor e promo
 document.getElementById('cupom_valor').addEventListener('input', atualizarPrecoFinalDisplay);
 document.getElementById('preco_promo').addEventListener('input', atualizarPrecoFinalDisplay);
+// ============================================================
+// MÁSCARA MONETÁRIA — estilo calculadora
+// Digita apenas números, vírgula e ponto são inseridos auto
+// ============================================================
+function aplicarMascaraMonetaria(el) {
+  el.addEventListener('input', function(e) {
+    // pega só os dígitos
+    let digits = this.value.replace(/\D/g, '');
+    if (digits === '') { this.value = ''; return; }
+
+    // limita a 10 dígitos (R$ 99.999.999,99)
+    if (digits.length > 10) digits = digits.slice(-10);
+
+    // converte para centavos → reais
+    const num = parseInt(digits, 10);
+    const reais = num / 100;
+
+    // formata pt-BR
+    this.value = reais.toLocaleString('pt-BR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+
+    // dispara oninput manualmente para os cálculos (valor real para parse)
+    this.dataset.rawValue = reais.toFixed(2);
+  });
+
+  // ao fazer blur, garante formatação
+  el.addEventListener('blur', function() {
+    if (this.value === '') return;
+    const raw = parseFloat(this.dataset.rawValue || this.value.replace(/\./g, '').replace(',', '.'));
+    if (!isNaN(raw)) {
+      this.value = raw.toLocaleString('pt-BR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+      this.dataset.rawValue = raw.toFixed(2);
+    }
+  });
+
+  // ao focar, se tiver valor zera para redigitar
+  el.addEventListener('focus', function() {
+    if (this.value === '0,00' || this.value === '') {
+      this.value = '';
+      this.dataset.rawValue = '';
+    }
+  });
+}
+
+// Sobrescreve parseFloat para ler campos com máscara
+function parseMoeda(el) {
+  if (!el) return 0;
+  // tenta rawValue primeiro
+  if (el.dataset && el.dataset.rawValue !== undefined && el.dataset.rawValue !== '') {
+    return parseFloat(el.dataset.rawValue) || 0;
+  }
+  // fallback: remove pontos de milhar e troca vírgula por ponto
+  const v = el.value.replace(/\./g, '').replace(',', '.');
+  return parseFloat(v) || 0;
+}
+
+// IDs que recebem máscara monetária
+const CAMPOS_MONETARIOS = ['custo', 'preco_cheio', 'embalagem', 'preco_promo', 'cupom_valor', 'rebate', 'ads_cpc', 'bas_custo', 'bas_embalagem', 'bas_preco', 'cmp_custo', 'cmp_preco', 'cfg_tiktok_fixa', 'cfg_shein_fixa', 'roas_preco', 'roas_custo', 'roas_frete', 'roas_fixa'];
+
+// Inicializa máscaras após DOM
+document.addEventListener('DOMContentLoaded', function() {
+  CAMPOS_MONETARIOS.forEach(function(id) {
+    const el = document.getElementById(id);
+    if (el) aplicarMascaraMonetaria(el);
+  });
+});
+
 </script>
 </body>
 </html>
