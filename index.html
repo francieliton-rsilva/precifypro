@@ -7,33 +7,156 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #f0f0ed;
+/* ============================================================
+   SISTEMA DE TEMAS — PrecifyPro
+   Troca via [data-theme] no <html>
+   ============================================================ */
+
+/* DARK (padrão) */
+:root, [data-theme="dark"] {
+  --bg: #0d0d12;
+  --surface: #111118;
+  --surface2: #18181f;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --text: #f0f0f5;
+  --muted: rgba(255,255,255,0.38);
+  --accent: #7c6dfa;
+  --accent2: #a78bfa;
+  --accent-bg: rgba(124,109,250,0.12);
+  --header-bg: #08080e;
+  --header-text: #f0f0f5;
+  --btn-bg: #7c6dfa;
+  --btn-text: #fff;
+  --tab-active-bg: #7c6dfa;
+  --tab-active-text: #fff;
+  --input-bg: #0d0d12;
+  --green: #34d399;
+  --green-bg: rgba(52,211,153,0.07);
+  --green-border: rgba(52,211,153,0.2);
+  --red: #f87171;
+  --red-bg: rgba(248,113,113,0.07);
+  --red-border: rgba(248,113,113,0.2);
+  --amber: #fbbf24;
+  --amber-bg: rgba(251,191,36,0.1);
+  --amber-border: rgba(251,191,36,0.25);
+  --blue: #60a5fa;
+  --blue-bg: rgba(96,165,250,0.08);
+  --blue-border: rgba(96,165,250,0.2);
+  --radius: 10px;
+  --radius-sm: 7px;
+  --shadow: none;
+}
+
+/* LIGHT */
+[data-theme="light"] {
+  --bg: #f5f5f0;
   --surface: #ffffff;
-  --surface2: #f7f7f5;
-  --border: #e0e0db;
-  --border2: #cacac4;
+  --surface2: #f0f0eb;
+  --border: rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.14);
   --text: #1a1a1a;
-  --muted: #777770;
+  --muted: #888880;
   --accent: #1a1a1a;
-  --accent-light: #f0f0ed;
+  --accent2: #5b4dd4;
+  --accent-bg: rgba(26,26,26,0.06);
+  --header-bg: #1a1a1a;
+  --header-text: #ffffff;
+  --btn-bg: #1a1a1a;
+  --btn-text: #ffffff;
+  --tab-active-bg: #1a1a1a;
+  --tab-active-text: #ffffff;
+  --input-bg: #f5f5f0;
   --green: #1a6e3a;
   --green-bg: #eaf5f0;
   --green-border: #a8d9be;
   --red: #c0392b;
   --red-bg: #fdf0ee;
   --red-border: #f5c4bc;
-  --blue: #1a5a99;
-  --blue-bg: #eaf2fb;
-  --blue-border: #b8d4f0;
   --amber: #7a5000;
   --amber-bg: #fdf5e4;
   --amber-border: #f0d090;
+  --blue: #1a5a99;
+  --blue-bg: #eaf2fb;
+  --blue-border: #b8d4f0;
   --radius: 10px;
   --radius-sm: 7px;
-  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
 
+/* BLUE PRO */
+[data-theme="blue"] {
+  --bg: #f0f4ff;
+  --surface: #ffffff;
+  --surface2: #e8eeff;
+  --border: rgba(30,58,138,0.1);
+  --border2: rgba(30,58,138,0.18);
+  --text: #1e3a8a;
+  --muted: #64748b;
+  --accent: #1e3a8a;
+  --accent2: #1d4ed8;
+  --accent-bg: rgba(30,58,138,0.08);
+  --header-bg: #1e3a8a;
+  --header-text: #ffffff;
+  --btn-bg: #1e3a8a;
+  --btn-text: #ffffff;
+  --tab-active-bg: #1e3a8a;
+  --tab-active-text: #ffffff;
+  --input-bg: #f0f4ff;
+  --green: #1d4ed8;
+  --green-bg: #eff6ff;
+  --green-border: #bfdbfe;
+  --red: #c0392b;
+  --red-bg: #fdf0ee;
+  --red-border: #f5c4bc;
+  --amber: #7a5000;
+  --amber-bg: #fdf5e4;
+  --amber-border: #f0d090;
+  --blue: #1e3a8a;
+  --blue-bg: #dbeafe;
+  --blue-border: #bfdbfe;
+  --radius: 10px;
+  --radius-sm: 7px;
+  --shadow: 0 1px 4px rgba(30,58,138,0.08);
+}
+
+/* DARK GREEN */
+[data-theme="green"] {
+  --bg: #0a110d;
+  --surface: #0f1a12;
+  --surface2: #131f16;
+  --border: rgba(52,211,153,0.1);
+  --border2: rgba(52,211,153,0.18);
+  --text: #e8f5ee;
+  --muted: rgba(52,211,153,0.45);
+  --accent: #34d399;
+  --accent2: #6ee7b7;
+  --accent-bg: rgba(52,211,153,0.1);
+  --header-bg: #060d08;
+  --header-text: #e8f5ee;
+  --btn-bg: #065f46;
+  --btn-text: #34d399;
+  --tab-active-bg: #065f46;
+  --tab-active-text: #34d399;
+  --input-bg: #0a110d;
+  --green: #34d399;
+  --green-bg: rgba(52,211,153,0.08);
+  --green-border: rgba(52,211,153,0.2);
+  --red: #f87171;
+  --red-bg: rgba(248,113,113,0.07);
+  --red-border: rgba(248,113,113,0.2);
+  --amber: #fbbf24;
+  --amber-bg: rgba(251,191,36,0.08);
+  --amber-border: rgba(251,191,36,0.2);
+  --blue: #6ee7b7;
+  --blue-bg: rgba(52,211,153,0.07);
+  --blue-border: rgba(52,211,153,0.18);
+  --radius: 10px;
+  --radius-sm: 7px;
+  --shadow: none;
+}
+
+/* ---- RESET ---- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
@@ -42,12 +165,13 @@ body {
   color: var(--text);
   min-height: 100vh;
   line-height: 1.5;
+  transition: background 0.3s, color 0.3s;
 }
 
 /* ---- HEADER ---- */
 header {
-  background: var(--text);
-  color: #fff;
+  background: var(--header-bg);
+  color: var(--header-text);
   padding: 0 24px;
   height: 52px;
   display: flex;
@@ -62,32 +186,89 @@ header {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-family: 'DM Mono', monospace;
-  font-size: 15px;
-  font-weight: 500;
-  letter-spacing: -0.02em;
 }
 
-.logo-dot {
-  width: 8px;
-  height: 8px;
-  background: #fff;
-  border-radius: 50%;
+.logo-mark {
+  width: 32px;
+  height: 32px;
+  background: var(--accent);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--btn-text);
 }
+
+.logo-name {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--header-text);
+}
+
+.logo-name span { color: var(--accent2); }
 
 .header-right {
   font-family: 'DM Mono', monospace;
   font-size: 11px;
-  color: rgba(255,255,255,0.4);
+  color: rgba(255,255,255,0.3);
   letter-spacing: 0.05em;
 }
 
+[data-theme="light"] .header-right,
+[data-theme="blue"] .header-right { color: rgba(255,255,255,0.45); }
+[data-theme="green"] .header-right { color: rgba(52,211,153,0.35); }
+
 /* ---- LAYOUT ---- */
 .page {
-  max-width: 680px;
+  max-width: 700px;
   margin: 0 auto;
   padding: 28px 20px 60px;
+  overflow: hidden;
+  width: 100%;
 }
+
+/* ---- TABS ---- */
+.tabs {
+  display: flex;
+  gap: 2px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 4px;
+  margin-bottom: 24px;
+  overflow-x: auto;
+}
+
+.tab-btn {
+  flex: 1;
+  height: 34px;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  font-family: 'Sora', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+  padding: 0 8px;
+}
+
+.tab-btn.active {
+  background: var(--tab-active-bg);
+  color: var(--tab-active-text);
+  font-weight: 600;
+}
+
+.tab-btn:not(.active):hover { color: var(--text); background: var(--accent-bg); }
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
 
 /* ---- CARDS ---- */
 .card {
@@ -97,6 +278,7 @@ header {
   padding: 20px;
   margin-bottom: 12px;
   box-shadow: var(--shadow);
+  width: 100%;
 }
 
 .section-title {
@@ -104,20 +286,17 @@ header {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--text);
+  color: var(--muted);
   margin-bottom: 16px;
   padding-bottom: 10px;
-  border-bottom: 2px solid var(--text);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
 }
 
-/* ---- FORM GRID ---- */
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+/* ---- GRIDS ---- */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; min-width: 0; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; min-width: 0; }
 
-.field { display: flex; flex-direction: column; gap: 5px; }
+.field { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
 
 .field label {
   font-size: 11px;
@@ -126,6 +305,7 @@ header {
   display: flex;
   align-items: center;
   gap: 4px;
+  flex-wrap: wrap;
 }
 
 .req { color: var(--red); }
@@ -137,40 +317,28 @@ header {
   border-radius: 20px;
   letter-spacing: 0.04em;
 }
-.badge-blue { background: var(--blue-bg); color: var(--blue); }
+.badge-blue { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-border); }
 .badge-gray { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
-.badge-green { background: var(--green-bg); color: var(--green); }
-.badge-amber { background: var(--amber-bg); color: var(--amber); }
+.badge-green { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+.badge-amber { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
 
 /* ---- INPUTS ---- */
-.input-wrap { position: relative; }
+.input-wrap { position: relative; min-width: 0; overflow: hidden; width: 100%; display: block; }
 
 .input-wrap .pre {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 12px;
-  color: var(--muted);
-  font-family: 'DM Mono', monospace;
-  pointer-events: none;
+  position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+  font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace; pointer-events: none;
 }
 
 .input-wrap .suf {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 12px;
-  color: var(--muted);
-  font-family: 'DM Mono', monospace;
-  pointer-events: none;
+  position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+  font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace; pointer-events: none;
 }
 
 input[type="number"], select {
-  width: 100%;
+  width: 100%; max-width: 100%;
   height: 38px;
-  background: var(--surface2);
+  background: var(--input-bg);
   border: 1px solid var(--border2);
   border-radius: var(--radius-sm);
   color: var(--text);
@@ -180,84 +348,29 @@ input[type="number"], select {
   padding: 0 10px;
   outline: none;
   transition: border-color 0.15s, background 0.15s;
+  box-sizing: border-box;
   -moz-appearance: textfield;
 }
 
-/* desativa setas do teclado com step fracionado */
-input[type="number"] { step: any; }
+input[type="number"]::-webkit-inner-spin-button { display: none; }
+input::placeholder { color: var(--muted); opacity: 0.5; }
 
-input::placeholder { color: #c8c8c0; }
-input::-webkit-input-placeholder { color: #c8c8c0; }
-input::-moz-placeholder { color: #c8c8c0; }
-
-input:focus, select:focus {
-  border-color: var(--text);
-  background: var(--surface);
-}
-
+input:focus, select:focus { border-color: var(--accent); }
 input.has-pre { padding-left: 26px; }
 input.has-suf { padding-right: 32px; }
 
-input.error {
-  border-color: var(--red) !important;
-  background: var(--red-bg) !important;
-}
-
-input.synced {
-  background: var(--blue-bg);
-  border-color: var(--blue-border);
-}
-
-input.recalc {
-  background: var(--green-bg);
-  border-color: var(--green-border);
-  font-weight: 700;
-}
+input.error { border-color: var(--red) !important; background: var(--red-bg) !important; }
+input.synced { background: var(--blue-bg); border-color: var(--blue-border); }
+input.recalc { background: var(--green-bg); border-color: var(--green-border); font-weight: 700; }
+input.locked-input { background: var(--surface2) !important; border-style: dashed !important; color: var(--muted) !important; cursor: not-allowed; pointer-events: none; }
 
 select {
-  cursor: pointer;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23777770' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  padding-right: 28px;
+  cursor: pointer; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px;
 }
 
-.hint {
-  font-size: 11px;
-  color: var(--muted);
-  line-height: 1.4;
-}
-
-/* ---- DIVIDERS ---- */
-.sep {
-  position: relative;
-  text-align: center;
-  margin: 16px 0 14px;
-}
-.sep::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  border-top: 1px dashed var(--border);
-}
-.sep span {
-  position: relative;
-  background: var(--surface);
-  padding: 0 10px;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--muted);
-}
-
-.arrow-note {
-  text-align: center;
-  font-size: 11px;
-  color: var(--muted);
-  margin: 5px 0 8px;
-}
+.hint { font-size: 11px; color: var(--muted); line-height: 1.4; margin-top: 2px; }
 
 /* ---- SELECT ROW ---- */
 .select-row { display: flex; gap: 8px; align-items: center; }
@@ -265,66 +378,77 @@ select {
 .select-row .input-wrap { flex: 1; min-width: 0; }
 .select-row .input-wrap input { width: 100%; }
 
-/* ---- BUTTON ---- */
+/* ---- SEPARADORES ---- */
+.sep {
+  position: relative; text-align: center; margin: 16px 0 14px;
+}
+.sep::before {
+  content: ''; position: absolute; top: 50%; left: 0; right: 0;
+  border-top: 1px dashed var(--border);
+}
+.sep span {
+  position: relative; background: var(--surface); padding: 0 10px;
+  font-size: 11px; font-weight: 600; color: var(--muted);
+}
+
+.arrow-note { text-align: center; font-size: 11px; color: var(--muted); margin: 4px 0 8px; }
+
+/* ---- BOTÃO CALCULAR ---- */
 .btn-calc {
-  width: 100%;
-  height: 48px;
-  background: var(--text);
-  border: none;
-  border-radius: var(--radius);
-  color: #fff;
+  width: 100%; height: 48px;
+  background: var(--btn-bg);
+  border: none; border-radius: var(--radius);
+  color: var(--btn-text);
   font-family: 'Sora', sans-serif;
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-  letter-spacing: -0.01em;
+  font-size: 15px; font-weight: 700;
+  cursor: pointer; letter-spacing: -0.01em;
   transition: opacity 0.15s, transform 0.1s;
   margin-bottom: 12px;
 }
-.btn-calc:hover { opacity: 0.85; }
+.btn-calc:hover { opacity: 0.88; }
 .btn-calc:active { transform: scale(0.99); }
 
-/* ---- INTELIGÊNCIA BOX ---- */
+/* ---- INTEL BOX ---- */
 .intel-box {
-  background: var(--blue-bg);
-  border: 1px solid var(--blue-border);
-  border-radius: var(--radius-sm);
-  padding: 11px 14px;
-  margin-top: 14px;
+  background: var(--blue-bg); border: 1px solid var(--blue-border);
+  border-radius: var(--radius-sm); padding: 11px 14px; margin-top: 14px;
 }
-.intel-box .t {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--blue);
-  margin-bottom: 3px;
-}
-.intel-box .s {
-  font-size: 11px;
-  color: var(--blue);
-  line-height: 1.5;
-}
+.intel-box .t { font-size: 11px; font-weight: 700; color: var(--blue); margin-bottom: 3px; }
+.intel-box .s { font-size: 11px; color: var(--blue); line-height: 1.5; opacity: 0.85; }
 
-/* ---- RESULTADO ---- */
+/* ---- BANNER MARGEM (avançado) ---- */
+.banner-margem {
+  background: var(--green-bg); border: 1px solid var(--green-border);
+  border-radius: var(--radius-sm); padding: 13px 16px; margin-bottom: 16px; display: none;
+}
+.banner-margem .bm-title { font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.banner-margem .bm-row { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--green); margin-top: 4px; }
+.bm-old { font-family: 'DM Mono', monospace; text-decoration: line-through; opacity: 0.5; font-size: 12px; }
+.bm-new { font-family: 'DM Mono', monospace; font-weight: 700; font-size: 15px; }
+
+/* ---- BANNER BÁSICO ---- */
+.banner-basico {
+  background: var(--green-bg); border: 1px solid var(--green-border);
+  border-radius: var(--radius-sm); padding: 13px 16px; margin-bottom: 12px; display: none;
+}
+.banner-basico .bb-title { font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 6px; }
+.banner-basico .bb-row { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--green); }
+.bb-old { font-family: 'DM Mono', monospace; text-decoration: line-through; opacity: 0.6; font-size: 12px; }
+.bb-new { font-family: 'DM Mono', monospace; font-weight: 700; font-size: 15px; }
+
+/* ---- RESULTADO / BREAKDOWN ---- */
 #resultado { display: none; }
 
 .br-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 13px;
-  padding: 7px 0;
-  border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 13px; padding: 7px 0; border-bottom: 1px solid var(--border);
 }
 .br-row:last-child { border-bottom: none; }
 .br-row .lbl { color: var(--muted); }
 .br-row .val { font-family: 'DM Mono', monospace; font-weight: 500; }
 .br-row.total {
-  border-top: 2px solid var(--text);
-  border-bottom: none;
-  padding-top: 10px;
-  margin-top: 4px;
-  font-weight: 700;
-  font-size: 15px;
+  border-top: 2px solid var(--text); border-bottom: none;
+  padding-top: 10px; margin-top: 4px; font-weight: 700; font-size: 15px;
 }
 .br-row.total .lbl { color: var(--text); font-weight: 700; }
 
@@ -332,144 +456,297 @@ select {
 .v-green { color: var(--green); }
 .v-neutral { color: var(--text); }
 
+/* ---- MÉTRICAS ---- */
 .metrics {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 10px;
-  margin-top: 16px;
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px; margin-top: 16px;
 }
 
 .metric {
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 13px 14px;
-}
-
-.metric .m-lbl {
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--muted);
-  margin-bottom: 6px;
-}
-
-.metric .m-val {
-  font-family: 'DM Mono', monospace;
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 1;
-}
-
-.metric .m-sub {
-  font-size: 10px;
-  color: var(--muted);
-  margin-top: 4px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 13px 14px;
 }
 
 .metric.good { border-color: var(--green-border); background: var(--green-bg); }
-.metric.good .m-val { color: var(--green); }
-.metric.bad { border-color: var(--red-border); background: var(--red-bg); }
-.metric.bad .m-val { color: var(--red); }
+.metric.bad  { border-color: var(--red-border);   background: var(--red-bg); }
 
+.metric .m-lbl {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--muted); margin-bottom: 6px;
+}
+.metric.good .m-lbl { color: var(--green); opacity: 0.8; }
+.metric.bad  .m-lbl { color: var(--red);   opacity: 0.8; }
+
+.metric .m-val {
+  font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 700; line-height: 1;
+}
+.metric.good .m-val { color: var(--green); }
+.metric.bad  .m-val { color: var(--red); }
+
+.metric .m-sub { font-size: 10px; color: var(--muted); margin-top: 4px; }
+
+/* ---- ALERTAS ---- */
 .alert-box {
-  border-radius: var(--radius-sm);
-  padding: 12px 15px;
-  margin-top: 14px;
-  font-size: 12px;
-  line-height: 1.5;
+  border-radius: var(--radius-sm); padding: 12px 15px; margin-top: 12px;
+  font-size: 12px; line-height: 1.5;
 }
 .alert-box .at { font-weight: 700; margin-bottom: 3px; font-size: 13px; }
-.alert-danger { background: var(--red-bg); border: 1px solid var(--red-border); color: var(--red); }
+.alert-danger  { background: var(--red-bg);   border: 1px solid var(--red-border);   color: var(--red); }
 .alert-success { background: var(--green-bg); border: 1px solid var(--green-border); color: var(--green); }
-.alert-warn { background: var(--amber-bg); border: 1px solid var(--amber-border); color: var(--amber); }
+.alert-warn    { background: var(--amber-bg); border: 1px solid var(--amber-border); color: var(--amber); }
 
 /* ---- RECALC TAG ---- */
 .recalc-tag {
-  display: inline-block;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 20px;
-  background: var(--green-bg);
-  color: var(--green);
-  border: 1px solid var(--green-border);
-  margin-left: 8px;
-  vertical-align: middle;
+  display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px;
+  border-radius: 20px; background: var(--green-bg); color: var(--green);
+  border: 1px solid var(--green-border); margin-left: 8px; vertical-align: middle;
 }
 
-.banner-margem {
-  background: var(--green-bg);
-  border: 1px solid var(--green-border);
-  border-radius: var(--radius-sm);
-  padding: 13px 16px;
-  margin-bottom: 16px;
-  display: none;
+/* ---- COMPARAR CANAIS ---- */
+.canal-cards {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px; margin-bottom: 14px;
 }
-.banner-margem .bm-title {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--green);
-  margin-bottom: 6px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+
+.canal-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 18px 12px; text-align: center; position: relative;
 }
-.banner-margem .bm-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: var(--green);
-  margin-top: 4px;
+
+.canal-card.melhor { border-color: var(--green-border); background: var(--green-bg); }
+.canal-card.pior   { border-color: var(--red-border);   background: var(--red-bg); }
+
+.canal-badge {
+  position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
+  font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  padding: 2px 9px; border-radius: 20px; white-space: nowrap;
 }
-.banner-margem .bm-old {
-  font-family: 'DM Mono', monospace;
-  text-decoration: line-through;
-  opacity: 0.6;
-  font-size: 13px;
+
+.badge-melhor { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+.badge-pior   { background: var(--red-bg);   color: var(--red);   border: 1px solid var(--red-border); }
+
+.canal-lucro-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 2px; }
+.canal-lucro { font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 700; color: var(--green); }
+.canal-card.pior .canal-lucro { color: var(--red); }
+.canal-card:not(.melhor):not(.pior) .canal-lucro { color: var(--text); }
+.canal-margem { font-size: 11px; color: var(--muted); margin-top: 3px; }
+.canal-divider { border: none; border-top: 1px dashed var(--border); margin: 10px 0 8px; }
+.canal-preco-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 3px; }
+.canal-preco { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 600; color: var(--amber); }
+
+/* ---- LOGOS MARKETPLACES ---- */
+.mkt-logo-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 8px;
 }
-.banner-margem .bm-arrow { font-size: 14px; opacity: 0.7; }
-.banner-margem .bm-new {
-  font-family: 'DM Mono', monospace;
-  font-weight: 700;
-  font-size: 15px;
+.mkt-logo-pill.ml     { background: #FFF9CC; color: #7a6500; border: 1px solid #FFE600; }
+.mkt-logo-pill.shopee { background: #FEF0ED; color: #c13b22; border: 1px solid #EE4D2D; }
+.mkt-logo-pill.tiktok { background: #1a1a1a; color: #69C9D0; border: 1px solid #69C9D0; }
+.mkt-logo-pill.shein  { background: #FCE4EC; color: #880e4f; border: 1px solid #E91E63; }
+.mkt-logo-dot { width: 16px; height: 16px; border-radius: 3px; flex-shrink: 0; object-fit: contain; }
+
+/* ---- TABELA COMPARAR ---- */
+.cmp-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.cmp-table th {
+  text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .07em; color: var(--muted); padding: 8px 10px; border-bottom: 1px solid var(--border);
 }
-.banner-margem .bm-pct {
-  font-family: 'DM Mono', monospace;
-  font-size: 12px;
-  opacity: 0.8;
-  margin-left: 4px;
+.cmp-table td { padding: 8px 10px; border-bottom: .5px solid var(--border); color: var(--muted); }
+.cmp-table tr:last-child td { border-bottom: none; }
+.cmp-table .cv  { font-family: 'DM Mono', monospace; color: var(--text); font-weight: 500; }
+.cmp-table .cvr { font-family: 'DM Mono', monospace; color: var(--red); }
+.cmp-table .cvg { font-family: 'DM Mono', monospace; color: var(--green); font-weight: 700; }
+.cmp-table .row-tot td { font-weight: 700; border-top: 2px solid var(--text); color: var(--text); }
+
+/* ---- CONFIGURAÇÕES ---- */
+.cfg-mkt-name {
+  font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
 }
+.cfg-divider { border: none; border-top: 1px solid var(--border); margin: 22px 0 18px; }
+.cfg-rule-box { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; margin-top: 10px; }
+.cfg-rule-title { font-size: 11px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.cfg-rule-row { display: flex; justify-content: space-between; font-size: 12px; padding: 5px 0; border-bottom: .5px solid var(--border); color: var(--muted); }
+.cfg-rule-row:last-child { border-bottom: none; }
+.cfg-rule-row .rv { font-weight: 700; color: var(--text); }
+
+.cfg-table-wrap { border: 1px solid var(--border); border-radius: var(--radius-sm); overflow-x: auto; margin-top: 10px; }
+.cfg-table { width: 100%; border-collapse: collapse; font-size: 11px; min-width: 0; }
+.cfg-table th { background: var(--surface2); padding: 6px 7px; text-align: left; font-weight: 700; font-size: 10px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); border-bottom: 1px solid var(--border); white-space: nowrap; }
+.cfg-table td { padding: 6px 7px; border-bottom: 1px solid var(--border); color: var(--muted); font-family: 'DM Mono', monospace; font-size: 12px; }
+.cfg-table tr:last-child td { border-bottom: none; }
+.cfg-table td:first-child { font-family: 'Sora', sans-serif; font-weight: 500; color: var(--text); }
+
+/* ---- SELETOR DE TEMA ---- */
+.theme-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 4px;
+}
+
+.theme-option {
+  border: 2px solid var(--border); border-radius: var(--radius); overflow: hidden;
+  cursor: pointer; transition: border-color 0.2s; position: relative;
+}
+
+.theme-option.selected { border-color: var(--accent); }
+.theme-option.selected::after {
+  content: '✓'; position: absolute; top: 6px; right: 6px;
+  font-size: 10px; font-weight: 700; width: 16px; height: 16px;
+  border-radius: 50%; background: var(--accent); color: var(--btn-text);
+  display: flex; align-items: center; justify-content: center;
+}
+
+.theme-preview-header { padding: 8px 10px; }
+.theme-preview-name { font-size: 10px; font-weight: 700; margin-top: 6px; }
+.theme-preview-card { margin: 6px; border-radius: 6px; padding: 8px; }
+.theme-preview-btn { margin: 6px; border-radius: 6px; height: 22px; }
+.theme-preview-input { margin: 0 6px 6px; border-radius: 5px; height: 18px; }
+
+/* dark preview */
+.tp-dark .theme-preview-header { background: #08080e; }
+.tp-dark .theme-preview-name { color: rgba(255,255,255,0.7); background: #08080e; padding: 4px 10px 6px; font-size: 10px; }
+.tp-dark .theme-preview-card { background: #111118; border: 1px solid rgba(255,255,255,0.07); }
+.tp-dark .theme-preview-btn { background: #7c6dfa; }
+.tp-dark .theme-preview-input { background: #0d0d12; border: 1px solid rgba(255,255,255,0.1); }
+.tp-dark { background: #0d0d12; }
+
+/* light preview */
+.tp-light .theme-preview-header { background: #1a1a1a; }
+.tp-light .theme-preview-name { color: #888; background: #f5f5f0; padding: 4px 10px 6px; font-size: 10px; }
+.tp-light .theme-preview-card { background: #fff; border: 1px solid rgba(0,0,0,0.08); }
+.tp-light .theme-preview-btn { background: #1a1a1a; }
+.tp-light .theme-preview-input { background: #f5f5f0; border: 1px solid #ddd; }
+.tp-light { background: #f5f5f0; }
+
+/* blue preview */
+.tp-blue .theme-preview-header { background: #1e3a8a; }
+.tp-blue .theme-preview-name { color: #64748b; background: #f0f4ff; padding: 4px 10px 6px; font-size: 10px; }
+.tp-blue .theme-preview-card { background: #fff; border: 1px solid rgba(30,58,138,0.1); }
+.tp-blue .theme-preview-btn { background: #1e3a8a; }
+.tp-blue .theme-preview-input { background: #f0f4ff; border: 1px solid #bfdbfe; }
+.tp-blue { background: #f0f4ff; }
+
+/* green preview */
+.tp-green .theme-preview-header { background: #060d08; }
+.tp-green .theme-preview-name { color: rgba(52,211,153,0.45); background: #0a110d; padding: 4px 10px 6px; font-size: 10px; }
+.tp-green .theme-preview-card { background: #0f1a12; border: 1px solid rgba(52,211,153,0.1); }
+.tp-green .theme-preview-btn { background: #065f46; }
+.tp-green .theme-preview-input { background: #0a110d; border: 1px solid rgba(52,211,153,0.15); }
+.tp-green { background: #0a110d; }
 </style>
 </head>
 <body>
 
 <header>
   <div class="logo">
-    <div class="logo-dot"></div>
-    PrecifyPro
+    <div class="logo-mark">P$</div>
+    <div class="logo-name">Precify<span>Pro</span></div>
   </div>
   <div class="header-right">v1.0 · MARKETPLACES BR</div>
 </header>
 
 <div class="page">
 
+  <!-- NAVEGAÇÃO -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('basico')">Básico</button>
+    <button class="tab-btn" onclick="switchTab('precificador')">Avançado</button>
+    <button class="tab-btn" onclick="switchTab('comparar')">Comparar Canais</button>
+    <button class="tab-btn" onclick="switchTab('configuracoes')">Configurações</button>
+  </div>
+
+  <!-- TAB BÁSICO -->
+  <div id="tab-basico" class="tab-content active">
+
+    <div class="card">
+      <div class="section-title">Dados do Produto</div>
+
+      <div class="grid2" style="margin-bottom:14px;">
+        <div class="field">
+          <label>Custo do Produto <span class="req">*</span></label>
+          <div class="input-wrap">
+            <span class="pre">R$</span>
+            <input type="number" id="bas_custo" placeholder="0,00" min="0" step="any" class="has-pre" oninput="bas_limparResultado()">
+          </div>
+        </div>
+        <div class="field">
+          <label>Peso do Pacote <span class="req">*</span></label>
+          <div class="input-wrap">
+            <input type="number" id="bas_peso" placeholder="0" min="1" step="any" class="has-suf" oninput="bas_limparResultado()">
+            <span class="suf">g</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid2" style="margin-bottom:14px;">
+        <div class="field">
+          <label>Embalagem / Outros <span class="badge badge-gray">Opcional</span></label>
+          <div class="input-wrap">
+            <span class="pre">R$</span>
+            <input type="number" id="bas_embalagem" placeholder="0,00" min="0" step="any" class="has-pre" oninput="bas_limparResultado()">
+          </div>
+        </div>
+        <div class="field"></div>
+      </div>
+
+      <div class="grid2" style="margin-bottom:14px;">
+        <div class="field">
+          <label>Preço de Venda <span style="font-size:10px;color:var(--muted);font-weight:400;">(ou preencha a Margem)</span></label>
+          <div class="input-wrap">
+            <span class="pre">R$</span>
+            <input type="number" id="bas_preco" placeholder="0,00" min="0" step="any" class="has-pre" oninput="bas_limparResultado(); document.getElementById('bas_margem').value=''; ">
+          </div>
+        </div>
+        <div class="field">
+          <label>Margem Desejada <span style="font-size:10px;color:var(--muted);font-weight:400;">(ou preencha o Preço)</span></label>
+          <div class="input-wrap">
+            <input type="number" id="bas_margem" placeholder="—" min="0" max="99" step="any" class="has-suf" oninput="bas_limparResultado(); document.getElementById('bas_preco').value=''; ">
+            <span class="suf">%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Marketplace <span class="req">*</span></label>
+        <select id="bas_marketplace" onchange="bas_limparResultado()">
+          <option value="ml_classico">ML Clássico</option>
+          <option value="ml_premium">ML Premium</option>
+          <option value="shopee">Shopee</option>
+          <option value="tiktok">TikTok Shop</option>
+          <option value="shein">Shein</option>
+        </select>
+      </div>
+
+    </div>
+
+    <button class="btn-calc" onclick="calcularBasico()">Calcular Resultado</button>
+
+    <div class="banner-basico" id="bas-banner">
+      <div class="bb-title">✦ Preço recalculado para atingir sua margem desejada</div>
+      <div class="bb-row">
+        <span>Preço de Venda:</span>
+        <span class="bb-old" id="bas-preco-old">—</span>
+        <span>→</span>
+        <span class="bb-new" id="bas-preco-new">—</span>
+      </div>
+    </div>
+
+    <div id="bas-resultado" style="display:none;">
+      <div class="card">
+        <div class="section-title" id="bas-result-title">Resultado</div>
+        <div id="bas-breakdown"></div>
+        <div class="metrics" id="bas-metrics"></div>
+        <div id="bas-alerta"></div>
+      </div>
+    </div>
+
+  </div><!-- fim tab-basico -->
+
+  <!-- TAB PRECIFICADOR (Avançado) -->
+  <div id="tab-precificador" class="tab-content">
+
   <!-- DADOS DO PRODUTO -->
   <div class="card">
     <div class="section-title">Dados do Produto</div>
-
-    <div class="grid2" style="margin-bottom:14px;">
-      <div class="field">
-        <label>Alíquota de Imposto <span class="req">*</span></label>
-        <div class="input-wrap">
-          <input type="number" id="aliquota" placeholder="0" min="0" max="100" step="any" class="has-suf" oninput="limparMargem()">
-          <span class="suf">%</span>
-        </div>
-      </div>
-      <div class="field"></div>
-    </div>
 
     <div class="grid2" style="margin-bottom:14px;">
       <div class="field">
@@ -571,10 +848,11 @@ select {
       <div class="field">
         <label>Marketplace <span class="req">*</span></label>
         <select id="marketplace" onchange="limparMargem(); onMarketplaceChange()">
-          <option value="ml_classico">ML Clássico · 14%</option>
-          <option value="ml_premium">ML Premium · 19%</option>
+          <option value="ml_classico">ML Clássico</option>
+          <option value="ml_premium">ML Premium</option>
           <option value="shopee">Shopee</option>
           <option value="tiktok">TikTok Shop</option>
+          <option value="shein">Shein</option>
         </select>
       </div>
       <div class="field">
@@ -664,11 +942,726 @@ select {
     </div>
   </div>
 
+  </div><!-- fim tab-precificador -->
+
+  <!-- TAB COMPARAR CANAIS -->
+  <div id="tab-comparar" class="tab-content">
+
+    <div class="card">
+      <div class="section-title">Comparar Margem de Lucro por Canais</div>
+      <div class="grid3" style="margin-bottom:14px;">
+        <div class="field">
+          <label>Custo do Produto <span class="req">*</span></label>
+          <div class="input-wrap">
+            <span class="pre">R$</span>
+            <input type="number" id="cmp_custo" placeholder="0,00" min="0" step="any" class="has-pre">
+          </div>
+        </div>
+        <div class="field">
+          <label>Peso do Pacote <span class="req">*</span></label>
+          <div class="input-wrap">
+            <input type="number" id="cmp_peso" placeholder="0" min="1" step="any" class="has-suf">
+            <span class="suf">g</span>
+          </div>
+        </div>
+        <div class="field"></div>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label>Preço de Venda</label>
+          <div class="input-wrap">
+            <span class="pre">R$</span>
+            <input type="number" id="cmp_preco" placeholder="0,00" min="0" step="any" class="has-pre">
+          </div>
+        </div>
+        <div class="field">
+          <label>Margem Desejada <span class="badge badge-gray">Opcional</span></label>
+          <div class="input-wrap">
+            <input type="number" id="cmp_margem" placeholder="—" min="0" max="99" step="any" class="has-suf">
+            <span class="suf">%</span>
+          </div>
+        </div>
+      </div>
+      <div class="hint" style="text-align:center;margin-top:8px;">Preencha o preço, a margem desejada, ou ambos — o sistema adapta o resultado</div>
+    </div>
+
+    <button class="btn-calc" onclick="calcularComparativo()">Comparar Canais</button>
+
+    <div id="cmp-resultado" style="display:none;margin-top:14px;">
+
+      <div class="canal-cards" id="cmp-cards"></div>
+
+      <div class="card">
+        <div class="section-title">Detalhamento Comparativo</div>
+        <div style="overflow-x:auto;">
+          <table class="cmp-table" id="cmp-tabela"></table>
+        </div>
+      </div>
+
+    </div>
+
+  </div><!-- fim tab-comparar -->
+  <div id="tab-configuracoes" class="tab-content">
+
+    <!-- TEMA -->
+    <div class="card">
+      <div class="section-title">Aparência</div>
+      <div class="field" style="margin-bottom:4px;">
+        <label>Tema do Sistema</label>
+      </div>
+      <div class="theme-grid">
+        <div class="theme-option tp-dark selected" id="theme-dark" onclick="setTema('dark')">
+          <div class="theme-preview-header" style="height:20px;"></div>
+          <div class="theme-preview-card" style="height:18px;margin-top:6px;"></div>
+          <div class="theme-preview-input"></div>
+          <div class="theme-preview-btn"></div>
+          <div class="theme-preview-name">Dark</div>
+        </div>
+        <div class="theme-option tp-light" id="theme-light" onclick="setTema('light')">
+          <div class="theme-preview-header" style="height:20px;"></div>
+          <div class="theme-preview-card" style="height:18px;margin-top:6px;"></div>
+          <div class="theme-preview-input"></div>
+          <div class="theme-preview-btn"></div>
+          <div class="theme-preview-name">Light</div>
+        </div>
+        <div class="theme-option tp-blue" id="theme-blue" onclick="setTema('blue')">
+          <div class="theme-preview-header" style="height:20px;"></div>
+          <div class="theme-preview-card" style="height:18px;margin-top:6px;"></div>
+          <div class="theme-preview-input"></div>
+          <div class="theme-preview-btn"></div>
+          <div class="theme-preview-name">Blue Pro</div>
+        </div>
+        <div class="theme-option tp-green" id="theme-green" onclick="setTema('green')">
+          <div class="theme-preview-header" style="height:20px;"></div>
+          <div class="theme-preview-card" style="height:18px;margin-top:6px;"></div>
+          <div class="theme-preview-input"></div>
+          <div class="theme-preview-btn"></div>
+          <div class="theme-preview-name">Dark Green</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FISCAL -->
+    <div class="card">
+      <div class="section-title">Configurações Fiscais</div>
+      <div class="grid2">
+        <div class="field">
+          <label>Alíquota de Imposto <span class="req">*</span></label>
+          <div class="input-wrap">
+            <input type="number" id="aliquota" placeholder="0" min="0" max="100" step="any" class="has-suf">
+            <span class="suf">%</span>
+          </div>
+          <div class="hint">Será usada como padrão em todos os cálculos</div>
+        </div>
+        <div class="field"></div>
+      </div>
+    </div>
+
+    <!-- TAXAS MARKETPLACES -->
+    <div class="card">
+      <div class="section-title">Taxas dos Marketplaces</div>
+
+      <!-- TikTok -->
+      <div class="cfg-mkt-name" style="display:flex;align-items:center;gap:8px;">
+        <img src="https://cdn.awsli.com.br/21/21120/arquivos/icon-tiktok.png" style="width:20px;height:20px;border-radius:4px;object-fit:contain;">
+        TikTok Shop
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label>Comissão</label>
+          <div class="input-wrap">
+            <input type="number" id="cfg_tiktok_com" value="12" min="0" max="100" step="any" class="has-suf">
+            <span class="suf">%</span>
+          </div>
+        </div>
+        <div class="field">
+          <label>Tarifa Fixa</label>
+          <div class="input-wrap">
+            <span class="pre">R$</span>
+            <input type="number" id="cfg_tiktok_fixa" value="4.00" min="0" step="any" class="has-pre">
+          </div>
+        </div>
+      </div>
+
+      <hr class="cfg-divider">
+
+      <!-- Shopee -->
+      <div class="cfg-mkt-name" style="display:flex;align-items:center;gap:8px;">
+        <img src="https://cdn.awsli.com.br/21/21120/arquivos/icons-shopee.png" style="width:20px;height:20px;border-radius:4px;object-fit:contain;">
+        Shopee
+      </div>
+      <div class="grid2" style="margin-bottom:10px;">
+        <div class="field">
+          <label>Comissão</label>
+          <div class="cfg-locked-box">14% ou 20% <span class="lock-ico">🔒</span></div>
+          <div class="hint">Calculada automaticamente pelo Preço Final</div>
+        </div>
+        <div class="field">
+          <label>Tarifa Fixa</label>
+          <div class="cfg-locked-box">R$ 4,00 a R$ 26,00 <span class="lock-ico">🔒</span></div>
+          <div class="hint">Calculada automaticamente pelo Preço Final</div>
+        </div>
+      </div>
+      <div class="cfg-rule-box">
+        <div class="cfg-rule-title">Regra de comissão Shopee 2026</div>
+        <div class="cfg-rule-row"><span>Até R$ 79,99</span><span class="rv">20% + R$ 4,00</span></div>
+        <div class="cfg-rule-row"><span>R$ 80,00 a R$ 99,99</span><span class="rv">14% + R$ 16,00</span></div>
+        <div class="cfg-rule-row"><span>R$ 100,00 a R$ 199,99</span><span class="rv">14% + R$ 20,00</span></div>
+        <div class="cfg-rule-row"><span>R$ 200,00 a R$ 499,99</span><span class="rv">14% + R$ 26,00</span></div>
+        <div class="cfg-rule-row"><span>Acima de R$ 500,00</span><span class="rv">14% + R$ 26,00</span></div>
+      </div>
+
+      <hr class="cfg-divider">
+
+      <!-- Shein -->
+      <div class="cfg-mkt-name" style="display:flex;align-items:center;gap:8px;">
+        <img src="https://cdn.awsli.com.br/21/21120/arquivos/icons-shein.png" style="width:20px;height:20px;border-radius:4px;object-fit:contain;">
+        Shein
+      </div>
+      <div class="grid2" style="margin-bottom:12px;">
+        <div class="field">
+          <label>Comissão</label>
+          <div class="input-wrap">
+            <input type="number" id="cfg_shein_com" value="20" min="0" max="100" step="any" class="has-suf">
+            <span class="suf">%</span>
+          </div>
+        </div>
+        <div class="field">
+          <label>Tarifa Fixa</label>
+          <div class="input-wrap">
+            <span class="pre">R$</span>
+            <input type="number" id="cfg_shein_fixa" value="6.00" min="0" step="any" class="has-pre">
+          </div>
+        </div>
+      </div>
+
+      <hr class="cfg-divider">
+
+      <!-- Mercado Livre -->
+      <div class="cfg-mkt-name" style="display:flex;align-items:center;gap:8px;">
+        <img src="https://cdn.awsli.com.br/21/21120/arquivos/icon-ml.png" style="width:20px;height:20px;border-radius:4px;object-fit:contain;">
+        Mercado Livre
+      </div>
+      <div class="grid2" style="margin-bottom:10px;">
+        <div class="field">
+          <label>ML Clássico — Comissão</label>
+          <div class="input-wrap">
+            <input type="number" id="cfg_ml_classico" value="14" min="0" max="100" step="any" class="has-suf">
+            <span class="suf">%</span>
+          </div>
+        </div>
+        <div class="field">
+          <label>ML Premium — Comissão</label>
+          <div class="input-wrap">
+            <input type="number" id="cfg_ml_premium" value="19" min="0" max="100" step="any" class="has-suf">
+            <span class="suf">%</span>
+          </div>
+        </div>
+      </div>
+      <div class="hint" style="margin-bottom:10px;">Tarifa / frete calculado pela tabela oficial abaixo</div>
+
+      <div class="cfg-table-wrap">
+        <table class="cfg-table">
+          <thead>
+            <tr>
+              <th>Peso</th>
+              <th>Até R$18</th>
+              <th>R$19–48</th>
+              <th>R$49–78</th>
+              <th>R$79–99</th>
+              <th>R$100–119</th>
+              <th>R$120–149</th>
+              <th>R$150–199</th>
+              <th>R$200+</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Até 300g</td><td>5,65</td><td>6,55</td><td>7,75</td><td>12,35</td><td>14,35</td><td>16,45</td><td>18,45</td><td>20,95</td></tr>
+            <tr><td>300–500g</td><td>5,95</td><td>6,65</td><td>7,85</td><td>13,25</td><td>15,45</td><td>17,65</td><td>19,85</td><td>22,55</td></tr>
+            <tr><td>500g–1kg</td><td>6,05</td><td>6,75</td><td>7,95</td><td>13,85</td><td>16,15</td><td>18,45</td><td>20,75</td><td>23,65</td></tr>
+            <tr><td>1–1,5kg</td><td>6,15</td><td>6,85</td><td>8,05</td><td>14,15</td><td>16,45</td><td>18,85</td><td>21,15</td><td>24,65</td></tr>
+            <tr><td>1,5–2kg</td><td>6,25</td><td>6,95</td><td>8,15</td><td>14,45</td><td>16,85</td><td>19,25</td><td>21,65</td><td>24,65</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="hint" style="margin-top:8px;">Regra: peso exato cai na faixa inferior. Ex: 500g = faixa 300g–500g.</div>
+
+    </div>
+
+  </div><!-- fim tab-configuracoes -->
+
 </div>
 
 <script>
 // ============================================================
-// TABELA DE FRETE ML
+// SISTEMA DE TEMAS
+// ============================================================
+function setTema(tema) {
+  document.documentElement.setAttribute('data-theme', tema);
+  localStorage.setItem('precifypro-tema', tema);
+  document.querySelectorAll('.theme-option').forEach(el => el.classList.remove('selected'));
+  const el = document.getElementById('theme-' + tema);
+  if (el) el.classList.add('selected');
+}
+
+// Inicializa tema salvo
+(function() {
+  const saved = localStorage.getItem('precifypro-tema') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+  // marca o seletor após DOM carregar
+  document.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('theme-' + saved);
+    if (el) {
+      document.querySelectorAll('.theme-option').forEach(e => e.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+  });
+})();
+// ============================================================
+function bas_limparResultado() {
+  document.getElementById('bas-resultado').style.display = 'none';
+  document.getElementById('bas-banner').style.display = 'none';
+}
+
+function calcularBasico() {
+  const custo  = parseFloat(document.getElementById('bas_custo').value) || 0;
+  const peso   = parseFloat(document.getElementById('bas_peso').value) || 0;
+  const emb    = parseFloat(document.getElementById('bas_embalagem').value) || 0;
+  const mkt    = document.getElementById('bas_marketplace').value;
+  const aliq   = getAliquota();
+
+  let preco    = parseFloat(document.getElementById('bas_preco').value) || 0;
+  const margem = parseFloat(document.getElementById('bas_margem').value);
+  const temMargem = !isNaN(margem) && margem > 0;
+
+  // validação — custo e peso sempre obrigatórios
+  // preço OU margem: pelo menos um deve estar preenchido
+  const camposFixos = ['bas_custo', 'bas_peso'];
+  let ok = true;
+  camposFixos.forEach(id => {
+    const el = document.getElementById(id);
+    const v = parseFloat(el.value);
+    if (!el.value || isNaN(v) || v <= 0) { el.classList.add('error'); ok = false; }
+    else el.classList.remove('error');
+  });
+
+  const elPreco  = document.getElementById('bas_preco');
+  const elMargem = document.getElementById('bas_margem');
+  const temPreco  = elPreco.value && parseFloat(elPreco.value) > 0;
+  const temMargemV = elMargem.value && parseFloat(elMargem.value) > 0;
+
+  if (!temPreco && !temMargemV) {
+    elPreco.classList.add('error');
+    elMargem.classList.add('error');
+    ok = false;
+  } else {
+    elPreco.classList.remove('error');
+    elMargem.classList.remove('error');
+  }
+
+  if (!ok) return;
+
+  const precoOriginal = preco;
+  let recalculado = false;
+
+  // lógica inversa da margem
+  if (temMargem) {
+    const m = margem / 100;
+    const pfAlvo = calcPrecoFinalParaMargem(custo, emb, peso, null, aliq, 0, 0, m, mkt);
+    if (isFinite(pfAlvo) && pfAlvo > 0) {
+      // verifica se margem é atingível
+      const comissao = getComissaoPct(mkt, pfAlvo);
+      const divisor = 1 - comissao - aliq - m;
+      if (divisor <= 0.01) {
+        document.getElementById('bas-resultado').style.display = 'block';
+        document.getElementById('bas-breakdown').innerHTML = '';
+        document.getElementById('bas-metrics').innerHTML = '';
+        document.getElementById('bas-alerta').innerHTML = `<div class="alert-box alert-danger">
+          <div class="at">⚠ Margem impossível</div>
+          A margem desejada ultrapassa os custos percentuais do canal selecionado. Reduza a margem ou troque de canal.
+        </div>`;
+        return;
+      }
+      preco = pfAlvo;
+      recalculado = true;
+    }
+  }
+
+  // cálculo
+  const comissao  = getComissaoPct(mkt, preco);
+  const tarifaFrete = calcTarifaFrete(peso, preco, mkt);
+  const comissaoR = preco * comissao;
+  const impostoR  = preco * aliq;
+  const repasseLiq = preco - comissaoR + 0 - tarifaFrete; // sem rebate no básico
+  const totalCustos = comissaoR + tarifaFrete + impostoR + emb + custo;
+  const lucro = preco - totalCustos;
+  const margemReal = preco > 0 ? lucro / preco : 0;
+
+  // labels
+  const mktLabels = {
+    ml_classico: `ML Clássico (${(comissao*100).toFixed(0)}%)`,
+    ml_premium:  `ML Premium (${(comissao*100).toFixed(0)}%)`,
+    shopee:      `Shopee (${(comissao*100).toFixed(0)}%)`,
+    tiktok:      `TikTok Shop (${(comissao*100).toFixed(0)}%)`,
+    shein:       `Shein (${(comissao*100).toFixed(0)}%)`,
+  };
+  const mktNomes = { ml_classico: 'ML', ml_premium: 'ML', shopee: 'Shopee', tiktok: 'TikTok', shein: 'Shein' };
+
+  // banner
+  const banner = document.getElementById('bas-banner');
+  if (recalculado) {
+    document.getElementById('bas-preco-old').textContent = `R$ ${fmt(precoOriginal)}`;
+    document.getElementById('bas-preco-new').textContent = `R$ ${fmt(preco)}`;
+    banner.style.display = 'block';
+  } else {
+    banner.style.display = 'none';
+  }
+
+  // título
+  document.getElementById('bas-result-title').textContent = `Resultado — ${Object.keys(mktLabels).includes(mkt) ? mktLabels[mkt].split(' (')[0] : mkt}`;
+
+  // breakdown
+  const linhas = [
+    { lbl: 'Preço de Venda (base)', val: preco, tipo: 'neutral' },
+    { lbl: `− Comissão ${mktLabels[mkt]}`, val: -comissaoR, tipo: 'red' },
+    { lbl: '− Tarifa Fixa / Frete Estimado', val: -tarifaFrete, tipo: 'red' },
+    { lbl: `− Imposto (${(aliq*100).toFixed(1).replace('.',',')}%)`, val: -impostoR, tipo: 'red' },
+  ];
+  if (emb > 0) linhas.push({ lbl: '− Embalagem', val: -emb, tipo: 'red' });
+  linhas.push({ lbl: '− Custo do Produto', val: -custo, tipo: 'red' });
+
+  let brHTML = linhas.map(l => {
+    const cls = l.tipo === 'red' ? 'v-red' : 'v-neutral';
+    return `<div class="br-row">
+      <span class="lbl">${l.lbl}</span>
+      <span class="val ${cls}">R$ ${fmt(Math.abs(l.val))}</span>
+    </div>`;
+  }).join('');
+  brHTML += `<div class="br-row total">
+    <span class="lbl">Lucro Líquido</span>
+    <span class="val ${lucro >= 0 ? 'v-green' : 'v-red'}">R$ ${fmt(lucro)}</span>
+  </div>`;
+  document.getElementById('bas-breakdown').innerHTML = brHTML;
+
+  // métricas
+  const metClass = v => v >= 0.25 ? 'good' : v >= 0.05 ? '' : 'bad';
+  document.getElementById('bas-metrics').innerHTML = `
+    <div class="metric ${lucro >= 0 ? 'good' : 'bad'}">
+      <div class="m-lbl">Lucro Líquido</div>
+      <div class="m-val">R$ ${fmt(lucro)}</div>
+      <div class="m-sub">por unidade vendida</div>
+    </div>
+    <div class="metric ${metClass(margemReal)}">
+      <div class="m-lbl">Margem Real</div>
+      <div class="m-val">${fmtPct(margemReal)}</div>
+      <div class="m-sub">sobre o Preço de Venda</div>
+    </div>
+    <div class="metric">
+      <div class="m-lbl">Repasse ${mktNomes[mkt]}</div>
+      <div class="m-val">R$ ${fmt(repasseLiq)}</div>
+      <div class="m-sub">após comissão e tarifa</div>
+    </div>`;
+
+  // alerta
+  let alertHTML = '';
+  if (lucro < 0) {
+    alertHTML = `<div class="alert-box alert-danger"><div class="at">⚠ Operação no prejuízo</div>Cada venda gera prejuízo de R$ ${fmt(Math.abs(lucro))}. Preencha a Margem Desejada para o sistema calcular o preço ideal.</div>`;
+  } else if (margemReal < 0.10) {
+    alertHTML = `<div class="alert-box alert-warn"><div class="at">Margem muito baixa</div>Margem de ${fmtPct(margemReal)} — qualquer variação de custo pode virar prejuízo.</div>`;
+  } else if (margemReal >= 0.25) {
+    alertHTML = `<div class="alert-box alert-success"><div class="at">✓ Margem saudável</div>Margem de ${fmtPct(margemReal)} — boa base para absorver variações e campanhas.</div>`;
+  }
+  document.getElementById('bas-alerta').innerHTML = alertHTML;
+
+  const res = document.getElementById('bas-resultado');
+  const eraOculto = res.style.display === 'none';
+  res.style.display = 'block';
+  if (eraOculto) setTimeout(() => res.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+}
+
+// ============================================================
+// ============================================================
+function calcularComparativo() {
+  const custo  = parseFloat(document.getElementById('cmp_custo').value) || 0;
+  const peso   = parseFloat(document.getElementById('cmp_peso').value) || 0;
+  const preco  = parseFloat(document.getElementById('cmp_preco').value) || 0;
+  const margem = parseFloat(document.getElementById('cmp_margem').value);
+  const aliq   = getAliquota();
+  const temMargem = !isNaN(margem) && margem > 0;
+
+  if (custo <= 0 || peso <= 0 || (preco <= 0 && !temMargem)) {
+    alert('Preencha pelo menos o Custo, o Peso e o Preço de Venda (ou a Margem Desejada).');
+    return;
+  }
+
+  const canais = [
+    { id: 'ml_classico', nome: 'ML Clássico', logoClass: 'ml' },
+    { id: 'ml_premium',  nome: 'ML Premium',  logoClass: 'ml' },
+    { id: 'shopee',      nome: 'Shopee',       logoClass: 'shopee' },
+    { id: 'tiktok',      nome: 'TikTok Shop',  logoClass: 'tiktok' },
+    { id: 'shein',       nome: 'Shein',        logoClass: 'shein' },
+  ];
+
+  const resultados = canais.map(canal => {
+    const mkt = canal.id;
+
+    // --- preço mínimo para margem desejada ---
+    let precoMeta = null;
+    if (temMargem) {
+      precoMeta = calcPrecoFinalParaMargem(custo, 0, peso, null, aliq, 0, 0, margem / 100, mkt);
+      if (!isFinite(precoMeta) || precoMeta <= 0) precoMeta = null;
+    }
+
+    // --- base de cálculo: usa preço informado se tiver, senão usa precoMeta ---
+    const basePreco = preco > 0 ? preco : precoMeta;
+
+    let lucro = null, margemReal = null, tarifaR = 0, comissaoR = 0, impostoR = 0;
+
+    if (basePreco > 0) {
+      const com = getComissaoPct(mkt, basePreco);
+      tarifaR   = calcTarifaFrete(peso, basePreco, mkt);
+      comissaoR = basePreco * com;
+      impostoR  = basePreco * aliq;
+      lucro     = basePreco - comissaoR - tarifaR - impostoR - custo;
+      margemReal = basePreco > 0 ? lucro / basePreco : 0;
+    }
+
+    return {
+      ...canal,
+      comissaoR,
+      tarifaR,
+      impostoR,
+      lucro:      lucro ?? 0,
+      margemReal: margemReal ?? 0,
+      basePreco,
+      precoMeta,
+      temPreco: preco > 0,
+    };
+  });
+
+  // badge melhor/pior — apenas quando há preço de venda informado
+  if (preco > 0) {
+    const lucros = resultados.map(r => r.lucro);
+    const maxL = Math.max(...lucros);
+    const minL = Math.min(...lucros);
+    resultados.forEach(r => {
+      r.badge = r.lucro === maxL ? 'melhor' : r.lucro === minL ? 'pior' : '';
+    });
+  } else {
+    resultados.forEach(r => r.badge = '');
+  }
+
+  // --- RENDER CARDS ---
+  const cardsEl = document.getElementById('cmp-cards');
+  cardsEl.innerHTML = resultados.map(r => {
+    const cardClass = r.badge === 'melhor' ? 'canal-card melhor' : r.badge === 'pior' ? 'canal-card pior' : 'canal-card';
+    const badgeHTML = r.badge === 'melhor'
+      ? '<div class="canal-badge badge-melhor">Melhor Margem</div>'
+      : r.badge === 'pior'
+      ? '<div class="canal-badge badge-pior">Menor Margem</div>'
+      : '';
+
+    const lucroHTML = r.basePreco > 0 ? `
+      <div class="canal-lucro-lbl">Lucro Líquido</div>
+      <div class="canal-lucro">R$ ${fmt(r.lucro)}</div>
+      <div class="canal-margem">${fmtPct(r.margemReal)} de margem</div>
+    ` : `<div class="canal-margem" style="margin-top:8px;">—</div>`;
+
+    const metaHTML = r.precoMeta ? `
+      <div class="canal-divider"></div>
+      <div class="canal-preco-lbl">Preço p/ ${margem.toFixed(0)}% de margem</div>
+      <div class="canal-preco">R$ ${fmt(r.precoMeta)}</div>
+    ` : '';
+
+    const logoUrls = {
+      ml:     'https://cdn.awsli.com.br/21/21120/arquivos/icon-ml.png',
+      shopee: 'https://cdn.awsli.com.br/21/21120/arquivos/icons-shopee.png',
+      tiktok: 'https://cdn.awsli.com.br/21/21120/arquivos/icon-tiktok.png',
+      shein:  'https://cdn.awsli.com.br/21/21120/arquivos/icons-shein.png',
+    };
+    const logoImg = logoUrls[r.logoClass] ? `<img src="${logoUrls[r.logoClass]}" class="mkt-logo-dot" alt="${r.nome}">` : '';
+    const logoPill = `<div class="mkt-logo-pill ${r.logoClass}">` + logoImg + r.nome + `</div>`;
+
+    return `<div class="${cardClass}">
+      ${badgeHTML}
+      ${logoPill}
+      ${lucroHTML}
+      ${metaHTML}
+    </div>`;
+  }).join('');
+
+  // --- RENDER TABELA — sempre mostra se tiver basePreco ---
+  const temBase = resultados.some(r => r.basePreco > 0);
+  if (temBase) {
+    const thead = `<thead><tr>
+      <th>Item</th>
+      ${resultados.map(r => `<th>${r.nome}</th>`).join('')}
+    </tr></thead>`;
+
+    const linhas = [
+      { lbl: 'Custo do Produto',    fn: r => ({ v: fmt(custo),       cls: 'cv'  }) },
+      { lbl: 'Comissão',            fn: r => ({ v: fmt(r.comissaoR), cls: 'cvr' }) },
+      { lbl: 'Tarifa Fixa / Frete', fn: r => ({ v: fmt(r.tarifaR),   cls: 'cvr' }) },
+      { lbl: `Imposto (${(aliq*100).toFixed(1)}%)`, fn: r => ({ v: fmt(r.impostoR), cls: 'cvr' }) },
+    ];
+
+    const tbody = `<tbody>
+      ${linhas.map(l => `<tr>
+        <td>${l.lbl}</td>
+        ${resultados.map(r => {
+          if (!r.basePreco) return '<td class="cv">—</td>';
+          const o = l.fn(r);
+          return `<td class="${o.cls}">R$ ${o.v}</td>`;
+        }).join('')}
+      </tr>`).join('')}
+      <tr class="row-tot">
+        <td>Lucro Líquido</td>
+        ${resultados.map(r => r.basePreco > 0
+          ? `<td class="cvg">R$ ${fmt(r.lucro)}</td>`
+          : '<td class="cv">—</td>'
+        ).join('')}
+      </tr>
+      <tr>
+        <td style="color:var(--muted);">Margem Real</td>
+        ${resultados.map(r => {
+          if (!r.basePreco) return '<td class="cv">—</td>';
+          const cor = r.margemReal >= 0.25 ? 'cvg' : r.margemReal >= 0.10 ? 'cv' : 'cvr';
+          return `<td class="${cor}">${fmtPct(r.margemReal)}</td>`;
+        }).join('')}
+      </tr>
+    </tbody>`;
+
+    document.getElementById('cmp-tabela').innerHTML = thead + tbody;
+    document.getElementById('cmp-tabela').closest('.card').style.display = 'block';
+  } else {
+    document.getElementById('cmp-tabela').closest('.card').style.display = 'none';
+  }
+
+  document.getElementById('cmp-resultado').style.display = 'block';
+  document.getElementById('cmp-resultado').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+// ============================================================
+function switchTab(id) {
+  // captura aba atual antes de trocar
+  const abaAtual = document.querySelector('.tab-content.active')?.id?.replace('tab-', '');
+
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('onclick').includes(id));
+  });
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+
+  // sincroniza campos comuns ao trocar de aba
+  sincronizarCampos(abaAtual, id);
+}
+
+// Mapa de campos equivalentes entre abas
+// formato: { campo_origem: campo_destino }
+const CAMPOS_SYNC = {
+  basico: {
+    avancado:  { bas_custo: 'custo', bas_peso: 'peso', bas_embalagem: 'embalagem' },
+    comparar:  { bas_custo: 'cmp_custo', bas_peso: 'cmp_peso' },
+  },
+  avancado: {
+    basico:    { custo: 'bas_custo', peso: 'bas_peso', embalagem: 'bas_embalagem' },
+    comparar:  { custo: 'cmp_custo', peso: 'cmp_peso' },
+  },
+  comparar: {
+    basico:    { cmp_custo: 'bas_custo', cmp_peso: 'bas_peso' },
+    avancado:  { cmp_custo: 'custo', cmp_peso: 'peso' },
+  },
+};
+
+// alias para mapear id da aba → chave do mapa
+const ABA_KEY = {
+  basico: 'basico',
+  precificador: 'avancado',
+  comparar: 'comparar',
+  configuracoes: null,
+};
+
+function sincronizarCampos(origem, destino) {
+  const origemKey = ABA_KEY[origem];
+  const destinoKey = ABA_KEY[destino];
+  if (!origemKey || !destinoKey) return;
+
+  const mapa = CAMPOS_SYNC[origemKey]?.[destinoKey];
+  if (!mapa) return;
+
+  Object.entries(mapa).forEach(([idOrigem, idDestino]) => {
+    const elOrigem  = document.getElementById(idOrigem);
+    const elDestino = document.getElementById(idDestino);
+    if (!elOrigem || !elDestino) return;
+
+    const valOrigem  = elOrigem.value?.trim();
+    const valDestino = elDestino.value?.trim();
+
+    // se origem tem valor → copia para destino (mesmo se destino já tem)
+    // se origem está vazio E destino tem o mesmo valor que veio de sync → apaga
+    // regra simples: sempre espelha se um dos dois tem valor
+    if (valOrigem) {
+      // origem tem valor: copia se destino está vazio ou igual ao que veio da sync
+      if (!valDestino) elDestino.value = valOrigem;
+    } else {
+      // origem foi apagada: apaga destino também
+      elDestino.value = '';
+    }
+  });
+
+  // sincroniza marketplace entre básico e avançado
+  if ((origemKey === 'basico' && destinoKey === 'avancado') ||
+      (origemKey === 'avancado' && destinoKey === 'basico')) {
+    const idOrig = origemKey === 'basico' ? 'bas_marketplace' : 'marketplace';
+    const idDest = origemKey === 'basico' ? 'marketplace' : 'bas_marketplace';
+    const elOrig = document.getElementById(idOrig);
+    const elDest = document.getElementById(idDest);
+    if (elOrig && elDest) elDest.value = elOrig.value;
+  }
+}
+
+function getCfgComissao(mkt) {
+  if (mkt === 'ml_classico') {
+    const v = parseFloat(document.getElementById('cfg_ml_classico').value);
+    return isNaN(v) ? 0.14 : v / 100;
+  }
+  if (mkt === 'ml_premium') {
+    const v = parseFloat(document.getElementById('cfg_ml_premium').value);
+    return isNaN(v) ? 0.19 : v / 100;
+  }
+  if (mkt === 'tiktok') {
+    const v = parseFloat(document.getElementById('cfg_tiktok_com').value);
+    return isNaN(v) ? 0.12 : v / 100;
+  }
+  return null; // shopee e shein: calculado por função própria
+}
+
+function getCfgTikTokFixa() {
+  const v = parseFloat(document.getElementById('cfg_tiktok_fixa').value);
+  return isNaN(v) ? 4.00 : v;
+}
+
+function getCfgSheinFixa() {
+  const el = document.getElementById('cfg_shein_fixa');
+  const v = el ? parseFloat(el.value) : 6.00;
+  return isNaN(v) ? 6.00 : v;
+}
+
+function getCfgSheinCom() {
+  const el = document.getElementById('cfg_shein_com');
+  const v = el ? parseFloat(el.value) : 20;
+  return isNaN(v) ? 0.20 : v / 100;
+}
+
+// Shein: 20% + R$ 6,00 fixo (editável nas configs)
+function calcComissaoShein() {
+  return { pct: getCfgSheinCom(), fixa: getCfgSheinFixa() };
+}
+
+function getAliquota() {
+  // lê da tela de configurações
+  const v = parseFloat(document.getElementById('aliquota').value);
+  return isNaN(v) ? 0 : v / 100;
+}
 // frete[peso_index][preco_index]
 // peso: 0=até300g, 1=300-500g, 2=500-1000g, 3=1000-1500g, 4=1500-2000g
 // preco: 0=0-18,99 | 1=19-48,99 | 2=49-78,99 | 3=79-99,99 | 4=100-119,99 | 5=120-149,99 | 6=150-199,99 | 7=200+
@@ -683,10 +1676,27 @@ const FRETE = [
 
 const COMISSOES = {
   ml_classico: 0.14,
-  ml_premium: 0.19,
-  shopee: 0.14,
-  tiktok: 0.05,
+  ml_premium:  0.19,
+  tiktok:      0.05,
 };
+
+// Shopee 2026: comissão % + taxa fixa por faixa de preço final
+function calcComissaoShopee(precoFinal) {
+  if (precoFinal <= 79.99) return { pct: 0.20, fixa: 4.00 };
+  if (precoFinal <= 99.99) return { pct: 0.14, fixa: 16.00 };
+  if (precoFinal <= 199.99) return { pct: 0.14, fixa: 20.00 };
+  if (precoFinal <= 499.99) return { pct: 0.14, fixa: 26.00 };
+  return { pct: 0.14, fixa: 26.00 };
+}
+
+// TikTok Shop 2026: 12% + R$ 4,00 fixo
+function getComissaoPct(mkt, precoFinal) {
+  if (mkt === 'shopee') return calcComissaoShopee(precoFinal).pct;
+  if (mkt === 'shein')  return calcComissaoShein().pct;
+  const cfg = getCfgComissao(mkt);
+  if (cfg !== null) return cfg;
+  return COMISSOES[mkt] || 0;
+}
 
 function getFreteIdx(peso, preco) {
   // peso index — regra: valor exato cai na faixa inferior (<=)
@@ -711,10 +1721,16 @@ function getFreteIdx(peso, preco) {
   return { pi, ri };
 }
 
-function calcFrete(peso, preco, mkt) {
-  if (!mkt.startsWith('ml')) return 0; // shopee/tiktok: frete não entra aqui por ora
-  const { pi, ri } = getFreteIdx(peso, preco);
-  return FRETE[pi][ri];
+// Retorna o valor da "Tarifa Fixa / Frete Estimado" por marketplace
+function calcTarifaFrete(peso, precoFinal, mkt) {
+  if (mkt.startsWith('ml')) {
+    const { pi, ri } = getFreteIdx(peso, precoFinal);
+    return FRETE[pi][ri];
+  }
+  if (mkt === 'shopee') return calcComissaoShopee(precoFinal).fixa;
+  if (mkt === 'tiktok') return getCfgTikTokFixa();
+  if (mkt === 'shein')  return calcComissaoShein().fixa;
+  return 0;
 }
 
 // ============================================================
@@ -851,7 +1867,7 @@ function onMarketplaceChange() {
 // VALIDAÇÃO
 // ============================================================
 function validar() {
-  const obrigatorios = ['aliquota', 'custo', 'preco_cheio', 'peso'];
+  const obrigatorios = ['custo', 'preco_cheio', 'peso'];
   let ok = true;
   obrigatorios.forEach(id => {
     const el = document.getElementById(id);
@@ -868,15 +1884,21 @@ function validar() {
 
 // ============================================================
 // LÓGICA INVERSA — MARGEM DESEJADA
-// recalcula precoPromo para atingir margem
-// Fórmula: precoFinal = (custo + emb + frete) / (1 - com - imp - ads - afil - margem)
-// mas frete depende do precoFinal → iteração
+// Para ML: precoFinal = (custo + emb + frete) / (1 - com% - imp - ads - afil - margem)
+// Para Shopee: precoFinal = (custo + emb + taxaFixa + tarifaFrete) / (1 - com% - imp - ads - afil - margem)
+// Como frete/tarifa dependem do precoFinal → iteração até convergir
 // ============================================================
-function calcPrecoFinalParaMargem(custo, emb, peso, comissao, aliquota, adsPct, afilPct, margem, mkt) {
-  let pf = (custo + emb) / (1 - comissao - aliquota - adsPct - afilPct - margem);
-  for (let i = 0; i < 15; i++) {
-    const frete = calcFrete(peso, pf, mkt);
-    const novo = (custo + emb + frete) / (1 - comissao - aliquota - adsPct - afilPct - margem);
+function calcPrecoFinalParaMargem(custo, emb, peso, _comissaoIgnorada, aliquota, adsPct, afilPct, margem, mkt) {
+  // chute inicial sem tarifa
+  let pf = (custo + emb) / (1 - 0.14 - aliquota - adsPct - afilPct - margem);
+  if (pf <= 0 || !isFinite(pf)) pf = custo * 3;
+
+  for (let i = 0; i < 20; i++) {
+    const comPct = getComissaoPct(mkt, pf);
+    const tarifa = calcTarifaFrete(peso, pf, mkt);
+    const divisor = 1 - comPct - aliquota - adsPct - afilPct - margem;
+    if (divisor <= 0) return Infinity;
+    const novo = (custo + emb + tarifa) / divisor;
     if (Math.abs(novo - pf) < 0.001) { pf = novo; break; }
     pf = novo;
   }
@@ -892,14 +1914,16 @@ function fmtPct(v) { return (v * 100).toFixed(1).replace('.', ',') + '%'; }
 function calcular() {
   if (!validar()) return;
 
-  const aliquota = parseFloat(document.getElementById('aliquota').value) / 100;
+  const aliquota = getAliquota();
   const custo = parseFloat(document.getElementById('custo').value);
   const precioCheio = parseFloat(document.getElementById('preco_cheio').value);
   const peso = parseFloat(document.getElementById('peso').value);
   const emb = parseFloat(document.getElementById('embalagem').value) || 0;
 
   const mkt = document.getElementById('marketplace').value;
-  const comissao = COMISSOES[mkt];
+  // comissão % será recalculada após ter o precoFinal — usamos placeholder aqui
+  // e recalculamos depois do bloco de precoFinal
+  let comissao = 0;
 
   const margemDesejada = parseFloat(document.getElementById('margem').value);
   const temMargem = !isNaN(margemDesejada) && margemDesejada > 0;
@@ -919,11 +1943,12 @@ function calcular() {
   // ---- SE MARGEM DESEJADA: validar viabilidade e recalcular preço final ----
   if (temMargem) {
     const m = margemDesejada / 100;
-    const divisor = 1 - comissao - aliquota - adsPct - afilPct - m;
+    const divisor = 1 - getComissaoPct(mkt, custo * 3) - aliquota - adsPct - afilPct - m;
 
-    // Fix 4: margem impossível — divisor <= 0 significa que os custos % já consomem tudo
+    // Fix 4: margem impossível
     if (divisor <= 0.01) {
-      const margemMaxima = (1 - comissao - aliquota - adsPct - afilPct) * 100;
+      const comEst = getComissaoPct(mkt, custo * 3);
+      const margemMaxima = (1 - comEst - aliquota - adsPct - afilPct) * 100;
       document.getElementById('margem').classList.add('error');
       document.getElementById('resultado').style.display = 'block';
       document.getElementById('breakdown').innerHTML = '';
@@ -997,25 +2022,36 @@ function calcular() {
   document.getElementById('ads_base_note').textContent = `Base de cálculo: Preço Final de R$ ${fmt(precoFinal)}`;
 
   // ---- CUSTOS ----
-  const frete = calcFrete(peso, precoFinal, mkt);
+  comissao = getComissaoPct(mkt, precoFinal); // agora temos precoFinal para Shopee
+  const tarifaFrete = calcTarifaFrete(peso, precoFinal, mkt);
   const comissaoR = precoFinal * comissao;
   const impostoR = precoFinal * aliquota;
   const adsR = precoFinal * adsPct;
   const afilR = precoFinal * afilPct;
-  // Fix 2: repasse = precoFinal - comissao + rebate - frete
-  const repasseLiq = precoFinal - comissaoR + rebate - frete;
+  // Repasse = o que o marketplace deposita na conta do vendedor
+  // = Preço Final - Comissão% - TarifaFixa + Rebate - Afiliados
+  const repasseLiq = precoFinal - comissaoR - tarifaFrete + rebate - afilR;
 
-  const totalCustos = comissaoR - rebate + frete + impostoR + emb + custo + adsR + afilR;
+  const totalCustos = comissaoR - rebate + tarifaFrete + impostoR + emb + custo + adsR + afilR;
   const lucro = precoFinal - totalCustos;
   const margemReal = precoFinal > 0 ? lucro / precoFinal : 0;
 
   // ---- BREAKDOWN ----
+  const comissaoPctLabel = (comissao * 100).toFixed(0);
+  const mktLabel = mkt === 'ml_classico' ? `ML Clássico (${comissaoPctLabel}%)`
+    : mkt === 'ml_premium' ? `ML Premium (${comissaoPctLabel}%)`
+    : mkt === 'shopee' ? `Shopee (${comissaoPctLabel}%)`
+    : mkt === 'shein'  ? `Shein (${comissaoPctLabel}%)`
+    : `TikTok Shop (${comissaoPctLabel}%)`;
+
+  const tarifaLabel = mkt.startsWith('ml') ? 'Tarifa Fixa / Frete Estimado' : 'Tarifa Fixa / Frete Estimado';
+
   const linhas = [
     { lbl: 'Preço Final (base)', val: precoFinal, tipo: 'neutral' },
-    { lbl: `− Comissão ${mkt === 'ml_classico' ? 'ML Clássico (14%)' : mkt === 'ml_premium' ? 'ML Premium (19%)' : mkt === 'shopee' ? 'Shopee (14%)' : 'TikTok Shop (5%)'}`, val: -comissaoR, tipo: 'red' },
+    { lbl: `− Comissão ${mktLabel}`, val: -comissaoR, tipo: 'red' },
   ];
   if (rebate > 0) linhas.push({ lbl: '+ Rebate da Campanha ML', val: rebate, tipo: 'green' });
-  if (mkt.startsWith('ml')) linhas.push({ lbl: '− Frete Estimado', val: -frete, tipo: 'red' });
+  if (tarifaFrete > 0) linhas.push({ lbl: `− ${tarifaLabel}`, val: -tarifaFrete, tipo: 'red' });
   linhas.push({ lbl: `− Imposto (${(aliquota * 100).toFixed(1).replace('.', ',')}%)`, val: -impostoR, tipo: 'red' });
   if (emb > 0) linhas.push({ lbl: '− Embalagem', val: -emb, tipo: 'red' });
   linhas.push({ lbl: '− Custo do Produto', val: -custo, tipo: 'red' });
@@ -1053,7 +2089,7 @@ function calcular() {
     <div class="metric">
       <div class="m-lbl">Repasse ${mkt.startsWith('ml') ? 'ML' : mkt === 'shopee' ? 'Shopee' : 'TikTok'}</div>
       <div class="m-val">R$ ${fmt(repasseLiq)}</div>
-      <div class="m-sub">após comissão${rebate > 0 ? ' + rebate' : ''}</div>
+      <div class="m-sub">após comissão${rebate > 0 ? ', rebate' : ''}${afilR > 0 ? ', afiliados' : ''} e tarifa</div>
     </div>`;
 
   // ---- ALERTA ---- 
@@ -1110,8 +2146,27 @@ function calcular() {
 // ============================================================
 // MÁSCARA DE VALOR — formata para 2 casas decimais ao sair do campo
 // ============================================================
-const camposMonetarios = ['custo', 'preco_cheio', 'embalagem', 'preco_promo', 'cupom_valor', 'rebate', 'ads_cpc'];
-const camposPct = ['aliquota', 'pct_desconto', 'ads_pct', 'ads_roas', 'margem', 'afiliados'];
+const camposMonetarios = [
+  // Avançado
+  'custo', 'preco_cheio', 'embalagem', 'preco_promo', 'cupom_valor', 'rebate', 'ads_cpc',
+  // Básico
+  'bas_custo', 'bas_embalagem', 'bas_preco',
+  // Comparar
+  'cmp_custo', 'cmp_preco',
+  // Configurações
+  'cfg_tiktok_fixa', 'cfg_shein_fixa',
+];
+
+const camposPct = [
+  // Avançado
+  'aliquota', 'pct_desconto', 'ads_pct', 'ads_roas', 'margem', 'afiliados',
+  // Básico
+  'bas_margem',
+  // Comparar
+  'cmp_margem',
+  // Configurações
+  'cfg_ml_classico', 'cfg_ml_premium', 'cfg_tiktok_com', 'cfg_shein_com',
+];
 
 function formatarValor(id, casas) {
   const el = document.getElementById(id);
@@ -1126,6 +2181,9 @@ function formatarValor(id, casas) {
 
 camposMonetarios.forEach(id => formatarValor(id, 2));
 camposPct.forEach(id => formatarValor(id, 2));
+
+// peso em gramas — sem casas decimais
+['peso', 'bas_peso', 'cmp_peso'].forEach(id => formatarValor(id, 0));
 
 // atualiza preço final ao mudar cupom valor e promo
 document.getElementById('cupom_valor').addEventListener('input', atualizarPrecoFinalDisplay);
