@@ -224,9 +224,9 @@ header {
 
 /* ---- LAYOUT ---- */
 .page {
-  max-width: 700px;
+  max-width: 780px;
   margin: 0 auto;
-  padding: 28px 20px 60px;
+  padding: 28px 24px 60px;
   overflow: hidden;
   width: 100%;
 }
@@ -504,13 +504,13 @@ select {
 
 /* ---- COMPARAR CANAIS ---- */
 .canal-cards {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 10px; margin-bottom: 14px;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 12px; margin-bottom: 14px;
 }
 
 .canal-card {
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 18px 12px; text-align: center; position: relative;
+  border-radius: var(--radius); padding: 20px 16px; text-align: center; position: relative;
 }
 
 .canal-card.melhor { border-color: var(--green-border); background: var(--green-bg); }
@@ -526,7 +526,7 @@ select {
 .badge-pior   { background: var(--red-bg);   color: var(--red);   border: 1px solid var(--red-border); }
 
 .canal-lucro-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 2px; }
-.canal-lucro { font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 700; color: var(--green); }
+.canal-lucro { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 700; color: var(--green); }
 .canal-card.pior .canal-lucro { color: var(--red); }
 .canal-card:not(.melhor):not(.pior) .canal-lucro { color: var(--text); }
 .canal-margem { font-size: 11px; color: var(--muted); margin-top: 3px; }
@@ -536,14 +536,15 @@ select {
 
 /* ---- LOGOS MARKETPLACES ---- */
 .mkt-logo-pill {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 8px;
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700;
+  margin-bottom: 12px; white-space: nowrap;
 }
 .mkt-logo-pill.ml     { background: #FFF9CC; color: #7a6500; border: 1px solid #FFE600; }
 .mkt-logo-pill.shopee { background: #FEF0ED; color: #c13b22; border: 1px solid #EE4D2D; }
 .mkt-logo-pill.tiktok { background: #1a1a1a; color: #69C9D0; border: 1px solid #69C9D0; }
 .mkt-logo-pill.shein  { background: #FCE4EC; color: #880e4f; border: 1px solid #E91E63; }
-.mkt-logo-dot { width: 16px; height: 16px; border-radius: 3px; flex-shrink: 0; object-fit: contain; }
+.mkt-logo-dot { width: 18px; height: 18px; border-radius: 4px; flex-shrink: 0; object-fit: contain; }
 
 /* ---- TABELA COMPARAR ---- */
 .cmp-table { width: 100%; border-collapse: collapse; font-size: 12px; }
