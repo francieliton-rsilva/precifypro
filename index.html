@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PrecifyPro — Precificação para Marketplaces</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f0f0ed;
+  --surface: #ffffff;
+  --surface2: #f7f7f5;
+  --border: #e0e0db;
+  --border2: #cacac4;
+  --text: #1a1a1a;
+  --muted: #777770;
+  --accent: #1a1a1a;
+  --accent-light: #f0f0ed;
+  --green: #1a6e3a;
+  --green-bg: #eaf5f0;
+  --green-border: #a8d9be;
+  --red: #c0392b;
+  --red-bg: #fdf0ee;
+  --red-border: #f5c4bc;
+  --blue: #1a5a99;
+  --blue-bg: #eaf2fb;
+  --blue-border: #b8d4f0;
+  --amber: #7a5000;
+  --amber-bg: #fdf5e4;
+  --amber-border: #f0d090;
+  --radius: 10px;
+  --radius-sm: 7px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Sora', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* ---- HEADER ---- */
+header {
+  background: var(--text);
+  color: #fff;
+  padding: 0 24px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.logo-dot {
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border-radius: 50%;
+}
+
+.header-right {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.05em;
+}
+
+/* ---- LAYOUT ---- */
+.page {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 28px 20px 60px;
+}
+
+/* ---- CARDS ---- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow);
+}
+
+.section-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ---- FORM GRID ---- */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+.field { display: flex; flex-direction: column; gap: 5px; }
+
+.field label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.req { color: var(--red); }
+
+.badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 20px;
+  letter-spacing: 0.04em;
+}
+.badge-blue { background: var(--blue-bg); color: var(--blue); }
+.badge-gray { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
+.badge-green { background: var(--green-bg); color: var(--green); }
+.badge-amber { background: var(--amber-bg); color: var(--amber); }
+
+/* ---- INPUTS ---- */
+.input-wrap { position: relative; }
+
+.input-wrap .pre {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+  pointer-events: none;
+}
+
+.input-wrap .suf {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+  pointer-events: none;
+}
+
+input[type="number"], select {
+  width: 100%;
+  height: 38px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0 10px;
+  outline: none;
+  transition: border-color 0.15s, background 0.15s;
+  -moz-appearance: textfield;
+}
+
+/* desativa setas do teclado com step fracionado */
+input[type="number"] { step: any; }
+
+input::placeholder { color: #c8c8c0; }
+input::-webkit-input-placeholder { color: #c8c8c0; }
+input::-moz-placeholder { color: #c8c8c0; }
+
+input:focus, select:focus {
+  border-color: var(--text);
+  background: var(--surface);
+}
+
+input.has-pre { padding-left: 26px; }
+input.has-suf { padding-right: 32px; }
+
+input.error {
+  border-color: var(--red) !important;
+  background: var(--red-bg) !important;
+}
+
+input.synced {
+  background: var(--blue-bg);
+  border-color: var(--blue-border);
+}
+
+input.recalc {
+  background: var(--green-bg);
+  border-color: var(--green-border);
+  font-weight: 700;
+}
+
+select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23777770' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+}
+
+.hint {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* ---- DIVIDERS ---- */
+.sep {
+  position: relative;
+  text-align: center;
+  margin: 16px 0 14px;
+}
+.sep::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  border-top: 1px dashed var(--border);
+}
+.sep span {
+  position: relative;
+  background: var(--surface);
+  padding: 0 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.arrow-note {
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+  margin: 5px 0 8px;
+}
+
+/* ---- SELECT ROW ---- */
+.select-row { display: flex; gap: 8px; align-items: center; }
+.select-row select { flex: 1; min-width: 0; }
+.select-row .input-wrap { flex: 1; min-width: 0; }
+.select-row .input-wrap input { width: 100%; }
+
+/* ---- BUTTON ---- */
+.btn-calc {
+  width: 100%;
+  height: 48px;
+  background: var(--text);
+  border: none;
+  border-radius: var(--radius);
+  color: #fff;
+  font-family: 'Sora', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: -0.01em;
+  transition: opacity 0.15s, transform 0.1s;
+  margin-bottom: 12px;
+}
+.btn-calc:hover { opacity: 0.85; }
+.btn-calc:active { transform: scale(0.99); }
+
+/* ---- INTELIGÊNCIA BOX ---- */
+.intel-box {
+  background: var(--blue-bg);
+  border: 1px solid var(--blue-border);
+  border-radius: var(--radius-sm);
+  padding: 11px 14px;
+  margin-top: 14px;
+}
+.intel-box .t {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 3px;
+}
+.intel-box .s {
+  font-size: 11px;
+  color: var(--blue);
+  line-height: 1.5;
+}
+
+/* ---- RESULTADO ---- */
+#resultado { display: none; }
+
+.br-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+}
+.br-row:last-child { border-bottom: none; }
+.br-row .lbl { color: var(--muted); }
+.br-row .val { font-family: 'DM Mono', monospace; font-weight: 500; }
+.br-row.total {
+  border-top: 2px solid var(--text);
+  border-bottom: none;
+  padding-top: 10px;
+  margin-top: 4px;
+  font-weight: 700;
+  font-size: 15px;
+}
+.br-row.total .lbl { color: var(--text); font-weight: 700; }
+
+.v-red { color: var(--red); }
+.v-green { color: var(--green); }
+.v-neutral { color: var(--text); }
+
+.metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.metric {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 13px 14px;
+}
+
+.metric .m-lbl {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.metric .m-val {
+  font-family: 'DM Mono', monospace;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.metric .m-sub {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.metric.good { border-color: var(--green-border); background: var(--green-bg); }
+.metric.good .m-val { color: var(--green); }
+.metric.bad { border-color: var(--red-border); background: var(--red-bg); }
+.metric.bad .m-val { color: var(--red); }
+
+.alert-box {
+  border-radius: var(--radius-sm);
+  padding: 12px 15px;
+  margin-top: 14px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.alert-box .at { font-weight: 700; margin-bottom: 3px; font-size: 13px; }
+.alert-danger { background: var(--red-bg); border: 1px solid var(--red-border); color: var(--red); }
+.alert-success { background: var(--green-bg); border: 1px solid var(--green-border); color: var(--green); }
+.alert-warn { background: var(--amber-bg); border: 1px solid var(--amber-border); color: var(--amber); }
+
+/* ---- RECALC TAG ---- */
+.recalc-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 20px;
+  background: var(--green-bg);
+  color: var(--green);
+  border: 1px solid var(--green-border);
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.banner-margem {
+  background: var(--green-bg);
+  border: 1px solid var(--green-border);
+  border-radius: var(--radius-sm);
+  padding: 13px 16px;
+  margin-bottom: 16px;
+  display: none;
+}
+.banner-margem .bm-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.banner-margem .bm-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--green);
+  margin-top: 4px;
+}
+.banner-margem .bm-old {
+  font-family: 'DM Mono', monospace;
+  text-decoration: line-through;
+  opacity: 0.6;
+  font-size: 13px;
+}
+.banner-margem .bm-arrow { font-size: 14px; opacity: 0.7; }
+.banner-margem .bm-new {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 15px;
+}
+.banner-margem .bm-pct {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  opacity: 0.8;
+  margin-left: 4px;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    PrecifyPro
+  </div>
+  <div class="header-right">v1.0 · MARKETPLACES BR</div>
+</header>
+
+<div class="page">
+
+  <!-- DADOS DO PRODUTO -->
+  <div class="card">
+    <div class="section-title">Dados do Produto</div>
+
+    <div class="grid2" style="margin-bottom:14px;">
+      <div class="field">
+        <label>Alíquota de Imposto <span class="req">*</span></label>
+        <div class="input-wrap">
+          <input type="number" id="aliquota" placeholder="0" min="0" max="100" step="any" class="has-suf" oninput="limparMargem()">
+          <span class="suf">%</span>
+        </div>
+      </div>
+      <div class="field"></div>
+    </div>
+
+    <div class="grid2" style="margin-bottom:14px;">
+      <div class="field">
+        <label>Custo do Produto <span class="req">*</span></label>
+        <div class="input-wrap">
+          <span class="pre">R$</span>
+          <input type="number" id="custo" placeholder="0,00" min="0" step="any" class="has-pre" oninput="limparMargem()">
+        </div>
+      </div>
+      <div class="field">
+        <label>Preço de Venda <span class="req">*</span> <span class="badge badge-blue">Preço Cheio</span></label>
+        <div class="input-wrap">
+          <span class="pre">R$</span>
+          <input type="number" id="preco_cheio" placeholder="0,00" min="0" step="any" class="has-pre" oninput="limparMargem(); onPrecoCheioChange()">
+        </div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="field">
+        <label>Peso do Pacote <span class="req">*</span></label>
+        <div class="input-wrap">
+          <input type="number" id="peso" placeholder="0" min="1" step="any" class="has-suf" oninput="limparMargem()">
+          <span class="suf">g</span>
+        </div>
+      </div>
+      <div class="field">
+        <label>Embalagem / Outros <span class="badge badge-gray">Opcional</span></label>
+        <div class="input-wrap">
+          <span class="pre">R$</span>
+          <input type="number" id="embalagem" placeholder="0,00" min="0" step="any" class="has-pre" oninput="limparMargem()">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESCONTO PROMOÇÃO REBATE -->
+  <div class="card">
+    <div class="section-title">Desconto, Promoção &amp; Rebate</div>
+
+    <div class="grid2">
+      <div class="field">
+        <label>% Desconto</label>
+        <div class="input-wrap">
+          <input type="number" id="pct_desconto" placeholder="0" min="0" max="100" step="any" class="has-suf synced" oninput="limparMargem(); zerarAds(); onPctDescontoChange()">
+          <span class="suf">%</span>
+        </div>
+      </div>
+      <div class="field">
+        <label>Preço Promocional</label>
+        <div class="input-wrap">
+          <span class="pre">R$</span>
+          <input type="number" id="preco_promo" placeholder="—" min="0" step="any" class="has-pre synced" oninput="limparMargem(); zerarAds(); onPrecoPromoChange()">
+        </div>
+      </div>
+    </div>
+    <div class="arrow-note">↕ Os campos se calculam automaticamente</div>
+
+    <div class="sep"><span>Cupom de Desconto (Opcional)</span></div>
+    <div class="field" style="margin-bottom:14px;">
+      <label>Tipo e Valor do Cupom</label>
+      <div class="select-row">
+        <select id="cupom_tipo" onchange="limparMargem(); zerarAds(); atualizarPrecoFinalDisplay()">
+          <option value="pct">Porcentagem (%)</option>
+          <option value="fixo">Valor Fixo (R$)</option>
+        </select>
+        <div class="input-wrap">
+          <input type="number" id="cupom_valor" placeholder="—" min="0" step="any" oninput="limparMargem(); zerarAds()">
+        </div>
+      </div>
+    </div>
+
+    <div class="sep"><span>Rebate de Campanha ML (Opcional)</span></div>
+    <div class="field" style="margin-bottom:16px;">
+      <label>Rebate da Campanha <span class="badge badge-green">ML</span></label>
+      <div class="input-wrap">
+        <span class="pre">R$</span>
+        <input type="number" id="rebate" placeholder="—" min="0" step="any" class="has-pre" oninput="limparMargem()">
+      </div>
+      <div class="hint">Redução de tarifa concedida pelo ML em campanhas da central de promoções</div>
+    </div>
+
+    <div style="border-top:1px solid var(--border);padding-top:14px;">
+      <div class="field">
+        <label>Preço Final <span class="badge badge-amber">Base dos Cálculos</span></label>
+        <div class="input-wrap">
+          <span class="pre">R$</span>
+          <input type="number" id="preco_final_display" readonly class="has-pre" style="background:var(--amber-bg);border-color:var(--amber-border);cursor:default;font-weight:700;">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CANAL DE VENDA -->
+  <div class="card">
+    <div class="section-title">Canal de Venda / Margem</div>
+
+    <div class="grid2">
+      <div class="field">
+        <label>Marketplace <span class="req">*</span></label>
+        <select id="marketplace" onchange="limparMargem(); onMarketplaceChange()">
+          <option value="ml_classico">ML Clássico · 14%</option>
+          <option value="ml_premium">ML Premium · 19%</option>
+          <option value="shopee">Shopee</option>
+          <option value="tiktok">TikTok Shop</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Margem Desejada <span class="badge badge-gray">Opcional</span></label>
+        <div class="input-wrap">
+          <input type="number" id="margem" placeholder="—" min="0" max="99" step="any" class="has-suf">
+          <span class="suf">%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="intel-box">
+      <div class="t">Inteligência do sistema</div>
+      <div class="s">Ao preencher a Margem Desejada, o sistema recalcula automaticamente o Preço Promocional e % Desconto para atingir a margem — sem alterar cupom, ads ou afiliados.</div>
+    </div>
+
+    <div class="sep" style="margin-top:18px;"><span>Investimento em Ads (Opcional)</span></div>
+
+    <div class="grid3" style="margin-bottom:5px;">
+      <div class="field">
+        <label>% de Ads</label>
+        <div class="input-wrap">
+          <input type="number" id="ads_pct" placeholder="—" min="0" max="100" step="any" class="has-suf synced" oninput="limparMargem(); onAdsChange('pct')">
+          <span class="suf">%</span>
+        </div>
+      </div>
+      <div class="field">
+        <label>Custo por Conversão</label>
+        <div class="input-wrap">
+          <span class="pre">R$</span>
+          <input type="number" id="ads_cpc" placeholder="—" min="0" step="any" class="has-pre synced" oninput="limparMargem(); onAdsChange('cpc')">
+        </div>
+      </div>
+      <div class="field">
+        <label>ROAS</label>
+        <div class="input-wrap">
+          <input type="number" id="ads_roas" placeholder="—" min="0" step="any" class="has-suf synced" oninput="limparMargem(); onAdsChange('roas')">
+          <span class="suf">x</span>
+        </div>
+      </div>
+    </div>
+    <div class="arrow-note">↕ Preencha qualquer campo — os outros dois calculam automaticamente</div>
+    <div class="hint" style="text-align:center;" id="ads_base_note">Base de cálculo: Preço Final</div>
+
+    <div class="sep"><span>Comissão de Afiliados (Opcional)</span></div>
+    <div class="field">
+      <label>% Comissão de Afiliados <span class="badge badge-blue">TikTok / Outros</span></label>
+      <div class="input-wrap">
+        <input type="number" id="afiliados" placeholder="—" min="0" max="100" step="any" class="has-suf" oninput="limparMargem()">
+        <span class="suf">%</span>
+      </div>
+      <div class="hint">Pago ao afiliado por venda gerada — incide sobre o Preço Final</div>
+    </div>
+  </div>
+
+  <button class="btn-calc" onclick="calcular()">Calcular Resultado</button>
+
+  <!-- RESULTADO -->
+  <div id="resultado">
+    <div class="card">
+      <div class="section-title">
+        <span>Resultado</span>
+        <span id="resultado_tag" style="display:none;" class="recalc-tag">Margem Recalculada</span>
+      </div>
+
+      <!-- Banner de margem recalculada -->
+      <div class="banner-margem" id="banner_margem">
+        <div class="bm-title">✦ Preço recalculado para atingir sua margem desejada</div>
+        <div class="bm-row">
+          <span>Preço Promocional:</span>
+          <span class="bm-old" id="bm_promo_old">—</span>
+          <span class="bm-arrow">→</span>
+          <span class="bm-new" id="bm_promo_new">—</span>
+        </div>
+        <div class="bm-row">
+          <span>% Desconto:</span>
+          <span class="bm-old" id="bm_desc_old">—</span>
+          <span class="bm-arrow">→</span>
+          <span class="bm-new" id="bm_desc_new">—</span>
+        </div>
+      </div>
+
+      <div id="breakdown"></div>
+
+      <div class="metrics" id="metrics"></div>
+      <div id="alerta"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+// TABELA DE FRETE ML
+// frete[peso_index][preco_index]
+// peso: 0=até300g, 1=300-500g, 2=500-1000g, 3=1000-1500g, 4=1500-2000g
+// preco: 0=0-18,99 | 1=19-48,99 | 2=49-78,99 | 3=79-99,99 | 4=100-119,99 | 5=120-149,99 | 6=150-199,99 | 7=200+
+// ============================================================
+const FRETE = [
+  [5.65, 6.55, 7.75, 12.35, 14.35, 16.45, 18.45, 20.95],
+  [5.95, 6.65, 7.85, 13.25, 15.45, 17.65, 19.85, 22.55],
+  [6.05, 6.75, 7.95, 13.85, 16.15, 18.45, 20.75, 23.65],
+  [6.15, 6.85, 8.05, 14.15, 16.45, 18.85, 21.15, 24.65],
+  [6.25, 6.95, 8.15, 14.45, 16.85, 19.25, 21.65, 24.65],
+];
+
+const COMISSOES = {
+  ml_classico: 0.14,
+  ml_premium: 0.19,
+  shopee: 0.14,
+  tiktok: 0.05,
+};
+
+function getFreteIdx(peso, preco) {
+  // peso index — regra: valor exato cai na faixa inferior (<=)
+  let pi = 0;
+  if (peso <= 300) pi = 0;
+  else if (peso <= 500) pi = 1;
+  else if (peso <= 1000) pi = 2;
+  else if (peso <= 1500) pi = 3;
+  else pi = 4;
+
+  // preco index
+  let ri = 0;
+  if (preco < 19) ri = 0;
+  else if (preco < 49) ri = 1;
+  else if (preco < 79) ri = 2;
+  else if (preco < 100) ri = 3;
+  else if (preco < 120) ri = 4;
+  else if (preco < 150) ri = 5;
+  else if (preco < 200) ri = 6;
+  else ri = 7;
+
+  return { pi, ri };
+}
+
+function calcFrete(peso, preco, mkt) {
+  if (!mkt.startsWith('ml')) return 0; // shopee/tiktok: frete não entra aqui por ora
+  const { pi, ri } = getFreteIdx(peso, preco);
+  return FRETE[pi][ri];
+}
+
+// ============================================================
+// CÁLCULO DO PREÇO FINAL
+// ============================================================
+function getPrecoFinal() {
+  const cheio = parseFloat(document.getElementById('preco_cheio').value) || 0;
+  const promo = parseFloat(document.getElementById('preco_promo').value);
+  const base = (!isNaN(promo) && promo > 0) ? promo : cheio;
+
+  const cupomTipo = document.getElementById('cupom_tipo').value;
+  const cupomVal = parseFloat(document.getElementById('cupom_valor').value) || 0;
+
+  let descCupom = 0;
+  if (cupomVal > 0) {
+    descCupom = cupomTipo === 'pct' ? base * (cupomVal / 100) : cupomVal;
+  }
+
+  return Math.max(0, base - descCupom);
+}
+
+function atualizarPrecoFinalDisplay() {
+  const pf = getPrecoFinal();
+  const el = document.getElementById('preco_final_display');
+  el.value = pf > 0 ? pf.toFixed(2) : '';
+
+  // atualiza nota base ads
+  const nota = document.getElementById('ads_base_note');
+  nota.textContent = pf > 0 ? `Base de cálculo: Preço Final de R$ ${fmt(pf)}` : 'Base de cálculo: Preço Final';
+}
+
+// ============================================================
+// SINCRONISMO % DESCONTO <-> PREÇO PROMOCIONAL
+// ============================================================
+let _syncLock = false;
+
+function onPrecoCheioChange() {
+  // se promo preenchido, recalcula %
+  const cheio = parseFloat(document.getElementById('preco_cheio').value) || 0;
+  const promo = parseFloat(document.getElementById('preco_promo').value);
+  if (!isNaN(promo) && promo > 0 && cheio > 0) {
+    const pct = ((cheio - promo) / cheio) * 100;
+    document.getElementById('pct_desconto').value = pct.toFixed(2);
+  }
+  atualizarPrecoFinalDisplay();
+}
+
+function onPctDescontoChange() {
+  if (_syncLock) return;
+  _syncLock = true;
+  const cheio = parseFloat(document.getElementById('preco_cheio').value) || 0;
+  const pct = parseFloat(document.getElementById('pct_desconto').value) || 0;
+  if (cheio > 0) {
+    const promo = cheio * (1 - pct / 100);
+    document.getElementById('preco_promo').value = promo.toFixed(2);
+  }
+  atualizarPrecoFinalDisplay();
+  _syncLock = false;
+}
+
+function onPrecoPromoChange() {
+  if (_syncLock) return;
+  _syncLock = true;
+  const cheio = parseFloat(document.getElementById('preco_cheio').value) || 0;
+  const promo = parseFloat(document.getElementById('preco_promo').value) || 0;
+  if (cheio > 0 && promo > 0) {
+    const pct = ((cheio - promo) / cheio) * 100;
+    document.getElementById('pct_desconto').value = pct.toFixed(2);
+  }
+  atualizarPrecoFinalDisplay();
+  _syncLock = false;
+}
+
+// ============================================================
+// SINCRONISMO ADS
+// ============================================================
+let _adsLock = false;
+
+function onAdsChange(campo) {
+  if (_adsLock) return;
+  _adsLock = true;
+
+  const pf = getPrecoFinal();
+  if (pf <= 0) { _adsLock = false; return; }
+
+  if (campo === 'pct') {
+    const pct = parseFloat(document.getElementById('ads_pct').value) || 0;
+    const cpc = pf * (pct / 100);
+    const roas = pct > 0 ? pf / cpc : 0;
+    document.getElementById('ads_cpc').value = cpc > 0 ? cpc.toFixed(2) : '';
+    document.getElementById('ads_roas').value = roas > 0 ? roas.toFixed(2) : '';
+  } else if (campo === 'cpc') {
+    const cpc = parseFloat(document.getElementById('ads_cpc').value) || 0;
+    const pct = cpc > 0 ? (cpc / pf) * 100 : 0;
+    const roas = cpc > 0 ? pf / cpc : 0;
+    document.getElementById('ads_pct').value = pct > 0 ? pct.toFixed(2) : '';
+    document.getElementById('ads_roas').value = roas > 0 ? roas.toFixed(2) : '';
+  } else if (campo === 'roas') {
+    const roas = parseFloat(document.getElementById('ads_roas').value) || 0;
+    const cpc = roas > 0 ? pf / roas : 0;
+    const pct = pf > 0 ? (cpc / pf) * 100 : 0;
+    document.getElementById('ads_cpc').value = cpc > 0 ? cpc.toFixed(2) : '';
+    document.getElementById('ads_pct').value = pct > 0 ? pct.toFixed(2) : '';
+  }
+
+  _adsLock = false;
+}
+
+// Zera campos de Ads quando Preço Final muda (base de cálculo deles)
+function zerarAds() {
+  document.getElementById('ads_pct').value = '';
+  document.getElementById('ads_cpc').value = '';
+  document.getElementById('ads_roas').value = '';
+  document.getElementById('ads_base_note').textContent = 'Base de cálculo: Preço Final';
+}
+
+// Fix 5: limpa margem quando qualquer campo impactante muda
+function limparMargem() {
+  const el = document.getElementById('margem');
+  if (el.value) {
+    el.value = '';
+    el.classList.remove('recalc');
+    document.getElementById('preco_promo').classList.remove('recalc');
+    document.getElementById('pct_desconto').classList.remove('recalc');
+  }
+}
+
+function onMarketplaceChange() {
+  limparMargem();
+  atualizarPrecoFinalDisplay();
+}
+
+// ============================================================
+// VALIDAÇÃO
+// ============================================================
+function validar() {
+  const obrigatorios = ['aliquota', 'custo', 'preco_cheio', 'peso'];
+  let ok = true;
+  obrigatorios.forEach(id => {
+    const el = document.getElementById(id);
+    const val = parseFloat(el.value);
+    if (!el.value || isNaN(val) || val <= 0) {
+      el.classList.add('error');
+      ok = false;
+    } else {
+      el.classList.remove('error');
+    }
+  });
+  return ok;
+}
+
+// ============================================================
+// LÓGICA INVERSA — MARGEM DESEJADA
+// recalcula precoPromo para atingir margem
+// Fórmula: precoFinal = (custo + emb + frete) / (1 - com - imp - ads - afil - margem)
+// mas frete depende do precoFinal → iteração
+// ============================================================
+function calcPrecoFinalParaMargem(custo, emb, peso, comissao, aliquota, adsPct, afilPct, margem, mkt) {
+  let pf = (custo + emb) / (1 - comissao - aliquota - adsPct - afilPct - margem);
+  for (let i = 0; i < 15; i++) {
+    const frete = calcFrete(peso, pf, mkt);
+    const novo = (custo + emb + frete) / (1 - comissao - aliquota - adsPct - afilPct - margem);
+    if (Math.abs(novo - pf) < 0.001) { pf = novo; break; }
+    pf = novo;
+  }
+  return pf;
+}
+
+// ============================================================
+// CALCULAR
+// ============================================================
+function fmt(v) { return v.toFixed(2).replace('.', ','); }
+function fmtPct(v) { return (v * 100).toFixed(1).replace('.', ',') + '%'; }
+
+function calcular() {
+  if (!validar()) return;
+
+  const aliquota = parseFloat(document.getElementById('aliquota').value) / 100;
+  const custo = parseFloat(document.getElementById('custo').value);
+  const precioCheio = parseFloat(document.getElementById('preco_cheio').value);
+  const peso = parseFloat(document.getElementById('peso').value);
+  const emb = parseFloat(document.getElementById('embalagem').value) || 0;
+
+  const mkt = document.getElementById('marketplace').value;
+  const comissao = COMISSOES[mkt];
+
+  const margemDesejada = parseFloat(document.getElementById('margem').value);
+  const temMargem = !isNaN(margemDesejada) && margemDesejada > 0;
+
+  const adsPct = (parseFloat(document.getElementById('ads_pct').value) || 0) / 100;
+  const afilPct = (parseFloat(document.getElementById('afiliados').value) || 0) / 100;
+
+  const rebate = parseFloat(document.getElementById('rebate').value) || 0;
+  const cupomTipo = document.getElementById('cupom_tipo').value;
+  const cupomVal = parseFloat(document.getElementById('cupom_valor').value) || 0;
+
+  let precoPromoUsado = parseFloat(document.getElementById('preco_promo').value) || 0;
+  const precoPromoAnterior = precoPromoUsado; // guarda para o banner
+  const pctDescontoAnterior = parseFloat(document.getElementById('pct_desconto').value) || 0;
+  let recalculado = false;
+
+  // ---- SE MARGEM DESEJADA: validar viabilidade e recalcular preço final ----
+  if (temMargem) {
+    const m = margemDesejada / 100;
+    const divisor = 1 - comissao - aliquota - adsPct - afilPct - m;
+
+    // Fix 4: margem impossível — divisor <= 0 significa que os custos % já consomem tudo
+    if (divisor <= 0.01) {
+      const margemMaxima = (1 - comissao - aliquota - adsPct - afilPct) * 100;
+      document.getElementById('margem').classList.add('error');
+      document.getElementById('resultado').style.display = 'block';
+      document.getElementById('breakdown').innerHTML = '';
+      document.getElementById('metrics').innerHTML = '';
+      document.getElementById('alerta').innerHTML = `<div class="alert-box alert-danger">
+        <div class="at">⚠ Margem impossível</div>
+        A soma de comissão (${(comissao*100).toFixed(0)}%) + imposto (${(aliquota*100).toFixed(1)}%) + ads + afiliados já ultrapassa 100%. 
+        A margem máxima possível nessa configuração é <strong>${(margemMaxima - 1).toFixed(1)}%</strong>. Reduza a margem desejada.
+      </div>`;
+      document.getElementById('resultado_tag').style.display = 'none';
+      return;
+    }
+    document.getElementById('margem').classList.remove('error');
+
+    const pfAlvo = calcPrecoFinalParaMargem(custo, emb, peso, comissao, aliquota, adsPct, afilPct, m, mkt);
+
+    // pfAlvo = precoPromo - desconto_cupom
+    let novoPrecoPromo;
+    if (cupomVal > 0) {
+      novoPrecoPromo = cupomTipo === 'pct' ? pfAlvo / (1 - cupomVal / 100) : pfAlvo + cupomVal;
+    } else {
+      novoPrecoPromo = pfAlvo;
+    }
+
+    // Fix 4: não pode ultrapassar preço cheio
+    if (novoPrecoPromo >= precioCheio) {
+      document.getElementById('margem').classList.add('error');
+      document.getElementById('resultado').style.display = 'block';
+      document.getElementById('breakdown').innerHTML = '';
+      document.getElementById('metrics').innerHTML = '';
+      document.getElementById('alerta').innerHTML = `<div class="alert-box alert-warn">
+        <div class="at">Margem inalcançável com desconto</div>
+        Para atingir ${margemDesejada}% de margem, o Preço Promocional precisaria ser R$ ${fmt(novoPrecoPromo)}, 
+        mas isso é maior que o Preço Cheio (R$ ${fmt(precioCheio)}). 
+        Reduza a margem desejada ou aumente o Preço de Venda.
+      </div>`;
+      document.getElementById('resultado_tag').style.display = 'none';
+      return;
+    }
+    document.getElementById('margem').classList.remove('error');
+
+    novoPrecoPromo = Math.max(0.01, novoPrecoPromo);
+    precoPromoUsado = novoPrecoPromo;
+
+    // atualiza campos visuais
+    _syncLock = true;
+    document.getElementById('preco_promo').value = novoPrecoPromo.toFixed(2);
+    document.getElementById('preco_promo').classList.add('recalc');
+    const pctDesc = ((precioCheio - novoPrecoPromo) / precioCheio) * 100;
+    document.getElementById('pct_desconto').value = pctDesc.toFixed(2);
+    document.getElementById('pct_desconto').classList.add('recalc');
+    _syncLock = false;
+    atualizarPrecoFinalDisplay();
+
+    recalculado = true;
+  } else {
+    document.getElementById('preco_promo').classList.remove('recalc');
+    document.getElementById('pct_desconto').classList.remove('recalc');
+  }
+
+  // ---- PREÇO FINAL ----
+  const baseCalc = precoPromoUsado > 0 ? precoPromoUsado : precioCheio;
+  let descCupom = 0;
+  if (cupomVal > 0) {
+    descCupom = cupomTipo === 'pct' ? baseCalc * (cupomVal / 100) : cupomVal;
+  }
+  const precoFinal = Math.max(0, baseCalc - descCupom);
+
+  // atualiza display preço final
+  document.getElementById('preco_final_display').value = precoFinal.toFixed(2);
+  document.getElementById('ads_base_note').textContent = `Base de cálculo: Preço Final de R$ ${fmt(precoFinal)}`;
+
+  // ---- CUSTOS ----
+  const frete = calcFrete(peso, precoFinal, mkt);
+  const comissaoR = precoFinal * comissao;
+  const impostoR = precoFinal * aliquota;
+  const adsR = precoFinal * adsPct;
+  const afilR = precoFinal * afilPct;
+  // Fix 2: repasse = precoFinal - comissao + rebate - frete
+  const repasseLiq = precoFinal - comissaoR + rebate - frete;
+
+  const totalCustos = comissaoR - rebate + frete + impostoR + emb + custo + adsR + afilR;
+  const lucro = precoFinal - totalCustos;
+  const margemReal = precoFinal > 0 ? lucro / precoFinal : 0;
+
+  // ---- BREAKDOWN ----
+  const linhas = [
+    { lbl: 'Preço Final (base)', val: precoFinal, tipo: 'neutral' },
+    { lbl: `− Comissão ${mkt === 'ml_classico' ? 'ML Clássico (14%)' : mkt === 'ml_premium' ? 'ML Premium (19%)' : mkt === 'shopee' ? 'Shopee (14%)' : 'TikTok Shop (5%)'}`, val: -comissaoR, tipo: 'red' },
+  ];
+  if (rebate > 0) linhas.push({ lbl: '+ Rebate da Campanha ML', val: rebate, tipo: 'green' });
+  if (mkt.startsWith('ml')) linhas.push({ lbl: '− Frete Estimado', val: -frete, tipo: 'red' });
+  linhas.push({ lbl: `− Imposto (${(aliquota * 100).toFixed(1).replace('.', ',')}%)`, val: -impostoR, tipo: 'red' });
+  if (emb > 0) linhas.push({ lbl: '− Embalagem', val: -emb, tipo: 'red' });
+  linhas.push({ lbl: '− Custo do Produto', val: -custo, tipo: 'red' });
+  if (adsR > 0) linhas.push({ lbl: `− Ads (${(adsPct * 100).toFixed(1).replace('.', ',')}%)`, val: -adsR, tipo: 'red' });
+  if (afilR > 0) linhas.push({ lbl: `− Afiliados (${(afilPct * 100).toFixed(1).replace('.', ',')}%)`, val: -afilR, tipo: 'red' });
+
+  let brHTML = '';
+  linhas.forEach(l => {
+    const cls = l.tipo === 'red' ? 'v-red' : l.tipo === 'green' ? 'v-green' : 'v-neutral';
+    const sinal = l.val >= 0 ? '' : '';
+    brHTML += `<div class="br-row">
+      <span class="lbl">${l.lbl}</span>
+      <span class="val ${cls}">R$ ${fmt(Math.abs(l.val))}</span>
+    </div>`;
+  });
+  brHTML += `<div class="br-row total">
+    <span class="lbl">Lucro Líquido</span>
+    <span class="val ${lucro >= 0 ? 'v-green' : 'v-red'}">R$ ${fmt(lucro)}</span>
+  </div>`;
+  document.getElementById('breakdown').innerHTML = brHTML;
+
+  // ---- METRICS ----
+  const metClass = (v) => v >= 0.25 ? 'good' : v >= 0.05 ? '' : 'bad';
+  document.getElementById('metrics').innerHTML = `
+    <div class="metric ${lucro >= 0 ? 'good' : 'bad'}">
+      <div class="m-lbl">Lucro Líquido</div>
+      <div class="m-val">R$ ${fmt(lucro)}</div>
+      <div class="m-sub">por unidade vendida</div>
+    </div>
+    <div class="metric ${metClass(margemReal)}">
+      <div class="m-lbl">Margem Real</div>
+      <div class="m-val">${fmtPct(margemReal)}</div>
+      <div class="m-sub">sobre o Preço Final</div>
+    </div>
+    <div class="metric">
+      <div class="m-lbl">Repasse ${mkt.startsWith('ml') ? 'ML' : mkt === 'shopee' ? 'Shopee' : 'TikTok'}</div>
+      <div class="m-val">R$ ${fmt(repasseLiq)}</div>
+      <div class="m-sub">após comissão${rebate > 0 ? ' + rebate' : ''}</div>
+    </div>`;
+
+  // ---- ALERTA ---- 
+  let alertHTML = '';
+  if (lucro < 0) {
+    alertHTML = `<div class="alert-box alert-danger">
+      <div class="at">⚠ Operação no prejuízo</div>
+      Cada venda gera prejuízo de R$ ${fmt(Math.abs(lucro))}. Preencha a Margem Desejada para o sistema recalcular o Preço Promocional ideal.
+    </div>`;
+  } else if (margemReal < 0.10) {
+    alertHTML = `<div class="alert-box alert-warn">
+      <div class="at">Margem muito baixa</div>
+      Margem de ${fmtPct(margemReal)} — qualquer devolução ou variação de frete pode virar prejuízo.
+    </div>`;
+  } else if (margemReal >= 0.30) {
+    alertHTML = `<div class="alert-box alert-success">
+      <div class="at">Margem saudável</div>
+      Margem de ${fmtPct(margemReal)} — você tem espaço para campanhas e absorver custos eventuais.
+    </div>`;
+  }
+  document.getElementById('alerta').innerHTML = alertHTML;
+
+  // ---- BANNER E TAG DE MARGEM RECALCULADA ----
+  const tag = document.getElementById('resultado_tag');
+  const banner = document.getElementById('banner_margem');
+  tag.style.display = recalculado ? 'inline-block' : 'none';
+
+  if (recalculado) {
+    const novoPromo = parseFloat(document.getElementById('preco_promo').value);
+    const novoPct = parseFloat(document.getElementById('pct_desconto').value);
+
+    // valores "antes" — se não havia promo anterior, era o preço cheio
+    const oldPromoLabel = precoPromoAnterior > 0 ? `R$ ${fmt(precoPromoAnterior)}` : `R$ ${fmt(precioCheio)} (sem desconto)`;
+    const oldPctLabel = precoPromoAnterior > 0 ? `${pctDescontoAnterior.toFixed(2).replace('.', ',')}%` : '0%';
+
+    document.getElementById('bm_promo_old').textContent = oldPromoLabel;
+    document.getElementById('bm_promo_new').textContent = `R$ ${fmt(novoPromo)}`;
+    document.getElementById('bm_desc_old').textContent = oldPctLabel;
+    document.getElementById('bm_desc_new').textContent = `${novoPct.toFixed(2).replace('.', ',')}%`;
+    banner.style.display = 'block';
+  } else {
+    banner.style.display = 'none';
+  }
+
+  // Fix 3: scroll suave apenas na primeira vez que o resultado aparece
+  const res = document.getElementById('resultado');
+  const eraOculto = res.style.display === 'none' || res.style.display === '';
+  res.style.display = 'block';
+  if (eraOculto) {
+    setTimeout(() => res.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  }
+}
+
+// ============================================================
+// MÁSCARA DE VALOR — formata para 2 casas decimais ao sair do campo
+// ============================================================
+const camposMonetarios = ['custo', 'preco_cheio', 'embalagem', 'preco_promo', 'cupom_valor', 'rebate', 'ads_cpc'];
+const camposPct = ['aliquota', 'pct_desconto', 'ads_pct', 'ads_roas', 'margem', 'afiliados'];
+
+function formatarValor(id, casas) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('blur', () => {
+    const v = parseFloat(el.value);
+    if (!isNaN(v) && el.value !== '') {
+      el.value = v.toFixed(casas);
+    }
+  });
+}
+
+camposMonetarios.forEach(id => formatarValor(id, 2));
+camposPct.forEach(id => formatarValor(id, 2));
+
+// atualiza preço final ao mudar cupom valor e promo
+document.getElementById('cupom_valor').addEventListener('input', atualizarPrecoFinalDisplay);
+document.getElementById('preco_promo').addEventListener('input', atualizarPrecoFinalDisplay);
+</script>
+</body>
+</html>
