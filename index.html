@@ -2294,24 +2294,21 @@ function setMoeda(id, valor) {
 function aplicarMascaraMonetaria(el) {
   el._mascaraAtiva = false; // flag para evitar loop
 
+  // capture:true garante execução ANTES do oninput do HTML
   el.addEventListener('input', function(e) {
-    if (this._mascaraAtiva) return; // sistema escreveu, ignora
+    if (this._mascaraAtiva) return;
     
-    // pega só os dígitos
     let digits = this.value.replace(/\D/g, '');
     if (digits === '') { 
       this.dataset.rawValue = '';
       return; 
     }
 
-    // limita a 10 dígitos (R$ 99.999.999,99)
     if (digits.length > 10) digits = digits.slice(-10);
 
-    // converte para centavos → reais
     const num = parseInt(digits, 10);
     const reais = num / 100;
 
-    // formata pt-BR
     this._mascaraAtiva = true;
     this.value = reais.toLocaleString('pt-BR', {
       minimumFractionDigits: 2,
@@ -2319,7 +2316,7 @@ function aplicarMascaraMonetaria(el) {
     });
     this.dataset.rawValue = reais.toFixed(2);
     this._mascaraAtiva = false;
-  });
+  }, true); // capture phase: executa antes dos handlers inline
 
   // ao fazer blur, garante formatação
   el.addEventListener('blur', function() {
