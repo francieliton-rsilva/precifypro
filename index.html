@@ -1192,7 +1192,7 @@ select {
         <div class="field">
           <label>Alíquota de Imposto <span class="req">*</span></label>
           <div class="input-wrap">
-            <input type="number" id="aliquota" placeholder="0" min="0" max="100" step="any" class="has-suf">
+            <input type="number" id="aliquota" oninput="salvarConfigs()" placeholder="0" min="0" max="100" step="any" class="has-suf">
             <span class="suf">%</span>
           </div>
           <div class="hint">Será usada como padrão em todos os cálculos</div>
@@ -1214,7 +1214,7 @@ select {
         <div class="field">
           <label>Comissão</label>
           <div class="input-wrap">
-            <input type="number" id="cfg_tiktok_com" value="12" min="0" max="100" step="any" class="has-suf">
+            <input type="number" id="cfg_tiktok_com" oninput="salvarConfigs()" value="12" min="0" max="100" step="any" class="has-suf">
             <span class="suf">%</span>
           </div>
         </div>
@@ -1222,7 +1222,7 @@ select {
           <label>Tarifa Fixa</label>
           <div class="input-wrap">
             <span class="pre">R$</span>
-            <input type="text" inputmode="numeric" id="cfg_tiktok_fixa" value="4.00" min="0" step="any" class="has-pre">
+            <input type="text" inputmode="numeric" id="cfg_tiktok_fixa" oninput="salvarConfigs()" value="4.00" min="0" step="any" class="has-pre">
           </div>
         </div>
       </div>
@@ -1260,7 +1260,7 @@ select {
           <div class="field">
             <label>Shopee Antecipa <span class="badge badge-gray">Opcional</span></label>
             <div class="input-wrap">
-              <input type="number" id="cfg_shopee_antecipa" placeholder="—" min="0" max="100" step="any" class="has-suf">
+              <input type="number" id="cfg_shopee_antecipa" oninput="salvarConfigs()" placeholder="—" min="0" max="100" step="any" class="has-suf">
               <span class="suf">%</span>
             </div>
             <div class="hint">Taxa sobre o valor líquido a receber — deixe vazio para ignorar</div>
@@ -1293,7 +1293,7 @@ select {
         <div class="field">
           <label>Comissão</label>
           <div class="input-wrap">
-            <input type="number" id="cfg_shein_com" value="20" min="0" max="100" step="any" class="has-suf">
+            <input type="number" id="cfg_shein_com" oninput="salvarConfigs()" value="20" min="0" max="100" step="any" class="has-suf">
             <span class="suf">%</span>
           </div>
         </div>
@@ -1301,7 +1301,7 @@ select {
           <label>Tarifa Fixa</label>
           <div class="input-wrap">
             <span class="pre">R$</span>
-            <input type="text" inputmode="numeric" id="cfg_shein_fixa" value="6.00" min="0" step="any" class="has-pre">
+            <input type="text" inputmode="numeric" id="cfg_shein_fixa" oninput="salvarConfigs()" value="6.00" min="0" step="any" class="has-pre">
           </div>
         </div>
       </div>
@@ -1317,14 +1317,14 @@ select {
         <div class="field">
           <label>ML Clássico — Comissão</label>
           <div class="input-wrap">
-            <input type="number" id="cfg_ml_classico" value="14" min="0" max="100" step="any" class="has-suf">
+            <input type="number" id="cfg_ml_classico" oninput="salvarConfigs()" value="14" min="0" max="100" step="any" class="has-suf">
             <span class="suf">%</span>
           </div>
         </div>
         <div class="field">
           <label>ML Premium — Comissão</label>
           <div class="input-wrap">
-            <input type="number" id="cfg_ml_premium" value="19" min="0" max="100" step="any" class="has-suf">
+            <input type="number" id="cfg_ml_premium" oninput="salvarConfigs()" value="19" min="0" max="100" step="any" class="has-suf">
             <span class="suf">%</span>
           </div>
         </div>
@@ -1877,6 +1877,7 @@ function getCfgDevolucaoFacil() {
 function setDevolucaoFacil(ativo) {
   localStorage.setItem('precifypro-dev-facil', ativo ? 'on' : 'off');
   atualizarBtnDevolucao();
+  salvarConfigs(); // salva no banco ao alterar
 }
 
 function atualizarBtnDevolucao() {
@@ -1912,6 +1913,73 @@ function getAliquota() {
   const v = parseFloat(document.getElementById('aliquota').value);
   return isNaN(v) ? 0 : v / 100;
 }
+
+// ============================================================
+// CONFIGS DO USUÁRIO — Supabase
+// ============================================================
+let _salvarTimeout = null;
+
+async function carregarConfigs() {
+  try {
+    const { data: { session } } = await supa.auth.getSession();
+    if (!session) return;
+
+    const { data, error } = await supa
+      .from('configuracoes_usuario')
+      .select('*')
+      .eq('usuario_id', session.user.id)
+      .single();
+
+    if (error || !data) return;
+
+    const set = (id, val) => {
+      const el = document.getElementById(id);
+      if (el && val !== null && val !== undefined) el.value = val;
+    };
+
+    set('aliquota',            data.aliquota);
+    set('cfg_ml_classico',     data.ml_classico_com);
+    set('cfg_ml_premium',      data.ml_premium_com);
+    set('cfg_tiktok_com',      data.tiktok_com);
+    set('cfg_tiktok_fixa',     data.tiktok_fixa);
+    set('cfg_shopee_antecipa', data.shopee_antecipa > 0 ? data.shopee_antecipa : '');
+    set('cfg_shein_com',       data.shein_com);
+    set('cfg_shein_fixa',      data.shein_fixa);
+
+    // Devolução Fácil
+    localStorage.setItem('precifypro-dev-facil', data.shopee_dev_facil ? 'on' : 'off');
+    atualizarBtnDevolucao();
+
+  } catch(e) {}
+}
+
+async function salvarConfigs() {
+  // Debounce — aguarda 800ms após última alteração
+  clearTimeout(_salvarTimeout);
+  _salvarTimeout = setTimeout(async () => {
+    try {
+      const { data: { session } } = await supa.auth.getSession();
+      if (!session) return;
+
+      const pct = (id, def) => { const v = parseFloat(document.getElementById(id)?.value); return isNaN(v) ? def : v; };
+
+      await supa.from('configuracoes_usuario').upsert({
+        usuario_id:       session.user.id,
+        aliquota:         pct('aliquota', 0),
+        ml_classico_com:  pct('cfg_ml_classico', 14),
+        ml_premium_com:   pct('cfg_ml_premium', 19),
+        tiktok_com:       pct('cfg_tiktok_com', 12),
+        tiktok_fixa:      pct('cfg_tiktok_fixa', 4.00),
+        shopee_antecipa:  pct('cfg_shopee_antecipa', 0),
+        shopee_dev_facil: getCfgDevolucaoFacil(),
+        shein_com:        pct('cfg_shein_com', 20),
+        shein_fixa:       pct('cfg_shein_fixa', 6.00),
+      }, { onConflict: 'usuario_id' });
+
+    } catch(e) {}
+  }, 800);
+}
+
 // frete[peso_index][preco_index]
 // peso: 0=até300g, 1=300-500g, 2=500-1000g, 3=1000-1500g, 4=1500-2000g
 // preco: 0=0-18,99 | 1=19-48,99 | 2=49-78,99 | 3=79-99,99 | 4=100-119,99 | 5=120-149,99 | 6=150-199,99 | 7=200+
@@ -2595,6 +2663,9 @@ registrarAcesso();
   document.getElementById('user-avatar').textContent = inicial;
   document.getElementById('user-nome').textContent = nome.split(' ')[0];
   document.getElementById('user-email-dd').textContent = user.email;
+
+  // Carrega configurações do usuário do banco
+  await carregarConfigs();
 })();
 
 function toggleUserMenu() {
