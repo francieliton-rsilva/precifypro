@@ -182,6 +182,40 @@ header {
   z-index: 100;
 }
 
+/* Menu usuário */
+.user-menu { position: relative; }
+.user-btn {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px; padding: 5px 12px 5px 8px;
+  cursor: pointer; color: var(--header-text); font-family: 'Sora', sans-serif;
+  font-size: 12px; font-weight: 500; transition: background 0.15s;
+}
+.user-btn:hover { background: rgba(255,255,255,0.1); }
+.user-avatar {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--accent); display: flex; align-items: center;
+  justify-content: center; font-size: 11px; font-weight: 700; color: #fff;
+  flex-shrink: 0;
+}
+.user-dropdown {
+  position: absolute; top: calc(100% + 8px); right: 0;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 6px; min-width: 160px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3); display: none; z-index: 200;
+}
+.user-dropdown.open { display: block; }
+.user-dropdown-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 12px; border-radius: 7px; font-size: 13px;
+  color: var(--text); cursor: pointer; transition: background 0.15s;
+  border: none; background: none; width: 100%; text-align: left;
+  font-family: 'Sora', sans-serif;
+}
+.user-dropdown-item:hover { background: var(--surface2); }
+.user-dropdown-item.danger { color: var(--red); }
+.user-dropdown-divider { border: none; border-top: 1px solid var(--border); margin: 4px 0; }
+
 .logo {
   display: flex;
   align-items: center;
@@ -739,7 +773,19 @@ select {
     <div class="logo-mark">P$</div>
     <div class="logo-name">Precify<span>Pro</span></div>
   </div>
-  <div class="header-right">v1.0 · MARKETPLACES BR</div>
+  <div class="user-menu">
+    <button class="user-btn" onclick="toggleUserMenu()" id="user-btn">
+      <div class="user-avatar" id="user-avatar">?</div>
+      <span id="user-nome">...</span>
+    </button>
+    <div class="user-dropdown" id="user-dropdown">
+      <div style="padding:8px 12px 6px;font-size:11px;color:var(--muted);" id="user-email-dd">—</div>
+      <div class="user-dropdown-divider"></div>
+      <button class="user-dropdown-item danger" onclick="fazerLogout()">
+        🚪 Sair
+      </button>
+    </div>
+  </div>
 </header>
 
 <div class="page">
@@ -2524,6 +2570,45 @@ async function getTotalCalculos() {
 
 // Registra acesso ao carregar
 registrarAcesso();
+
+// ============================================================
+// AUTENTICAÇÃO — proteção da página e menu de usuário
+// ============================================================
+(async function initAuth() {
+  const { data: { session } } = await supa.auth.getSession();
+
+  if (!session) {
+    // Não logado → redireciona para login
+    window.location.href = 'login.html';
+    return;
+  }
+
+  // Preenche menu de usuário
+  const user = session.user;
+  const nome = user.user_metadata?.nome || user.email.split('@')[0];
+  const inicial = nome.charAt(0).toUpperCase();
+
+  document.getElementById('user-avatar').textContent = inicial;
+  document.getElementById('user-nome').textContent = nome.split(' ')[0];
+  document.getElementById('user-email-dd').textContent = user.email;
+})();
+
+function toggleUserMenu() {
+  document.getElementById('user-dropdown').classList.toggle('open');
+}
+
+// Fecha dropdown ao clicar fora
+document.addEventListener('click', function(e) {
+  const menu = document.getElementById('user-menu');
+  if (!e.target.closest('.user-menu')) {
+    document.getElementById('user-dropdown').classList.remove('open');
+  }
+});
+
+async function fazerLogout() {
+  await supa.auth.signOut();
+  window.location.href = 'login.html';
+}
 </script>
 </body>
 </html>
