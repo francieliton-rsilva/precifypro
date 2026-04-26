@@ -10,23 +10,24 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #0d0d12;
-  --surface: #111118;
-  --surface2: #18181f;
-  --border: rgba(255,255,255,0.08);
-  --border2: rgba(255,255,255,0.14);
-  --text: #f0f0f5;
-  --muted: rgba(255,255,255,0.4);
-  --accent: #7c6dfa;
-  --accent2: #a78bfa;
-  --green: #34d399;
-  --green-bg: rgba(52,211,153,0.08);
-  --green-border: rgba(52,211,153,0.2);
-  --red: #f87171;
-  --red-bg: rgba(248,113,113,0.08);
-  --red-border: rgba(248,113,113,0.2);
-  --amber: #fbbf24;
-  --amber-bg: rgba(251,191,36,0.08);
+  --bg: #f0f4ff;
+  --surface: #ffffff;
+  --surface2: #e8eeff;
+  --border: rgba(30,58,138,0.1);
+  --border2: rgba(30,58,138,0.18);
+  --text: #1e3a8a;
+  --muted: #64748b;
+  --accent: #1e3a8a;
+  --accent2: #1d4ed8;
+  --green: #1d4ed8;
+  --green-bg: #eff6ff;
+  --green-border: #bfdbfe;
+  --red: #c0392b;
+  --red-bg: #fdf0ee;
+  --red-border: #f5c4bc;
+  --amber: #7a5000;
+  --amber-bg: #fdf5e4;
+  --amber-border: #f0d090;
 }
 
 body {
@@ -47,8 +48,8 @@ body::before {
   position: fixed;
   inset: 0;
   background-image:
-    linear-gradient(rgba(124,109,250,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(124,109,250,0.04) 1px, transparent 1px);
+    linear-gradient(rgba(30,58,138,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,58,138,0.05) 1px, transparent 1px);
   background-size: 40px 40px;
   pointer-events: none;
   z-index: 0;
@@ -73,7 +74,7 @@ body::before {
 .logo-mark {
   width: 36px;
   height: 36px;
-  background: var(--accent);
+  background: #1e3a8a;
   border-radius: 9px;
   display: flex;
   align-items: center;
@@ -100,6 +101,7 @@ body::before {
   border-radius: 14px;
   padding: 28px 28px 24px;
   margin-bottom: 16px;
+  box-shadow: 0 4px 24px rgba(30,58,138,0.08);
 }
 
 /* Toggle */
@@ -221,6 +223,7 @@ body::before {
   padding: 0 12px 0 38px;
   outline: none;
   transition: border-color 0.15s;
+  box-shadow: inset 0 1px 3px rgba(30,58,138,0.05);
 }
 
 .input-wrap input::placeholder { color: var(--muted); opacity: 0.6; }
@@ -287,7 +290,7 @@ body::before {
 }
 
 .link-center a {
-  color: var(--accent2);
+  color: #1d4ed8;
   text-decoration: none;
   font-weight: 500;
   cursor: pointer;
@@ -339,11 +342,12 @@ body::before {
 /* Plano Pro — Em Breve */
 .pro-card {
   background: var(--surface);
-  border: 1px solid rgba(124,109,250,0.2);
+  border: 1px solid rgba(30,58,138,0.15);
   border-radius: 14px;
   padding: 20px 24px;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 24px rgba(30,58,138,0.08);
 }
 
 .pro-card::before {
@@ -351,7 +355,7 @@ body::before {
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  background: linear-gradient(90deg, #1e3a8a, #1d4ed8);
 }
 
 .pro-header {
@@ -364,7 +368,7 @@ body::before {
 .pro-title {
   font-size: 14px;
   font-weight: 700;
-  color: var(--accent2);
+  color: #1d4ed8;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -377,7 +381,7 @@ body::before {
 }
 
 .pro-price strong {
-  color: var(--accent2);
+  color: #1d4ed8;
   font-size: 18px;
   font-weight: 700;
 }
@@ -398,7 +402,7 @@ body::before {
 
 .pro-features li::before {
   content: '✓';
-  color: var(--accent2);
+  color: #1d4ed8;
   font-weight: 700;
   font-size: 11px;
   flex-shrink: 0;
@@ -407,10 +411,10 @@ body::before {
 .btn-em-breve {
   width: 100%;
   height: 42px;
-  background: rgba(124,109,250,0.1);
-  border: 1px solid rgba(124,109,250,0.25);
+  background: rgba(30,58,138,0.06);
+  border: 1px solid rgba(30,58,138,0.15);
   border-radius: 8px;
-  color: var(--accent2);
+  color: #1d4ed8;
   font-family: 'Sora', sans-serif;
   font-size: 13px;
   font-weight: 600;
