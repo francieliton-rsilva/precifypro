@@ -1154,7 +1154,7 @@ select {
         <label>Tema do Sistema</label>
       </div>
       <div class="theme-grid">
-        <div class="theme-option tp-dark selected" id="theme-dark" onclick="setTema('dark')">
+        <div class="theme-option tp-dark" id="theme-dark" onclick="setTema('dark')">
           <div class="theme-preview-header" style="height:20px;"></div>
           <div class="theme-preview-card" style="height:18px;margin-top:6px;"></div>
           <div class="theme-preview-input"></div>
@@ -1168,7 +1168,7 @@ select {
           <div class="theme-preview-btn"></div>
           <div class="theme-preview-name">Light</div>
         </div>
-        <div class="theme-option tp-blue" id="theme-blue" onclick="setTema('blue')">
+        <div class="theme-option tp-blue selected" id="theme-blue" onclick="setTema('blue')">
           <div class="theme-preview-header" style="height:20px;"></div>
           <div class="theme-preview-card" style="height:18px;margin-top:6px;"></div>
           <div class="theme-preview-input"></div>
@@ -1377,7 +1377,7 @@ function setTema(tema) {
 
 // Inicializa tema salvo
 (function() {
-  const saved = localStorage.getItem('precifypro-tema') || 'dark';
+  const saved = localStorage.getItem('precifypro-tema') || 'blue';
   document.documentElement.setAttribute('data-theme', saved);
   // marca o seletor após DOM carregar
   document.addEventListener('DOMContentLoaded', () => {
