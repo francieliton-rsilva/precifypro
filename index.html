@@ -2541,8 +2541,10 @@ const supa = supabase.createClient(SUPA_URL, SUPA_KEY);
 // Registra acesso (sessão anônima)
 async function registrarAcesso() {
   try {
+    const { data: { session } } = await supa.auth.getSession();
+    const uid = session?.user?.id || null;
     await supa.from('sessoes').insert({
-      usuario_id: null,
+      usuario_id: uid,
       user_agent: navigator.userAgent.slice(0, 200),
     });
   } catch(e) {}
@@ -2551,8 +2553,10 @@ async function registrarAcesso() {
 // Registra cálculo — chamado após cada "Calcular Resultado"
 async function registrarCalculo(marketplace) {
   try {
+    const { data: { session } } = await supa.auth.getSession();
+    const uid = session?.user?.id || null;
     await supa.from('calculos').insert({
-      usuario_id: null,
+      usuario_id: uid,
       marketplace: marketplace,
     });
   } catch(e) {}
