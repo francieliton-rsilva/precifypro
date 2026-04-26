@@ -248,6 +248,23 @@ header {
 
 .logo-name span { color: var(--accent2); }
 
+.version-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 2px 8px;
+  letter-spacing: 0.04em;
+  margin-left: 4px;
+}
+
+[data-theme="light"] .version-badge,
+[data-theme="blue"] .version-badge { color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.15); }
+[data-theme="green"] .version-badge { color: rgba(52,211,153,0.4); background: rgba(52,211,153,0.06); border-color: rgba(52,211,153,0.15); }
+
 .header-right {
   font-family: 'DM Mono', monospace;
   font-size: 11px;
@@ -772,6 +789,7 @@ select {
   <div class="logo">
     <div class="logo-mark">P$</div>
     <div class="logo-name">Precify<span>Pro</span></div>
+    <div class="version-badge">v1.01</div>
   </div>
   <div class="user-menu">
     <button class="user-btn" onclick="toggleUserMenu()" id="user-btn">
