@@ -1192,7 +1192,7 @@ select {
         <div class="field">
           <label>Alíquota de Imposto <span class="req">*</span></label>
           <div class="input-wrap">
-            <input type="number" id="aliquota" oninput="salvarConfigs()" placeholder="0" min="0" max="100" step="any" class="has-suf">
+            <input type="number" id="aliquota" oninput="salvarConfigs()" onchange="salvarConfigs()" onblur="salvarConfigs()" placeholder="0" min="0" max="100" step="any" class="has-suf">
             <span class="suf">%</span>
           </div>
           <div class="hint">Será usada como padrão em todos os cálculos</div>
@@ -1214,7 +1214,7 @@ select {
         <div class="field">
           <label>Comissão</label>
           <div class="input-wrap">
-            <input type="number" id="cfg_tiktok_com" oninput="salvarConfigs()" value="12" min="0" max="100" step="any" class="has-suf">
+            <input type="number" id="cfg_tiktok_com" oninput="salvarConfigs()" onchange="salvarConfigs()" onblur="salvarConfigs()" value="12" min="0" max="100" step="any" class="has-suf">
             <span class="suf">%</span>
           </div>
         </div>
@@ -1222,7 +1222,7 @@ select {
           <label>Tarifa Fixa</label>
           <div class="input-wrap">
             <span class="pre">R$</span>
-            <input type="text" inputmode="numeric" id="cfg_tiktok_fixa" oninput="salvarConfigs()" value="4.00" min="0" step="any" class="has-pre">
+            <input type="text" inputmode="numeric" id="cfg_tiktok_fixa" oninput="salvarConfigs()" onchange="salvarConfigs()" onblur="salvarConfigs()" value="4.00" min="0" step="any" class="has-pre">
           </div>
         </div>
       </div>
@@ -1260,7 +1260,7 @@ select {
           <div class="field">
             <label>Shopee Antecipa <span class="badge badge-gray">Opcional</span></label>
             <div class="input-wrap">
-              <input type="number" id="cfg_shopee_antecipa" oninput="salvarConfigs()" placeholder="—" min="0" max="100" step="any" class="has-suf">
+              <input type="number" id="cfg_shopee_antecipa" oninput="salvarConfigs()" onchange="salvarConfigs()" onblur="salvarConfigs()" placeholder="—" min="0" max="100" step="any" class="has-suf">
               <span class="suf">%</span>
             </div>
             <div class="hint">Taxa sobre o valor líquido a receber — deixe vazio para ignorar</div>
@@ -1293,7 +1293,7 @@ select {
         <div class="field">
           <label>Comissão</label>
           <div class="input-wrap">
-            <input type="number" id="cfg_shein_com" oninput="salvarConfigs()" value="20" min="0" max="100" step="any" class="has-suf">
+            <input type="number" id="cfg_shein_com" oninput="salvarConfigs()" onchange="salvarConfigs()" onblur="salvarConfigs()" value="20" min="0" max="100" step="any" class="has-suf">
             <span class="suf">%</span>
           </div>
         </div>
@@ -1301,7 +1301,7 @@ select {
           <label>Tarifa Fixa</label>
           <div class="input-wrap">
             <span class="pre">R$</span>
-            <input type="text" inputmode="numeric" id="cfg_shein_fixa" oninput="salvarConfigs()" value="6.00" min="0" step="any" class="has-pre">
+            <input type="text" inputmode="numeric" id="cfg_shein_fixa" oninput="salvarConfigs()" onchange="salvarConfigs()" onblur="salvarConfigs()" value="6.00" min="0" step="any" class="has-pre">
           </div>
         </div>
       </div>
@@ -1317,14 +1317,14 @@ select {
         <div class="field">
           <label>ML Clássico — Comissão</label>
           <div class="input-wrap">
-            <input type="number" id="cfg_ml_classico" oninput="salvarConfigs()" value="14" min="0" max="100" step="any" class="has-suf">
+            <input type="number" id="cfg_ml_classico" oninput="salvarConfigs()" onchange="salvarConfigs()" onblur="salvarConfigs()" value="14" min="0" max="100" step="any" class="has-suf">
             <span class="suf">%</span>
           </div>
         </div>
         <div class="field">
           <label>ML Premium — Comissão</label>
           <div class="input-wrap">
-            <input type="number" id="cfg_ml_premium" oninput="salvarConfigs()" value="19" min="0" max="100" step="any" class="has-suf">
+            <input type="number" id="cfg_ml_premium" oninput="salvarConfigs()" onchange="salvarConfigs()" onblur="salvarConfigs()" value="19" min="0" max="100" step="any" class="has-suf">
             <span class="suf">%</span>
           </div>
         </div>
@@ -1751,8 +1751,12 @@ function calcularComparativo() {
 }
 // ============================================================
 function switchTab(id) {
-  // captura aba atual antes de trocar
+  // Se estava em Configurações, salva imediatamente antes de sair
   const abaAtual = document.querySelector('.tab-content.active')?.id?.replace('tab-', '');
+  if (abaAtual === 'configuracoes') {
+    clearTimeout(_salvarTimeout);
+    salvarConfigs();
+  }
 
   document.querySelectorAll('.tab-btn').forEach(b => {
     b.classList.toggle('active', b.getAttribute('onclick').includes(id));
@@ -1954,7 +1958,7 @@ async function carregarConfigs() {
 }
 
 async function salvarConfigs() {
-  // Debounce — aguarda 800ms após última alteração
+  // Debounce — aguarda 500ms após última alteração
   clearTimeout(_salvarTimeout);
   _salvarTimeout = setTimeout(async () => {
     try {
@@ -1963,7 +1967,7 @@ async function salvarConfigs() {
 
       const pct = (id, def) => { const v = parseFloat(document.getElementById(id)?.value); return isNaN(v) ? def : v; };
 
-      await supa.from('configuracoes_usuario').upsert({
+      const { error } = await supa.from('configuracoes_usuario').upsert({
         usuario_id:       session.user.id,
         aliquota:         pct('aliquota', 0),
         ml_classico_com:  pct('cfg_ml_classico', 14),
@@ -1976,8 +1980,10 @@ async function salvarConfigs() {
         shein_fixa:       pct('cfg_shein_fixa', 6.00),
       }, { onConflict: 'usuario_id' });
 
-    } catch(e) {}
-  }, 800);
+      if (error) console.error('Erro ao salvar configs:', error);
+
+    } catch(e) { console.error('salvarConfigs error:', e); }
+  }, 500);
 }
 
 // frete[peso_index][preco_index]
