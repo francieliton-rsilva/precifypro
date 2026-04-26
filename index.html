@@ -1510,6 +1510,9 @@ function calcularBasico() {
   const eraOculto = res.style.display === 'none';
   res.style.display = 'block';
   if (eraOculto) setTimeout(() => res.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+
+  // Registra cálculo no Supabase
+  if (typeof registrarCalculo === 'function') registrarCalculo(mkt);
 }
 
 // ============================================================
@@ -1696,6 +1699,9 @@ function calcularComparativo() {
 
   document.getElementById('cmp-resultado').style.display = 'block';
   document.getElementById('cmp-resultado').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Registra cálculo no Supabase (comparativo = múltiplos canais)
+  if (typeof registrarCalculo === 'function') registrarCalculo('comparativo');
 }
 // ============================================================
 function switchTab(id) {
@@ -2346,6 +2352,9 @@ function calcular() {
   if (eraOculto) {
     setTimeout(() => res.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
   }
+
+  // Registra cálculo no Supabase
+  if (typeof registrarCalculo === 'function') registrarCalculo(mkt);
 }
 
 // ============================================================
@@ -2472,6 +2481,49 @@ document.addEventListener('DOMContentLoaded', function() {
   atualizarBtnDevolucao();
 });
 
+</script>
+
+<!-- ============================================================
+     SUPABASE — Integração de métricas
+     ============================================================ -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPA_URL = 'https://wtcqhbutjxliqsqtjjjv.supabase.co';
+const SUPA_KEY = 'sb_publishable_tw1HNtoMbKo1c8Lu5OUt8A_MQ0-duDf';
+const supa = supabase.createClient(SUPA_URL, SUPA_KEY);
+
+// Registra acesso (sessão anônima)
+async function registrarAcesso() {
+  try {
+    await supa.from('sessoes').insert({
+      usuario_id: null,
+      user_agent: navigator.userAgent.slice(0, 200),
+    });
+  } catch(e) {}
+}
+
+// Registra cálculo — chamado após cada "Calcular Resultado"
+async function registrarCalculo(marketplace) {
+  try {
+    await supa.from('calculos').insert({
+      usuario_id: null,
+      marketplace: marketplace,
+    });
+  } catch(e) {}
+}
+
+// Contador total de cálculos (para landing page)
+async function getTotalCalculos() {
+  try {
+    const { count } = await supa
+      .from('calculos')
+      .select('*', { count: 'exact', head: true });
+    return count || 0;
+  } catch(e) { return 0; }
+}
+
+// Registra acesso ao carregar
+registrarAcesso();
 </script>
 </body>
 </html>
