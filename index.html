@@ -944,7 +944,7 @@ select {
   <div class="logo">
     <div class="logo-mark">P$</div>
     <div class="logo-name">Precify<span>Pro</span></div>
-    <div class="version-badge">v1.06</div>
+    <div class="version-badge">v1.07</div>
   </div>
   <div class="user-menu">
     <button class="user-btn" onclick="toggleUserMenu()" id="user-btn">
@@ -1327,10 +1327,11 @@ select {
     <!-- LISTA DE PRODUTOS -->
     <div id="produtos-lista">
       <div class="card">
-        <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;">
-          <span>Meus Produtos <span id="prod-count" style="font-weight:400;color:var(--muted);"></span></span>
-          <button id="btn-novo-produto" onclick="abrirModalProduto()" style="height:36px;width:fit-content;min-width:0;padding:0 18px;font-size:13px;font-weight:700;font-family:'Sora',sans-serif;background:var(--btn-bg);color:var(--btn-text);border:none;border-radius:var(--radius-sm);cursor:pointer;white-space:nowrap;flex-shrink:0;display:inline-block;">+ Novo Produto</button>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <div class="section-title" style="margin-bottom:0;border-bottom:none;padding-bottom:0;">Meus Produtos <span id="prod-count" style="font-weight:400;color:var(--muted);"></span></div>
+          <button id="btn-novo-produto" onclick="abrirModalProduto()" style="height:32px;padding:0 14px;font-size:12px;font-weight:700;font-family:'Sora',sans-serif;background:var(--btn-bg);color:var(--btn-text);border:none;border-radius:var(--radius-sm);cursor:pointer;white-space:nowrap;line-height:32px;">+ Novo Produto</button>
         </div>
+        <div style="border-bottom:1px solid var(--border);margin-bottom:12px;"></div>
         <div id="prod-lock-banner" class="lock-banner" style="display:none;margin-bottom:16px;">
           <div class="lock-banner-icon">🔒</div>
           <div class="lock-banner-text">
