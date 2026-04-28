@@ -1797,37 +1797,71 @@ function renderProdutos() {
   }).join('');
 }
 
-// Calcular com produto — preenche campos e vai para aba Básico
+// Calcular com produto — preenche campos em TODAS as abas e vai para Básico
 function calcularComProduto(id) {
   const p = _produtos.find(x => x.id === id);
   if (!p) return;
-  // Preenche campos do Básico
-  const setV = (elId, v) => {
+
+  // Preço base: usa promo se existir, senão cheio
+  const preco = p.preco_promocional || p.preco_cheio || 0;
+  const custo = p.custo || 0;
+  const peso  = p.peso  || 0;
+  const emb   = p.embalagem || 0;
+
+  // Helper para setar campo monetário com máscara
+  const setM = (elId, v) => {
+    if (!v || v <= 0) return;
     const el = document.getElementById(elId);
-    if (el && v !== null && v !== undefined) {
-      el.value = v;
-      if (el.dataset !== undefined) el.dataset.rawValue = String(v);
-    }
+    if (!el) return;
+    el._mascaraAtiva = true;
+    el.value = v.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
+    el.dataset.rawValue = v.toFixed(2);
+    el._mascaraAtiva = false;
   };
-  setV('bas_custo', p.custo ? p.custo.toFixed(2) : '');
-  setV('bas_peso', p.peso || '');
-  setV('bas_embalagem', p.embalagem ? p.embalagem.toFixed(2) : '');
-  // Usa preço promo se existir, senão preço cheio
-  const preco = p.preco_promocional || p.preco_cheio;
-  setV('bas_preco', preco ? preco.toFixed(2) : '');
-  // Formata os campos monetários
-  ['bas_custo','bas_preco','bas_embalagem'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el && el.value) {
-      const v = parseFloat(el.value);
-      if (!isNaN(v)) {
-        el._mascaraAtiva = true;
-        el.value = v.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
-        el.dataset.rawValue = v.toFixed(2);
-        el._mascaraAtiva = false;
-      }
-    }
-  });
+
+  // Helper para setar campo numérico simples
+  const setN = (elId, v) => {
+    if (!v || v <= 0) return;
+    const el = document.getElementById(elId);
+    if (el) el.value = v;
+  };
+
+  // ---- ABA BÁSICO ----
+  setM('bas_custo',     custo);
+  setN('bas_peso',      peso);
+  setM('bas_embalagem', emb);
+  setM('bas_preco',     preco);
+  document.getElementById('bas_margem').value = '';
+
+  // ---- ABA AVANÇADO ----
+  setM('custo',      custo);
+  setN('peso',       peso);
+  setM('embalagem',  emb);
+  setM('preco_cheio', p.preco_cheio || 0);
+  // Se tiver preço promo, preenche o campo promocional e calcula % desconto
+  if (p.preco_promocional && p.preco_cheio && p.preco_promocional < p.preco_cheio) {
+    setM('preco_promo', p.preco_promocional);
+    const pct = ((p.preco_cheio - p.preco_promocional) / p.preco_cheio) * 100;
+    document.getElementById('pct_desconto').value = pct.toFixed(2);
+  } else {
+    document.getElementById('preco_promo').value = '';
+    document.getElementById('preco_promo').dataset.rawValue = '';
+    document.getElementById('pct_desconto').value = '';
+  }
+  atualizarPrecoFinalDisplay();
+
+  // ---- ABA COMPARAR CANAIS ----
+  setM('cmp_custo', custo);
+  setN('cmp_peso',  peso);
+  setM('cmp_preco', preco);
+  document.getElementById('cmp_margem').value = '';
+
+  // Limpa resultados anteriores
+  bas_limparResultado();
+  document.getElementById('resultado').style.display = 'none';
+  document.getElementById('cmp-resultado').style.display = 'none';
+
+  // Vai para aba Básico
   switchTab('basico');
 }
 
