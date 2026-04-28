@@ -944,7 +944,7 @@ select {
   <div class="logo">
     <div class="logo-mark">P$</div>
     <div class="logo-name">Precify<span>Pro</span></div>
-    <div class="version-badge">v1.01</div>
+    <div class="version-badge">v1.02</div>
   </div>
   <div class="user-menu">
     <button class="user-btn" onclick="toggleUserMenu()" id="user-btn">
@@ -1729,6 +1729,32 @@ async function carregarProdutos() {
   try {
     const { data: { session } } = await supa.auth.getSession();
     if (!session) return;
+
+    // Verificar plano do usuário
+    const { data: userRow } = await supa
+      .from('usuarios')
+      .select('plano')
+      .eq('id', session.user.id)
+      .single();
+
+    const isPro = userRow?.plano === 'pro';
+
+    // Controle visual Free vs Pro
+    const lockBanner    = document.getElementById('prod-lock-banner');
+    const btnNovo       = document.getElementById('btn-novo-produto');
+    const tabelaWrap    = document.getElementById('prod-tabela-wrap');
+
+    if (isPro) {
+      lockBanner.style.display  = 'none';
+      btnNovo.style.display     = 'inline-flex';
+      tabelaWrap.style.display  = 'block';
+    } else {
+      lockBanner.style.display  = 'flex';
+      btnNovo.style.display     = 'none';
+      tabelaWrap.style.display  = 'none';
+      return; // não carrega produtos para free
+    }
+
     const { data } = await supa.from('produtos')
       .select('*')
       .eq('usuario_id', session.user.id)
