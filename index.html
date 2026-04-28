@@ -944,7 +944,7 @@ select {
   <div class="logo">
     <div class="logo-mark">P$</div>
     <div class="logo-name">Precify<span>Pro</span></div>
-    <div class="version-badge">v1.08</div>
+    <div class="version-badge">v1.09</div>
   </div>
   <div class="user-menu">
     <button class="user-btn" onclick="toggleUserMenu()" id="user-btn">
@@ -1340,7 +1340,7 @@ select {
           </div>
           <button class="btn-calc" style="width:auto;height:34px;padding:0 16px;font-size:12px;opacity:.6;cursor:not-allowed;">Em breve</button>
         </div>
-        <div style="overflow-x:auto;">
+        <div id="prod-tabela-wrap" style="overflow-x:auto;">
           <table class="prod-table">
             <thead>
               <tr>
@@ -1762,7 +1762,7 @@ async function carregarProdutos() {
       .order('data_criacao', { ascending: false });
     _produtos = data || [];
     renderProdutos();
-  } catch(e) {}
+  } catch(e) { console.error("carregarProdutos erro:", e); }
 }
 
 function renderProdutos() {
