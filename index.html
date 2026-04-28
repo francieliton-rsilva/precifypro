@@ -561,7 +561,162 @@ select {
   border: 1px solid var(--green-border); margin-left: 8px; vertical-align: middle;
 }
 
-/* ---- COMPARAR CANAIS ---- */
+/* ---- ABA PRODUTOS ---- */
+.prod-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.prod-table th {
+  text-align: left; font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .07em;
+  color: var(--muted); padding: 0 8px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.prod-table td { padding: 9px 8px; border-bottom: .5px solid var(--border); vertical-align: middle; }
+.prod-table tr:last-child td { border-bottom: none; }
+.prod-foto-thumb {
+  width: 48px; height: 48px; border-radius: var(--radius-sm);
+  background: var(--surface2); border: 1px solid var(--border);
+  object-fit: cover; display: flex; align-items: center;
+  justify-content: center; font-size: 10px; color: var(--muted);
+  flex-shrink: 0;
+}
+.prod-foto-thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-sm); }
+.prod-nome-td { font-size: 13px; font-weight: 500; color: var(--text); }
+.prod-acoes { display: flex; gap: 5px; }
+.btn-sm-outline {
+  height: 28px; padding: 0 10px; font-size: 11px; font-weight: 500;
+  border: 1px solid var(--border2); border-radius: var(--radius-sm);
+  background: var(--surface2); color: var(--text); cursor: pointer;
+  font-family: 'Sora', sans-serif; white-space: nowrap;
+  transition: background .15s;
+}
+.btn-sm-outline:hover { background: var(--surface); }
+
+/* Modal Produto */
+.prod-modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+  z-index: 500; display: none; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.prod-modal-overlay.open { display: flex; }
+.prod-modal {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 24px; width: 100%;
+  max-width: 520px; max-height: 90vh; overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+.prod-modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px;
+}
+.prod-modal-title { font-size: 15px; font-weight: 700; color: var(--text); }
+.prod-modal-close {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1px solid var(--border); background: var(--surface2);
+  color: var(--muted); cursor: pointer; font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+}
+.prod-modal-footer {
+  display: flex; gap: 10px; margin-top: 16px;
+  padding-top: 16px; border-top: 1px solid var(--border);
+}
+
+/* Crop de foto */
+.foto-upload-area {
+  display: flex; gap: 16px; margin-bottom: 16px; align-items: flex-start;
+}
+.foto-placeholder {
+  width: 96px; height: 96px; border-radius: var(--radius-sm);
+  border: 1px dashed var(--border2); background: var(--surface2);
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 6px; cursor: pointer; flex-shrink: 0;
+  transition: border-color .15s;
+}
+.foto-placeholder:hover { border-color: var(--accent); }
+.foto-placeholder-icon { font-size: 22px; color: var(--muted); }
+.foto-placeholder-label { font-size: 10px; color: var(--muted); text-align: center; line-height: 1.4; }
+.foto-preview-container {
+  width: 96px; height: 96px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); overflow: hidden; position: relative;
+  flex-shrink: 0; display: none;
+}
+.foto-preview-container img { width: 100%; height: 100%; object-fit: cover; }
+.foto-remove-btn {
+  position: absolute; top: 4px; right: 4px; width: 20px; height: 20px;
+  border-radius: 50%; background: rgba(0,0,0,0.6); color: #fff;
+  border: none; font-size: 10px; cursor: pointer; display: flex;
+  align-items: center; justify-content: center;
+}
+.foto-hint { font-size: 11px; color: var(--muted); line-height: 1.6; }
+.foto-hint strong { color: var(--text); }
+
+/* Tela Desempenho */
+.desemp-screen { display: none; }
+.desemp-screen.open { display: block; }
+.back-btn {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--muted); cursor: pointer;
+  background: none; border: none; font-family: 'Sora', sans-serif;
+  margin-bottom: 16px; padding: 0; transition: color .15s;
+}
+.back-btn:hover { color: var(--text); }
+.desemp-produto-header {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding-bottom: 16px; border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.desemp-foto {
+  width: 72px; height: 72px; border-radius: var(--radius-sm);
+  background: var(--surface2); border: 1px solid var(--border);
+  object-fit: cover; flex-shrink: 0; display: flex;
+  align-items: center; justify-content: center; font-size: 10px; color: var(--muted);
+}
+.desemp-foto img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-sm); }
+.desemp-nome { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.desemp-sku { font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace; }
+.desemp-chips { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+.desemp-chip {
+  font-size: 10px; padding: 3px 9px; border-radius: 20px;
+  background: var(--surface2); border: 1px solid var(--border); color: var(--muted);
+}
+.desemp-controls { margin-left: auto; display: flex; gap: 8px; align-items: flex-start; flex-shrink: 0; }
+.desemp-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.desemp-table th {
+  text-align: left; font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .07em;
+  color: var(--muted); padding: 0 8px 10px; border-bottom: 1px solid var(--border);
+}
+.desemp-table td { padding: 9px 8px; border-bottom: .5px solid var(--border); vertical-align: middle; }
+.desemp-table tr:last-child td { border-bottom: none; }
+.mkt-chip { font-size: 10px; padding: 3px 9px; border-radius: 20px; display: inline-block; }
+.chip-ml     { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
+.chip-shopee { background: var(--red-bg);   color: var(--red);   border: 1px solid var(--red-border); }
+.chip-tiktok { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
+.chip-shein  { background: var(--red-bg);   color: #E91E63;      border: 1px solid #E91E63; }
+.var-down { color: var(--red);   font-size: 11px; font-weight: 600; }
+.var-base { color: var(--muted); font-size: 11px; }
+.var-up   { color: var(--green); font-size: 11px; font-weight: 600; }
+
+/* Modal Desempenho (novo registro) */
+.desemp-modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+  z-index: 500; display: none; align-items: center; justify-content: center; padding: 20px;
+}
+.desemp-modal-overlay.open { display: flex; }
+.desemp-modal {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 24px; width: 100%; max-width: 420px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+/* Lock banner Free */
+.lock-banner {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 16px 18px;
+  display: flex; align-items: center; gap: 14px;
+}
+.lock-banner-icon { font-size: 24px; flex-shrink: 0; }
+.lock-banner-text { flex: 1; }
+.lock-banner-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.lock-banner-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
 .canal-cards {
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: 12px; margin-bottom: 14px;
@@ -813,6 +968,7 @@ select {
     <button class="tab-btn active" onclick="switchTab('basico')">Básico</button>
     <button class="tab-btn" onclick="switchTab('precificador')">Avançado</button>
     <button class="tab-btn" onclick="switchTab('comparar')">Comparar Canais</button>
+    <button class="tab-btn" onclick="switchTab('produtos')">Produtos</button>
     <button class="tab-btn" onclick="switchTab('configuracoes')">Configurações</button>
   </div>
 
@@ -1162,7 +1318,175 @@ select {
 
     </div>
 
+
   </div><!-- fim tab-comparar -->
+
+  <!-- TAB PRODUTOS -->
+  <div id="tab-produtos" class="tab-content">
+
+    <!-- LISTA DE PRODUTOS -->
+    <div id="produtos-lista">
+      <div class="card">
+        <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;">
+          <span>Meus Produtos <span id="prod-count" style="font-weight:400;color:var(--muted);"></span></span>
+          <button class="btn-calc" style="width:auto;height:34px;padding:0 16px;font-size:13px;" id="btn-novo-produto" onclick="abrirModalProduto()">+ Novo Produto</button>
+        </div>
+        <div id="prod-lock-banner" class="lock-banner" style="display:none;">
+          <div class="lock-banner-icon">🔒</div>
+          <div class="lock-banner-text">
+            <div class="lock-banner-title">Funcionalidade exclusiva do plano Pro</div>
+            <div class="lock-banner-desc">Cadastre seus produtos, preencha campos automaticamente e acompanhe o desempenho de cada um.</div>
+          </div>
+          <button class="btn-calc" style="width:auto;height:34px;padding:0 16px;font-size:12px;opacity:.6;cursor:not-allowed;">Em breve</button>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="prod-table">
+            <thead>
+              <tr>
+                <th style="width:56px;">Foto</th>
+                <th style="width:88px;">SKU</th>
+                <th>Nome</th>
+                <th style="width:105px;">Preço Cheio</th>
+                <th style="width:110px;">Preço Promo</th>
+                <th style="width:200px;">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="prod-tbody">
+              <tr id="prod-empty-row">
+                <td colspan="6" style="text-align:center;padding:32px;color:var(--muted);font-size:13px;">
+                  Nenhum produto cadastrado ainda.<br>
+                  <span style="font-size:12px;">Clique em "Novo Produto" para começar.</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TELA DESEMPENHO -->
+    <div id="produtos-desemp" class="desemp-screen">
+      <button class="back-btn" onclick="voltarParaLista()">← Voltar para Produtos</button>
+      <div class="card">
+        <div class="desemp-produto-header">
+          <div class="desemp-foto" id="desemp-foto-el"></div>
+          <div style="flex:1;">
+            <div class="desemp-nome" id="desemp-nome-el">—</div>
+            <div class="desemp-sku" id="desemp-sku-el">—</div>
+            <div class="desemp-chips" id="desemp-chips-el"></div>
+          </div>
+          <div class="desemp-controls">
+            <select id="desemp-filtro-mkt" onchange="renderHistorico()" style="height:32px;font-size:11px;border:1px solid var(--border2);border-radius:var(--radius-sm);padding:0 8px;background:var(--input-bg);color:var(--text);">
+              <option value="">Todos os canais</option>
+              <option value="ml_classico">ML Clássico</option>
+              <option value="ml_premium">ML Premium</option>
+              <option value="shopee">Shopee</option>
+              <option value="tiktok">TikTok Shop</option>
+              <option value="shein">Shein</option>
+            </select>
+            <button class="btn-calc" style="width:auto;height:32px;padding:0 14px;font-size:12px;" onclick="abrirModalDesemp()">+ Registrar</button>
+          </div>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="desemp-table">
+            <thead>
+              <tr>
+                <th>Data</th><th>Marketplace</th><th>Preço</th>
+                <th>Margem</th><th>Vendas 7 dias</th><th>Variação</th><th>Observação</th>
+              </tr>
+            </thead>
+            <tbody id="desemp-tbody">
+              <tr><td colspan="7" style="text-align:center;padding:24px;color:var(--muted);font-size:13px;">Nenhum registro ainda. Clique em "+ Registrar" para começar.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- fim tab-produtos -->
+
+  <!-- MODAL PRODUTO -->
+  <div class="prod-modal-overlay" id="modal-produto">
+    <div class="prod-modal">
+      <div class="prod-modal-header">
+        <div class="prod-modal-title" id="modal-prod-title">Novo Produto</div>
+        <button class="prod-modal-close" onclick="fecharModalProduto()">✕</button>
+      </div>
+      <input type="hidden" id="prod-edit-id">
+      <div class="foto-upload-area">
+        <div class="foto-placeholder" id="foto-placeholder" onclick="document.getElementById('foto-input').click()">
+          <div class="foto-placeholder-icon">+</div>
+          <div class="foto-placeholder-label">Clique para<br>adicionar foto</div>
+        </div>
+        <div class="foto-preview-container" id="foto-preview-container">
+          <img id="foto-preview-img" src="" alt="">
+          <button class="foto-remove-btn" onclick="removerFoto()">✕</button>
+        </div>
+        <div class="foto-hint">
+          <strong>Foto do produto</strong> — opcional<br><br>
+          Após escolher, você poderá cortar em formato <strong>quadrado</strong>.
+        </div>
+      </div>
+      <input type="file" id="foto-input" accept="image/*" style="display:none;" onchange="onFotoSelecionada(this)">
+      <div class="grid2" style="margin-bottom:12px;">
+        <div class="field"><label>Código SKU</label><div class="input-wrap"><input type="text" id="prod-sku" placeholder="Ex: CJ-001"></div></div>
+        <div class="field"><label>Nome do Produto <span class="req">*</span></label><div class="input-wrap"><input type="text" id="prod-nome" placeholder="Nome do produto"></div></div>
+      </div>
+      <div class="grid2" style="margin-bottom:12px;">
+        <div class="field"><label>Custo <span class="req">*</span></label><div class="input-wrap"><span class="pre">R$</span><input type="text" inputmode="numeric" id="prod-custo" placeholder="0,00" class="has-pre"></div></div>
+        <div class="field"><label>Peso (g) <span class="req">*</span></label><div class="input-wrap"><input type="number" id="prod-peso" placeholder="0" min="1" step="any" class="has-suf"><span class="suf">g</span></div></div>
+      </div>
+      <div class="grid2" style="margin-bottom:12px;">
+        <div class="field"><label>Preço Cheio <span class="req">*</span></label><div class="input-wrap"><span class="pre">R$</span><input type="text" inputmode="numeric" id="prod-preco-cheio" placeholder="0,00" class="has-pre"></div></div>
+        <div class="field"><label>Preço Promocional <span class="badge badge-gray">Opcional</span></label><div class="input-wrap"><span class="pre">R$</span><input type="text" inputmode="numeric" id="prod-preco-promo" placeholder="—" class="has-pre"></div></div>
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label>Embalagem / Outros <span class="badge badge-gray">Opcional</span></label>
+        <div class="input-wrap"><span class="pre">R$</span><input type="text" inputmode="numeric" id="prod-embalagem" placeholder="—" class="has-pre"></div>
+      </div>
+      <div class="prod-modal-footer">
+        <button class="btn-calc" style="flex:1;background:var(--surface2);color:var(--text);border:1px solid var(--border2);" onclick="fecharModalProduto()">Cancelar</button>
+        <button class="btn-calc" style="flex:2;" onclick="salvarProduto()">Salvar Produto</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL REGISTRAR DESEMPENHO -->
+  <div class="desemp-modal-overlay" id="modal-desemp">
+    <div class="desemp-modal">
+      <div class="prod-modal-header">
+        <div class="prod-modal-title">Registrar Desempenho</div>
+        <button class="prod-modal-close" onclick="fecharModalDesemp()">✕</button>
+      </div>
+      <div class="field" style="margin-bottom:12px;">
+        <label>Marketplace <span class="req">*</span></label>
+        <select id="desemp-mkt" style="height:38px;border:1px solid var(--border2);border-radius:var(--radius-sm);background:var(--input-bg);color:var(--text);font-family:'Sora',sans-serif;font-size:13px;padding:0 10px;">
+          <option value="ml_classico">ML Clássico</option>
+          <option value="ml_premium">ML Premium</option>
+          <option value="shopee">Shopee</option>
+          <option value="tiktok">TikTok Shop</option>
+          <option value="shein">Shein</option>
+        </select>
+      </div>
+      <div class="grid2" style="margin-bottom:12px;">
+        <div class="field"><label>Preço de Venda <span class="req">*</span></label><div class="input-wrap"><span class="pre">R$</span><input type="text" inputmode="numeric" id="desemp-preco" placeholder="0,00" class="has-pre"></div></div>
+        <div class="field"><label>Margem (%)</label><div class="input-wrap"><input type="number" id="desemp-margem" placeholder="—" min="0" max="100" step="any" class="has-suf"><span class="suf">%</span></div></div>
+      </div>
+      <div class="field" style="margin-bottom:12px;">
+        <label>Vendas nos últimos 7 dias <span class="req">*</span></label>
+        <div class="input-wrap"><input type="number" id="desemp-vendas" placeholder="0" min="0" step="1"></div>
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label>Observação <span class="badge badge-gray">Opcional</span></label>
+        <div class="input-wrap"><input type="text" id="desemp-obs" placeholder="Ex: Aumento de preço, promoção..."></div>
+      </div>
+      <div class="prod-modal-footer">
+        <button class="btn-calc" style="flex:1;background:var(--surface2);color:var(--text);border:1px solid var(--border2);" onclick="fecharModalDesemp()">Cancelar</button>
+        <button class="btn-calc" style="flex:2;" onclick="salvarRegistroDesemp()">Salvar Registro</button>
+      </div>
+    </div>
+  </div>
+
   <div id="tab-configuracoes" class="tab-content">
 
     <!-- TEMA -->
@@ -1383,7 +1707,369 @@ select {
 
 <script>
 // ============================================================
-// SISTEMA DE TEMAS
+// ABA PRODUTOS
+// ============================================================
+let _produtos = [];
+let _produtoAtual = null;
+let _historicoAtual = [];
+let _fotoBase64 = null;
+let _fotoNomeArquivo = null;
+
+const MKT_LABELS = {
+  ml_classico: 'ML Clássico', ml_premium: 'ML Premium',
+  shopee: 'Shopee', tiktok: 'TikTok Shop', shein: 'Shein'
+};
+const MKT_CHIP_CLASS = {
+  ml_classico: 'chip-ml', ml_premium: 'chip-ml',
+  shopee: 'chip-shopee', tiktok: 'chip-tiktok', shein: 'chip-shein'
+};
+
+// Carregar produtos do banco
+async function carregarProdutos() {
+  try {
+    const { data: { session } } = await supa.auth.getSession();
+    if (!session) return;
+    const { data } = await supa.from('produtos')
+      .select('*')
+      .eq('usuario_id', session.user.id)
+      .order('data_criacao', { ascending: false });
+    _produtos = data || [];
+    renderProdutos();
+  } catch(e) {}
+}
+
+function renderProdutos() {
+  const tbody = document.getElementById('prod-tbody');
+  const count = document.getElementById('prod-count');
+  count.textContent = `— ${_produtos.length} cadastrado${_produtos.length !== 1 ? 's' : ''}`;
+
+  if (_produtos.length === 0) {
+    tbody.innerHTML = `<tr id="prod-empty-row"><td colspan="6" style="text-align:center;padding:32px;color:var(--muted);font-size:13px;">
+      Nenhum produto cadastrado ainda.<br><span style="font-size:12px;">Clique em "Novo Produto" para começar.</span></td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = _produtos.map(p => {
+    const fotoHTML = p.foto_url
+      ? `<img src="${p.foto_url}" style="width:48px;height:48px;border-radius:var(--radius-sm);object-fit:cover;border:1px solid var(--border);">`
+      : `<div class="prod-foto-thumb">sem foto</div>`;
+    const promo = p.preco_promocional
+      ? `<span style="font-family:'DM Mono',monospace;font-size:12px;">R$ ${fmt(p.preco_promocional)}</span>`
+      : `<span style="color:var(--muted);font-size:12px;">—</span>`;
+    return `<tr>
+      <td>${fotoHTML}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:12px;">${p.codigo_sku || '—'}</td>
+      <td style="font-size:13px;font-weight:500;color:var(--text);">${p.nome}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:12px;">R$ ${fmt(p.preco_cheio || 0)}</td>
+      <td>${promo}</td>
+      <td><div class="prod-acoes">
+        <button class="btn-sm-outline" onclick="calcularComProduto('${p.id}')">Calcular</button>
+        <button class="btn-sm-outline" onclick="abrirDesempenho('${p.id}')">Desempenho</button>
+        <button class="btn-sm-outline" onclick="editarProduto('${p.id}')">Editar</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+// Calcular com produto — preenche campos e vai para aba Básico
+function calcularComProduto(id) {
+  const p = _produtos.find(x => x.id === id);
+  if (!p) return;
+  // Preenche campos do Básico
+  const setV = (elId, v) => {
+    const el = document.getElementById(elId);
+    if (el && v !== null && v !== undefined) {
+      el.value = v;
+      if (el.dataset !== undefined) el.dataset.rawValue = String(v);
+    }
+  };
+  setV('bas_custo', p.custo ? p.custo.toFixed(2) : '');
+  setV('bas_peso', p.peso || '');
+  setV('bas_embalagem', p.embalagem ? p.embalagem.toFixed(2) : '');
+  // Usa preço promo se existir, senão preço cheio
+  const preco = p.preco_promocional || p.preco_cheio;
+  setV('bas_preco', preco ? preco.toFixed(2) : '');
+  // Formata os campos monetários
+  ['bas_custo','bas_preco','bas_embalagem'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.value) {
+      const v = parseFloat(el.value);
+      if (!isNaN(v)) {
+        el._mascaraAtiva = true;
+        el.value = v.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
+        el.dataset.rawValue = v.toFixed(2);
+        el._mascaraAtiva = false;
+      }
+    }
+  });
+  switchTab('basico');
+}
+
+// MODAL PRODUTO
+function abrirModalProduto() {
+  document.getElementById('modal-prod-title').textContent = 'Novo Produto';
+  document.getElementById('prod-edit-id').value = '';
+  document.getElementById('prod-sku').value = '';
+  document.getElementById('prod-nome').value = '';
+  document.getElementById('prod-custo').value = '';
+  document.getElementById('prod-custo').dataset.rawValue = '';
+  document.getElementById('prod-peso').value = '';
+  document.getElementById('prod-preco-cheio').value = '';
+  document.getElementById('prod-preco-cheio').dataset.rawValue = '';
+  document.getElementById('prod-preco-promo').value = '';
+  document.getElementById('prod-preco-promo').dataset.rawValue = '';
+  document.getElementById('prod-embalagem').value = '';
+  document.getElementById('prod-embalagem').dataset.rawValue = '';
+  removerFoto();
+  document.getElementById('modal-produto').classList.add('open');
+}
+
+function fecharModalProduto() {
+  document.getElementById('modal-produto').classList.remove('open');
+}
+
+function editarProduto(id) {
+  const p = _produtos.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('modal-prod-title').textContent = 'Editar Produto';
+  document.getElementById('prod-edit-id').value = p.id;
+  document.getElementById('prod-sku').value = p.codigo_sku || '';
+  document.getElementById('prod-nome').value = p.nome || '';
+  setMoeda('prod-custo', p.custo || 0);
+  document.getElementById('prod-peso').value = p.peso || '';
+  setMoeda('prod-preco-cheio', p.preco_cheio || 0);
+  setMoeda('prod-preco-promo', p.preco_promocional || 0);
+  setMoeda('prod-embalagem', p.embalagem || 0);
+  // Foto
+  if (p.foto_url) {
+    document.getElementById('foto-placeholder').style.display = 'none';
+    document.getElementById('foto-preview-container').style.display = 'block';
+    document.getElementById('foto-preview-img').src = p.foto_url;
+    _fotoBase64 = p.foto_url; // URL existente
+  } else {
+    removerFoto();
+  }
+  document.getElementById('modal-produto').classList.add('open');
+}
+
+async function salvarProduto() {
+  const nome = document.getElementById('prod-nome').value.trim();
+  if (!nome) { alert('Preencha o nome do produto.'); return; }
+
+  const custo   = parseMoeda(document.getElementById('prod-custo'));
+  const peso    = parseFloat(document.getElementById('prod-peso').value) || 0;
+  const pCheio  = parseMoeda(document.getElementById('prod-preco-cheio'));
+  if (custo <= 0 || peso <= 0 || pCheio <= 0) {
+    alert('Preencha Custo, Peso e Preço Cheio.'); return;
+  }
+
+  const { data: { session } } = await supa.auth.getSession();
+  if (!session) return;
+
+  const editId = document.getElementById('prod-edit-id').value;
+  let fotoUrl = editId ? (_produtos.find(x => x.id === editId)?.foto_url || null) : null;
+
+  // Upload foto se for nova (base64)
+  if (_fotoBase64 && _fotoBase64.startsWith('data:')) {
+    try {
+      const blob = await (await fetch(_fotoBase64)).blob();
+      const ext  = blob.type.split('/')[1] || 'jpg';
+      const path = `${session.user.id}/${Date.now()}.${ext}`;
+      const { data: upData, error: upErr } = await supa.storage
+        .from('produtos-fotos')
+        .upload(path, blob, { contentType: blob.type, upsert: true });
+      if (!upErr) {
+        const { data: urlData } = supa.storage.from('produtos-fotos').getPublicUrl(path);
+        fotoUrl = urlData.publicUrl;
+      }
+    } catch(e) {}
+  }
+
+  const payload = {
+    usuario_id:         session.user.id,
+    codigo_sku:         document.getElementById('prod-sku').value.trim() || null,
+    nome,
+    foto_url:           fotoUrl,
+    custo,
+    custo_origem:       'manual',
+    peso:               Math.round(peso),
+    preco_cheio:        pCheio,
+    preco_promocional:  parseMoeda(document.getElementById('prod-preco-promo')) || null,
+    embalagem:          parseMoeda(document.getElementById('prod-embalagem')) || null,
+  };
+
+  if (editId) {
+    await supa.from('produtos').update(payload).eq('id', editId);
+  } else {
+    await supa.from('produtos').insert(payload);
+  }
+
+  fecharModalProduto();
+  await carregarProdutos();
+}
+
+// FOTO
+function onFotoSelecionada(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    _fotoBase64 = e.target.result;
+    document.getElementById('foto-preview-img').src = _fotoBase64;
+    document.getElementById('foto-placeholder').style.display = 'none';
+    document.getElementById('foto-preview-container').style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+}
+
+function removerFoto() {
+  _fotoBase64 = null;
+  document.getElementById('foto-preview-img').src = '';
+  document.getElementById('foto-preview-container').style.display = 'none';
+  document.getElementById('foto-placeholder').style.display = 'flex';
+}
+
+// DESEMPENHO
+async function abrirDesempenho(id) {
+  _produtoAtual = _produtos.find(x => x.id === id);
+  if (!_produtoAtual) return;
+
+  // Preenche cabeçalho
+  const p = _produtoAtual;
+  const fotoEl = document.getElementById('desemp-foto-el');
+  if (p.foto_url) {
+    fotoEl.innerHTML = `<img src="${p.foto_url}" style="width:72px;height:72px;object-fit:cover;border-radius:var(--radius-sm);">`;
+  } else {
+    fotoEl.innerHTML = '<span style="font-size:11px;color:var(--muted);">sem foto</span>';
+  }
+  document.getElementById('desemp-nome-el').textContent = p.nome;
+  document.getElementById('desemp-sku-el').textContent = `SKU: ${p.codigo_sku || '—'} · ${p.peso || '—'}g`;
+  document.getElementById('desemp-chips-el').innerHTML = `
+    <span class="desemp-chip">Custo: R$ ${fmt(p.custo || 0)}</span>
+    <span class="desemp-chip">Preço: R$ ${fmt(p.preco_cheio || 0)}</span>
+    ${p.preco_promocional ? `<span class="desemp-chip">Promo: R$ ${fmt(p.preco_promocional)}</span>` : ''}
+  `;
+
+  // Carrega histórico
+  await carregarHistorico();
+
+  // Mostra tela
+  document.getElementById('produtos-lista').style.display = 'none';
+  document.getElementById('produtos-desemp').classList.add('open');
+}
+
+function voltarParaLista() {
+  document.getElementById('produtos-desemp').classList.remove('open');
+  document.getElementById('produtos-lista').style.display = 'block';
+  _produtoAtual = null;
+  _historicoAtual = [];
+}
+
+async function carregarHistorico() {
+  if (!_produtoAtual) return;
+  try {
+    const { data } = await supa.from('historico_precos')
+      .select('*')
+      .eq('produto_id', _produtoAtual.id)
+      .order('data_registro', { ascending: false });
+    _historicoAtual = data || [];
+    renderHistorico();
+  } catch(e) {}
+}
+
+function renderHistorico() {
+  const filtro = document.getElementById('desemp-filtro-mkt').value;
+  const lista = filtro ? _historicoAtual.filter(h => h.marketplace === filtro) : _historicoAtual;
+  const tbody = document.getElementById('desemp-tbody');
+
+  if (lista.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--muted);font-size:13px;">
+      Nenhum registro ainda. Clique em "+ Registrar" para começar.</td></tr>`;
+    return;
+  }
+
+  // Calcular variação: compara vendas com o registro anterior do mesmo marketplace
+  const porMkt = {};
+  _historicoAtual.forEach(h => {
+    if (!porMkt[h.marketplace]) porMkt[h.marketplace] = [];
+    porMkt[h.marketplace].push(h);
+  });
+
+  tbody.innerHTML = lista.map(h => {
+    const data = new Date(h.data_registro).toLocaleDateString('pt-BR');
+    const chip = `<span class="mkt-chip ${MKT_CHIP_CLASS[h.marketplace] || ''}">${MKT_LABELS[h.marketplace] || h.marketplace}</span>`;
+
+    // Variação de vendas
+    const listaMkt = porMkt[h.marketplace] || [];
+    const idx = listaMkt.findIndex(x => x.id === h.id);
+    let varHTML = '<span class="var-base">— referência</span>';
+    if (idx >= 0 && idx < listaMkt.length - 1) {
+      const anterior = listaMkt[idx + 1];
+      if (anterior.vendas_7_dias > 0) {
+        const diff = ((h.vendas_7_dias - anterior.vendas_7_dias) / anterior.vendas_7_dias) * 100;
+        const sinal = diff > 0 ? '▲' : '▼';
+        const cls = diff > 0 ? 'var-up' : 'var-down';
+        varHTML = `<span class="${cls}">${sinal} ${Math.abs(diff).toFixed(0)}% nas vendas</span>`;
+      }
+    }
+
+    return `<tr>
+      <td style="color:var(--muted);font-size:12px;">${data}</td>
+      <td>${chip}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:12px;">R$ ${fmt(h.preco)}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:12px;">${h.margem ? h.margem + '%' : '—'}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:12px;">${h.vendas_7_dias}</td>
+      <td>${varHTML}</td>
+      <td style="font-size:11px;color:var(--muted);">${h.observacao || '—'}</td>
+    </tr>`;
+  }).join('');
+}
+
+// MODAL DESEMPENHO
+function abrirModalDesemp() {
+  document.getElementById('desemp-preco').value = '';
+  document.getElementById('desemp-margem').value = '';
+  document.getElementById('desemp-vendas').value = '';
+  document.getElementById('desemp-obs').value = '';
+  document.getElementById('modal-desemp').classList.add('open');
+}
+
+function fecharModalDesemp() {
+  document.getElementById('modal-desemp').classList.remove('open');
+}
+
+async function salvarRegistroDesemp() {
+  if (!_produtoAtual) return;
+  const mkt    = document.getElementById('desemp-mkt').value;
+  const preco  = parseMoeda(document.getElementById('desemp-preco'));
+  const vendas = parseInt(document.getElementById('desemp-vendas').value);
+  if (preco <= 0 || isNaN(vendas)) { alert('Preencha Preço e Vendas.'); return; }
+
+  const { data: { session } } = await supa.auth.getSession();
+  if (!session) return;
+
+  await supa.from('historico_precos').insert({
+    produto_id:   _produtoAtual.id,
+    usuario_id:   session.user.id,
+    marketplace:  mkt,
+    preco,
+    margem:       parseFloat(document.getElementById('desemp-margem').value) || null,
+    vendas_7_dias: vendas,
+    observacao:   document.getElementById('desemp-obs').value.trim() || null,
+  });
+
+  fecharModalDesemp();
+  await carregarHistorico();
+}
+
+// Aplicar máscaras nos campos do modal de produto
+document.addEventListener('DOMContentLoaded', () => {
+  ['prod-custo','prod-preco-cheio','prod-preco-promo','prod-embalagem','desemp-preco'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) aplicarMascaraMonetaria(el);
+  });
+});
 // ============================================================
 function setTema(tema) {
   document.documentElement.setAttribute('data-theme', tema);
@@ -2688,8 +3374,9 @@ registrarAcesso();
   document.getElementById('user-nome').textContent = nome.split(' ')[0];
   document.getElementById('user-email-dd').textContent = user.email;
 
-  // Carrega configurações do usuário do banco
+  // Carrega configurações e produtos do usuário
   await carregarConfigs();
+  await carregarProdutos();
 })();
 
 function toggleUserMenu() {
