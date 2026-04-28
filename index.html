@@ -944,7 +944,7 @@ select {
   <div class="logo">
     <div class="logo-mark">P$</div>
     <div class="logo-name">Precify<span>Pro</span></div>
-    <div class="version-badge">v1.07</div>
+    <div class="version-badge">v1.08</div>
   </div>
   <div class="user-menu">
     <button class="user-btn" onclick="toggleUserMenu()" id="user-btn">
@@ -1960,9 +1960,11 @@ async function salvarProduto() {
   };
 
   if (editId) {
-    await supa.from('produtos').update(payload).eq('id', editId);
+    const { error } = await supa.from('produtos').update(payload).eq('id', editId);
+    if (error) { console.error('ERRO update produto:', JSON.stringify(error)); alert('Erro: ' + error.message); return; }
   } else {
-    await supa.from('produtos').insert(payload);
+    const { error } = await supa.from('produtos').insert(payload);
+    if (error) { console.error('ERRO insert produto:', JSON.stringify(error)); alert('Erro: ' + error.message); return; }
   }
 
   fecharModalProduto();
