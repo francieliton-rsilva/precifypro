@@ -1036,7 +1036,7 @@ select {
   <div class="logo">
     <div class="logo-mark">P$</div>
     <div class="logo-name">Precify<span>Pro</span></div>
-    <div class="version-badge">v1.21</div>
+    <div class="version-badge">v1.22</div>
   </div>
   <div class="user-menu">
     <button class="user-btn" onclick="toggleUserMenu()" id="user-btn">
@@ -1666,7 +1666,7 @@ select {
 
     <!-- TELA ITENS DE CUSTO -->
     <div id="produtos-itens" class="desemp-screen">
-      <button class="back-btn" onclick="voltarParaLista()">← Voltar para Produtos</button>
+      <button class="back-btn" onclick="voltarDoItensParaPreCusto()">← Voltar para Pré-Custo</button>
       <div class="card">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
           <div style="font-size:13px;font-weight:700;color:var(--text);">Itens de Custo</div>
@@ -2499,9 +2499,24 @@ async function deletarItemCusto(id) {
 }
 
 function abrirTelaItens() {
+  // Guarda que veio do pré-custo
+  document.getElementById('produtos-itens').dataset.origem = _produtoPC ? 'precusto' : 'lista';
   ocultarTodasTelasProdutos();
   document.getElementById('produtos-itens').classList.add('open');
   renderItensCusto();
+}
+
+function voltarDoItensParaPreCusto() {
+  document.getElementById('produtos-itens').classList.remove('open');
+  if (_produtoPC) {
+    // Volta para o pré-custo do produto que estava aberto
+    document.getElementById('produtos-precusto').classList.add('open');
+    // Recarrega itens de custo para refletir novos cadastros
+    carregarItensCusto().then(() => renderLinhasItens());
+  } else {
+    // Não tinha produto aberto — volta para lista
+    document.getElementById('produtos-lista').style.display = 'block';
+  }
 }
 
 function abrirPreCusto(id) {
