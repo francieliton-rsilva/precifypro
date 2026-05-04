@@ -561,7 +561,70 @@ select {
   border: 1px solid var(--green-border); margin-left: 8px; vertical-align: middle;
 }
 
-/* ---- ABA PRODUTOS ---- */
+/* ---- PRÉ-CUSTO ---- */
+.pc-etapa-title {
+  font-size: 12px; font-weight: 700; color: var(--text);
+  margin: 16px 0 12px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+}
+.pc-etapa-badge {
+  font-size: 10px; font-weight: 600; padding: 2px 8px;
+  border-radius: 20px; background: var(--accent-bg);
+  color: var(--accent2); border: 1px solid var(--border);
+}
+.pc-tipo-btn {
+  flex: 1; height: 38px; border: 1px solid var(--border2);
+  border-radius: var(--radius-sm); font-size: 12px; font-weight: 600;
+  cursor: pointer; background: var(--surface2); color: var(--muted);
+  font-family: 'Sora', sans-serif; transition: all .15s;
+}
+.pc-tipo-sel {
+  background: var(--btn-bg); color: var(--btn-text);
+  border-color: transparent;
+}
+.pc-resultado {
+  height: 38px; background: var(--green-bg) !important;
+  border: 1px solid var(--green-border) !important;
+  color: var(--green) !important; font-weight: 700;
+  font-family: 'DM Mono', monospace; font-size: 13px;
+  display: flex; align-items: center; padding: 0 12px;
+  border-radius: var(--radius-sm);
+}
+.pc-item-row {
+  display: grid; grid-template-columns: 1fr 140px 34px;
+  gap: 8px; align-items: center; margin-bottom: 8px;
+}
+.pc-item-sel {
+  height: 38px; border: 1px solid var(--border2);
+  border-radius: var(--radius-sm); background: var(--input-bg);
+  color: var(--text); font-family: 'Sora', sans-serif;
+  font-size: 12px; padding: 0 10px;
+}
+.pc-del-btn {
+  width: 34px; height: 34px; border: 1px solid var(--red-border);
+  border-radius: var(--radius-sm); background: var(--red-bg);
+  color: var(--red); font-size: 16px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.pc-add-btn {
+  width: 100%; height: 34px; border: 1px dashed var(--border2);
+  border-radius: var(--radius-sm); background: none;
+  font-size: 12px; color: var(--muted); cursor: pointer;
+  font-family: 'Sora', sans-serif; margin-bottom: 14px;
+  transition: border-color .15s;
+}
+.pc-add-btn:hover { border-color: var(--accent); color: var(--accent); }
+.pc-total-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--btn-bg); border-radius: var(--radius-sm);
+  padding: 12px 16px; margin-bottom: 4px;
+}
+.pc-total-bar span { font-size: 13px; font-weight: 600; color: var(--btn-text); }
+.pc-total-valor {
+  font-family: 'DM Mono', monospace; font-size: 18px;
+  font-weight: 700; color: var(--btn-text);
+}
 .prod-table { width: 100%; border-collapse: collapse; font-size: 12px; }
 .prod-table th {
   text-align: left; font-size: 10px; font-weight: 700;
@@ -965,7 +1028,7 @@ select {
   <div class="logo">
     <div class="logo-mark">P$</div>
     <div class="logo-name">Precify<span>Pro</span></div>
-    <div class="version-badge">v1.12</div>
+    <div class="version-badge">v1.13</div>
   </div>
   <div class="user-menu">
     <button class="user-btn" onclick="toggleUserMenu()" id="user-btn">
@@ -1350,6 +1413,8 @@ select {
       <div class="card">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
           <div class="section-title" style="margin-bottom:0;border-bottom:none;padding-bottom:0;">Meus Produtos <span id="prod-count" style="font-weight:400;color:var(--muted);"></span></div>
+          <div style="display:flex;gap:8px;">
+          <button onclick="abrirTelaItens()" style="height:32px;padding:0 14px;font-size:12px;font-weight:600;font-family:'Sora',sans-serif;background:var(--surface2);color:var(--text);border:1px solid var(--border2);border-radius:var(--radius-sm);cursor:pointer;">Itens de Custo</button>
           <button id="btn-novo-produto" onclick="abrirModalProduto()" style="height:32px;padding:0 14px;font-size:12px;font-weight:700;font-family:'Sora',sans-serif;background:var(--btn-bg);color:var(--btn-text);border:none;border-radius:var(--radius-sm);cursor:pointer;white-space:nowrap;line-height:32px;">+ Novo Produto</button>
         </div>
         <div style="border-bottom:1px solid var(--border);margin-bottom:12px;"></div>
@@ -1425,9 +1490,202 @@ select {
       </div>
     </div>
 
+    <!-- TELA PRÉ-CUSTO -->
+    <div id="produtos-precusto" class="desemp-screen">
+      <button class="back-btn" onclick="voltarParaLista()">← Voltar para Produtos</button>
+
+      <!-- Cabeçalho produto -->
+      <div class="card" style="margin-bottom:12px;">
+        <div class="desemp-produto-header" style="margin-bottom:0;padding-bottom:0;border-bottom:none;">
+          <div class="desemp-foto" id="pc-foto-el"></div>
+          <div style="flex:1;">
+            <div class="desemp-nome" id="pc-nome-el">—</div>
+            <div class="desemp-sku" id="pc-sku-el">—</div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button onclick="abrirHistoricoFabricacao()" style="height:32px;padding:0 14px;font-size:12px;font-weight:600;font-family:'Sora',sans-serif;background:var(--surface2);color:var(--text);border:1px solid var(--border2);border-radius:var(--radius-sm);cursor:pointer;">Histórico</button>
+            <button onclick="iniciarNovoPreCusto()" style="height:32px;padding:0 14px;font-size:12px;font-weight:700;font-family:'Sora',sans-serif;background:var(--btn-bg);color:var(--btn-text);border:none;border-radius:var(--radius-sm);cursor:pointer;">+ Novo Pré-Custo</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulário Pré-Custo -->
+      <div id="pc-form-wrap" class="card" style="display:none;">
+
+        <!-- ETAPA 1 -->
+        <div class="pc-etapa-title">Etapa 1 — Consumo por Peça <span class="pc-etapa-badge">Calculadora de Encaixe</span></div>
+        <div class="grid2" style="margin-bottom:10px;">
+          <div class="field">
+            <label>Comprimento do Encaixe (m) <span class="req">*</span></label>
+            <div class="input-wrap"><input type="number" id="pc-comprimento" placeholder="Ex: 2,82" step="any" min="0" oninput="calcularConsumoPeca()"></div>
+          </div>
+          <div class="field">
+            <label>Peças no Grade <span class="req">*</span></label>
+            <div class="input-wrap"><input type="number" id="pc-grade" placeholder="Ex: 6" min="1" step="1" oninput="calcularConsumoPeca()"></div>
+          </div>
+        </div>
+        <div class="grid2" style="margin-bottom:14px;">
+          <div class="field">
+            <label>Margem de Segurança</label>
+            <div class="input-wrap"><input type="number" id="pc-margem-seg" value="5" min="0" max="30" step="any" class="has-suf" oninput="calcularConsumoPeca()"><span class="suf">%</span></div>
+          </div>
+          <div class="field">
+            <label>Consumo por Peça (calculado)</label>
+            <div class="input-wrap pc-resultado" id="pc-consumo-result">—</div>
+          </div>
+        </div>
+
+        <!-- ETAPA 2 -->
+        <div class="pc-etapa-title">Etapa 2 — Custo do Tecido</div>
+        <div style="display:flex;gap:8px;margin-bottom:14px;">
+          <button class="pc-tipo-btn" id="pc-btn-malha" onclick="setTipoTecido('malha')">🧶 Malha</button>
+          <button class="pc-tipo-btn pc-tipo-sel" id="pc-btn-plano" onclick="setTipoTecido('plano')">🪡 Plano</button>
+        </div>
+
+        <!-- Malha -->
+        <div id="pc-campos-malha" style="display:none;">
+          <div class="grid2" style="margin-bottom:10px;">
+            <div class="field">
+              <label>Valor por kg (R$) <span class="req">*</span></label>
+              <div class="input-wrap"><span class="pre">R$</span><input type="text" inputmode="numeric" id="pc-valor-kg" placeholder="0,00" class="has-pre" oninput="calcularCustoTecido()"></div>
+            </div>
+            <div class="field">
+              <label>Rendimento (m/kg) <span class="req">*</span></label>
+              <div class="input-wrap"><input type="number" id="pc-rendimento-kg" placeholder="Ex: 3,30" step="any" min="0" oninput="calcularCustoTecido()"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plano -->
+        <div id="pc-campos-plano">
+          <div class="field" style="margin-bottom:10px;">
+            <label>Valor por Metro (R$) <span class="req">*</span></label>
+            <div class="input-wrap"><span class="pre">R$</span><input type="text" inputmode="numeric" id="pc-valor-metro" placeholder="0,00" class="has-pre" oninput="calcularCustoTecido()"></div>
+          </div>
+        </div>
+
+        <div class="grid2" style="margin-bottom:14px;">
+          <div class="field">
+            <label>Consumo por Peça (m)</label>
+            <div class="input-wrap"><input type="number" id="pc-consumo-tecido" placeholder="0,00" step="any" min="0" oninput="calcularCustoTecido()"></div>
+          </div>
+          <div class="field">
+            <label>Custo Tecido/Peça (calculado)</label>
+            <div class="input-wrap pc-resultado" id="pc-custo-tecido-result">—</div>
+          </div>
+        </div>
+
+        <!-- ETAPA 3 -->
+        <div class="pc-etapa-title">Etapa 3 — Pré-Custo Completo</div>
+        <div id="pc-itens-wrap" style="margin-bottom:8px;"></div>
+        <button onclick="adicionarLinhaItem()" class="pc-add-btn">+ Adicionar item de custo</button>
+
+        <div class="pc-total-bar">
+          <span>Pré-Custo Total por Peça</span>
+          <span id="pc-total-result" class="pc-total-valor">R$ 0,00</span>
+        </div>
+
+        <!-- CUSTO REAL -->
+        <div class="pc-etapa-title" style="margin-top:16px;">Custo Real <span style="font-size:11px;font-weight:400;color:var(--muted);">— preencher após a produção</span></div>
+        <div class="grid2" style="margin-bottom:10px;">
+          <div class="field">
+            <label>Valor Total Pago no Tecido (R$)</label>
+            <div class="input-wrap"><span class="pre">R$</span><input type="text" inputmode="numeric" id="pc-valor-total-tecido" placeholder="0,00" class="has-pre" oninput="calcularCustoReal()"></div>
+          </div>
+          <div class="field">
+            <label>Peças Recebidas</label>
+            <div class="input-wrap"><input type="number" id="pc-pecas-recebidas" placeholder="0" min="0" step="1" oninput="calcularCustoReal()"></div>
+          </div>
+        </div>
+        <div class="grid2" style="margin-bottom:10px;">
+          <div class="field">
+            <label>Peças com Defeito</label>
+            <div class="input-wrap"><input type="number" id="pc-pecas-defeito" placeholder="0" min="0" step="1" oninput="calcularCustoReal()"></div>
+          </div>
+          <div class="field">
+            <label>Peças Aproveitáveis (calculado)</label>
+            <div class="input-wrap pc-resultado" id="pc-aproveitaveis-result">—</div>
+          </div>
+        </div>
+        <div class="grid2" style="margin-bottom:16px;">
+          <div class="field">
+            <label>Custo Real Tecido/Peça (calculado)</label>
+            <div class="input-wrap pc-resultado" id="pc-custo-real-tecido-result">—</div>
+          </div>
+          <div class="field">
+            <label>Custo Real Total/Peça (calculado)</label>
+            <div class="input-wrap pc-resultado" id="pc-custo-real-total-result">—</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;">
+          <button onclick="salvarPreCusto(false)" style="flex:1;height:40px;font-size:13px;font-weight:600;font-family:'Sora',sans-serif;background:var(--surface2);color:var(--text);border:1px solid var(--border2);border-radius:var(--radius-sm);cursor:pointer;">Salvar Pré-Custo</button>
+          <button onclick="salvarPreCusto(true)" style="flex:2;height:40px;font-size:13px;font-weight:700;font-family:'Sora',sans-serif;background:var(--btn-bg);color:var(--btn-text);border:none;border-radius:var(--radius-sm);cursor:pointer;">✓ Usar Custo Real no Produto</button>
+        </div>
+
+      </div><!-- fim pc-form-wrap -->
+
+      <!-- HISTÓRICO DE FABRICAÇÕES -->
+      <div id="pc-historico-wrap" class="card" style="display:none;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <div style="font-size:13px;font-weight:700;color:var(--text);">Histórico de Fabricações</div>
+          <button onclick="iniciarNovoPreCusto()" style="height:30px;padding:0 14px;font-size:12px;font-weight:700;font-family:'Sora',sans-serif;background:var(--btn-bg);color:var(--btn-text);border:none;border-radius:var(--radius-sm);cursor:pointer;">+ Novo Pré-Custo</button>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="desemp-table">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Tecido</th>
+                <th>Pré-Custo/Peça</th>
+                <th>Custo Real/Peça</th>
+                <th>Peças Aproveit.</th>
+                <th>Variação Custo</th>
+              </tr>
+            </thead>
+            <tbody id="pc-historico-tbody">
+              <tr><td colspan="6" style="text-align:center;padding:24px;color:var(--muted);font-size:13px;">Nenhuma fabricação registrada ainda.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- fim produtos-precusto -->
+
+    <!-- TELA ITENS DE CUSTO -->
+    <div id="produtos-itens" class="desemp-screen">
+      <button class="back-btn" onclick="voltarParaLista()">← Voltar para Produtos</button>
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <div style="font-size:13px;font-weight:700;color:var(--text);">Itens de Custo</div>
+          <button onclick="abrirModalNovoItem()" style="height:32px;padding:0 14px;font-size:12px;font-weight:700;font-family:'Sora',sans-serif;background:var(--btn-bg);color:var(--btn-text);border:none;border-radius:var(--radius-sm);cursor:pointer;">+ Novo Item</button>
+        </div>
+        <div style="border-bottom:1px solid var(--border);margin-bottom:14px;"></div>
+        <div id="itens-custo-lista">
+          <div style="text-align:center;padding:24px;color:var(--muted);font-size:13px;">Nenhum item cadastrado. Clique em "+ Novo Item".</div>
+        </div>
+      </div>
+    </div>
+
   </div><!-- fim tab-produtos -->
 
-  <!-- MODAL PRODUTO -->
+  <!-- MODAL NOVO ITEM DE CUSTO -->
+  <div class="prod-modal-overlay" id="modal-novo-item">
+    <div class="prod-modal" style="max-width:380px;">
+      <div class="prod-modal-header">
+        <div class="prod-modal-title">Novo Item de Custo</div>
+        <button class="prod-modal-close" onclick="fecharModalNovoItem()">✕</button>
+      </div>
+      <div class="field" style="margin-bottom:16px;">
+        <label>Nome do Item <span class="req">*</span></label>
+        <div class="input-wrap"><input type="text" id="novo-item-nome" placeholder="Ex: Costura, Corte, Caseado..."></div>
+      </div>
+      <div class="prod-modal-footer">
+        <button onclick="fecharModalNovoItem()" style="flex:1;height:38px;font-size:13px;font-weight:600;font-family:'Sora',sans-serif;background:var(--surface2);color:var(--text);border:1px solid var(--border2);border-radius:var(--radius-sm);cursor:pointer;">Cancelar</button>
+        <button onclick="salvarNovoItem()" style="flex:2;height:38px;font-size:13px;font-weight:700;font-family:'Sora',sans-serif;background:var(--btn-bg);color:var(--btn-text);border:none;border-radius:var(--radius-sm);cursor:pointer;">Salvar</button>
+      </div>
+    </div>
+  </div>
   <div class="prod-modal-overlay" id="modal-produto">
     <div class="prod-modal">
       <div class="prod-modal-header">
@@ -1812,6 +2070,7 @@ function renderProdutos() {
       <td>${promo}</td>
       <td><div class="prod-acoes">
         <button class="btn-sm-outline" onclick="calcularComProduto('${p.id}')">Calcular</button>
+        <button class="btn-sm-outline" onclick="abrirPreCusto('${p.id}')">Pré-Custo</button>
         <button class="btn-sm-outline" onclick="abrirDesempenho('${p.id}')">Desempenho</button>
         <button class="btn-sm-outline" onclick="editarProduto('${p.id}')">Editar</button>
       </div></td>
@@ -2154,6 +2413,353 @@ document.addEventListener('DOMContentLoaded', () => {
     if (el) aplicarMascaraMonetaria(el);
   });
 });
+// ============================================================
+// MÓDULO PRÉ-CUSTO
+// ============================================================
+let _produtoPC = null;
+let _tipoTecido = 'plano';
+let _itensLinha = [];
+let _itensCusto = [];
+
+async function carregarItensCusto() {
+  try {
+    const { data: { session } } = await supa.auth.getSession();
+    if (!session) return;
+    const { data } = await supa.from('itens_custo')
+      .select('*').eq('usuario_id', session.user.id)
+      .order('nome', { ascending: true });
+    _itensCusto = data || [];
+  } catch(e) {}
+}
+
+function renderItensCusto() {
+  const el = document.getElementById('itens-custo-lista');
+  if (!el) return;
+  if (_itensCusto.length === 0) {
+    el.innerHTML = '<div style="text-align:center;padding:24px;color:var(--muted);font-size:13px;">Nenhum item cadastrado. Clique em "+ Novo Item".</div>';
+    return;
+  }
+  el.innerHTML = _itensCusto.map(item => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--surface2);border-radius:var(--radius-sm);margin-bottom:8px;">
+      <span style="font-size:13px;">${item.nome}</span>
+      <button onclick="deletarItemCusto('${item.id}')" style="height:28px;padding:0 10px;font-size:11px;font-weight:600;color:var(--red);border:1px solid var(--red-border);background:var(--red-bg);border-radius:var(--radius-sm);cursor:pointer;font-family:'Sora',sans-serif;">Excluir</button>
+    </div>
+  `).join('');
+}
+
+function abrirModalNovoItem() {
+  document.getElementById('novo-item-nome').value = '';
+  document.getElementById('modal-novo-item').classList.add('open');
+}
+function fecharModalNovoItem() {
+  document.getElementById('modal-novo-item').classList.remove('open');
+}
+
+async function salvarNovoItem() {
+  const nome = document.getElementById('novo-item-nome').value.trim();
+  if (!nome) { alert('Digite o nome do item.'); return; }
+  const { data: { session } } = await supa.auth.getSession();
+  if (!session) return;
+  const { error } = await supa.from('itens_custo').insert({ usuario_id: session.user.id, nome });
+  if (error) { alert('Erro ao salvar: ' + error.message); return; }
+  fecharModalNovoItem();
+  await carregarItensCusto();
+  renderItensCusto();
+}
+
+async function deletarItemCusto(id) {
+  const { error } = await supa.from('itens_custo').delete().eq('id', id);
+  if (error) {
+    if (error.code === '23503') {
+      alert('Este item não pode ser excluído pois já foi utilizado em um pré-custo.');
+    } else {
+      alert('Erro ao excluir: ' + error.message);
+    }
+    return;
+  }
+  await carregarItensCusto();
+  renderItensCusto();
+}
+
+function abrirTelaItens() {
+  ocultarTodasTelasProdutos();
+  document.getElementById('produtos-itens').classList.add('open');
+  renderItensCusto();
+}
+
+function abrirPreCusto(id) {
+  _produtoPC = _produtos.find(x => x.id === id);
+  if (!_produtoPC) return;
+  const p = _produtoPC;
+  const fotoEl = document.getElementById('pc-foto-el');
+  fotoEl.innerHTML = p.foto_url
+    ? `<img src="${p.foto_url}" style="width:52px;height:52px;object-fit:cover;border-radius:var(--radius-sm);">`
+    : '<span style="font-size:10px;color:var(--muted);">sem foto</span>';
+  document.getElementById('pc-nome-el').textContent = p.nome;
+  document.getElementById('pc-sku-el').textContent = `SKU: ${p.codigo_sku || '—'}`;
+  document.getElementById('pc-form-wrap').style.display = 'none';
+  document.getElementById('pc-historico-wrap').style.display = 'none';
+  ocultarTodasTelasProdutos();
+  document.getElementById('produtos-precusto').classList.add('open');
+  carregarHistoricoFabricacao();
+}
+
+function iniciarNovoPreCusto() {
+  ['pc-comprimento','pc-grade','pc-valor-kg','pc-rendimento-kg','pc-valor-metro',
+   'pc-consumo-tecido','pc-valor-total-tecido','pc-pecas-recebidas','pc-pecas-defeito'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.value = ''; if (el.dataset) el.dataset.rawValue = ''; }
+  });
+  document.getElementById('pc-margem-seg').value = '5';
+  document.getElementById('pc-consumo-result').textContent = '—';
+  document.getElementById('pc-custo-tecido-result').textContent = '—';
+  document.getElementById('pc-aproveitaveis-result').textContent = '—';
+  document.getElementById('pc-custo-real-tecido-result').textContent = '—';
+  document.getElementById('pc-custo-real-total-result').textContent = '—';
+  document.getElementById('pc-total-result').textContent = 'R$ 0,00';
+  _itensLinha = [];
+  renderLinhasItens();
+  setTipoTecido('plano');
+  document.getElementById('pc-historico-wrap').style.display = 'none';
+  document.getElementById('pc-form-wrap').style.display = 'block';
+}
+
+function abrirHistoricoFabricacao() {
+  document.getElementById('pc-form-wrap').style.display = 'none';
+  document.getElementById('pc-historico-wrap').style.display = 'block';
+  carregarHistoricoFabricacao();
+}
+
+async function carregarHistoricoFabricacao() {
+  if (!_produtoPC) return;
+  try {
+    const { data } = await supa.from('precustos')
+      .select('*, precusto_itens(*)')
+      .eq('produto_id', _produtoPC.id)
+      .order('data_registro', { ascending: false });
+    const lista = data || [];
+    const tbody = document.getElementById('pc-historico-tbody');
+    if (!tbody) return;
+    if (lista.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--muted);font-size:13px;">Nenhuma fabricação registrada ainda.</td></tr>';
+      iniciarNovoPreCusto();
+      return;
+    }
+    tbody.innerHTML = lista.map((pc, idx) => {
+      const data = new Date(pc.data_registro).toLocaleDateString('pt-BR');
+      const tipoChip = pc.tipo_tecido === 'malha'
+        ? `<span style="font-size:10px;padding:2px 7px;border-radius:20px;background:var(--amber-bg);color:var(--amber);">Malha</span>`
+        : `<span style="font-size:10px;padding:2px 7px;border-radius:20px;background:var(--surface2);color:var(--muted);">Plano</span>`;
+      let varHTML = '<span style="color:var(--muted);font-size:11px;">— 1ª fabricação</span>';
+      if (idx < lista.length - 1) {
+        const ant = lista[idx + 1];
+        const atual = pc.custo_real_total_peca || pc.precusto_total || 0;
+        const anterior = ant.custo_real_total_peca || ant.precusto_total || 0;
+        if (anterior > 0) {
+          const diff = atual - anterior;
+          const color = diff > 0 ? 'var(--red)' : 'var(--green)';
+          const sinal = diff > 0 ? '▲' : '▼';
+          varHTML = `<span style="color:${color};font-size:11px;font-weight:600;">${sinal} R$ ${fmt(Math.abs(diff))}</span>`;
+        }
+      }
+      return `<tr>
+        <td style="color:var(--muted);font-size:12px;">${data}</td>
+        <td>${tipoChip}</td>
+        <td style="font-family:'DM Mono',monospace;font-size:12px;">R$ ${fmt(pc.precusto_total||0)}</td>
+        <td style="font-family:'DM Mono',monospace;font-size:12px;">${pc.custo_real_total_peca ? 'R$ '+fmt(pc.custo_real_total_peca) : '—'}</td>
+        <td style="font-family:'DM Mono',monospace;font-size:12px;">${pc.pecas_aproveitaveis||'—'}</td>
+        <td>${varHTML}</td>
+      </tr>`;
+    }).join('');
+    document.getElementById('pc-historico-wrap').style.display = 'block';
+  } catch(e) {}
+}
+
+function setTipoTecido(tipo) {
+  _tipoTecido = tipo;
+  document.getElementById('pc-btn-malha').classList.toggle('pc-tipo-sel', tipo === 'malha');
+  document.getElementById('pc-btn-plano').classList.toggle('pc-tipo-sel', tipo === 'plano');
+  document.getElementById('pc-campos-malha').style.display = tipo === 'malha' ? 'block' : 'none';
+  document.getElementById('pc-campos-plano').style.display = tipo === 'plano' ? 'block' : 'none';
+  calcularCustoTecido();
+}
+
+function calcularConsumoPeca() {
+  const comp = parseFloat(document.getElementById('pc-comprimento').value);
+  const grade = parseFloat(document.getElementById('pc-grade').value);
+  const margem = parseFloat(document.getElementById('pc-margem-seg').value) || 5;
+  const el = document.getElementById('pc-consumo-result');
+  if (!comp || !grade || grade <= 0) { el.textContent = '—'; return; }
+  const consumo = (comp * (1 + margem / 100)) / grade;
+  el.textContent = consumo.toFixed(4) + ' m';
+  document.getElementById('pc-consumo-tecido').value = consumo.toFixed(4);
+  calcularCustoTecido();
+}
+
+function calcularCustoTecido() {
+  const consumo = parseFloat(document.getElementById('pc-consumo-tecido').value) || 0;
+  const el = document.getElementById('pc-custo-tecido-result');
+  let custo = 0;
+  if (_tipoTecido === 'malha') {
+    const valorKg = parseMoeda(document.getElementById('pc-valor-kg'));
+    const rend = parseFloat(document.getElementById('pc-rendimento-kg').value) || 0;
+    if (valorKg > 0 && rend > 0 && consumo > 0) custo = (valorKg / rend) * consumo;
+  } else {
+    const valorMetro = parseMoeda(document.getElementById('pc-valor-metro'));
+    if (valorMetro > 0 && consumo > 0) custo = valorMetro * consumo;
+  }
+  el.textContent = custo > 0 ? 'R$ ' + fmt(custo) : '—';
+  calcularTotal();
+}
+
+function calcularTotal() {
+  const textoTecido = document.getElementById('pc-custo-tecido-result').textContent;
+  const tecido = parseFloat(textoTecido.replace('R$ ','').replace(/\./g,'').replace(',','.')) || 0;
+  let total = tecido;
+  _itensLinha.forEach(linha => {
+    total += parseMoeda(document.getElementById('pc-item-val-' + linha.id)) || 0;
+  });
+  document.getElementById('pc-total-result').textContent = 'R$ ' + fmt(total);
+  calcularCustoReal();
+}
+
+function calcularCustoReal() {
+  const valorTotal = parseMoeda(document.getElementById('pc-valor-total-tecido')) || 0;
+  const recebidas = parseInt(document.getElementById('pc-pecas-recebidas').value) || 0;
+  const defeito = parseInt(document.getElementById('pc-pecas-defeito').value) || 0;
+  const aprovEl = document.getElementById('pc-aproveitaveis-result');
+  const crtEl = document.getElementById('pc-custo-real-tecido-result');
+  const crtotalEl = document.getElementById('pc-custo-real-total-result');
+  if (recebidas <= 0) { aprovEl.textContent='—'; crtEl.textContent='—'; crtotalEl.textContent='—'; return; }
+  const aprov = recebidas - defeito;
+  aprovEl.textContent = aprov + ' peças';
+  if (valorTotal > 0 && aprov > 0) {
+    const crt = valorTotal / aprov;
+    crtEl.textContent = 'R$ ' + fmt(crt);
+    let somaItens = 0;
+    _itensLinha.forEach(linha => {
+      const vr = parseMoeda(document.getElementById('pc-item-real-' + linha.id));
+      const ve = parseMoeda(document.getElementById('pc-item-val-' + linha.id));
+      somaItens += (vr > 0 ? vr : ve) || 0;
+    });
+    crtotalEl.textContent = 'R$ ' + fmt(crt + somaItens);
+  }
+}
+
+function adicionarLinhaItem() {
+  _itensLinha.push({ id: Date.now() });
+  renderLinhasItens();
+}
+
+function removerLinhaItem(id) {
+  _itensLinha = _itensLinha.filter(l => l.id !== id);
+  renderLinhasItens();
+  calcularTotal();
+}
+
+function renderLinhasItens() {
+  const wrap = document.getElementById('pc-itens-wrap');
+  if (!wrap) return;
+  if (_itensLinha.length === 0) { wrap.innerHTML = ''; return; }
+  const opts = _itensCusto.map(i => `<option value="${i.id}" data-nome="${i.nome}">${i.nome}</option>`).join('');
+  wrap.innerHTML = _itensLinha.map(linha => `
+    <div class="pc-item-row">
+      <select class="pc-item-sel" id="pc-item-sel-${linha.id}" onchange="calcularTotal()">
+        <option value="">Selecione...</option>${opts}
+      </select>
+      <div class="input-wrap" style="margin-bottom:0;">
+        <span class="pre">R$</span>
+        <input type="text" inputmode="numeric" id="pc-item-val-${linha.id}" placeholder="0,00" class="has-pre" oninput="calcularTotal()">
+      </div>
+      <button class="pc-del-btn" onclick="removerLinhaItem(${linha.id})">×</button>
+    </div>
+    <div style="margin-bottom:8px;">
+      <div style="font-size:10px;color:var(--muted);margin-bottom:3px;">Valor real (se diferente do estimado):</div>
+      <div class="input-wrap" style="max-width:180px;">
+        <span class="pre">R$</span>
+        <input type="text" inputmode="numeric" id="pc-item-real-${linha.id}" placeholder="—" class="has-pre" oninput="calcularCustoReal()">
+      </div>
+    </div>
+  `).join('');
+  _itensLinha.forEach(linha => {
+    const ev = document.getElementById('pc-item-val-' + linha.id);
+    const er = document.getElementById('pc-item-real-' + linha.id);
+    if (ev) aplicarMascaraMonetaria(ev);
+    if (er) aplicarMascaraMonetaria(er);
+  });
+}
+
+async function salvarPreCusto(usarNoProduct) {
+  if (!_produtoPC) return;
+  const { data: { session } } = await supa.auth.getSession();
+  if (!session) return;
+  const parseResult = (id) => {
+    const t = document.getElementById(id)?.textContent || '';
+    const v = parseFloat(t.replace('R$ ','').replace(/\./g,'').replace(',','.'));
+    return isNaN(v) ? null : v;
+  };
+  const payload = {
+    produto_id: _produtoPC.id, usuario_id: session.user.id,
+    tipo_tecido: _tipoTecido,
+    comprimento_encaixe: parseFloat(document.getElementById('pc-comprimento').value)||null,
+    pecas_grade: parseInt(document.getElementById('pc-grade').value)||null,
+    margem_seguranca: parseFloat(document.getElementById('pc-margem-seg').value)||5,
+    consumo_peca: parseFloat(document.getElementById('pc-consumo-tecido').value)||null,
+    valor_metro: _tipoTecido==='plano' ? parseMoeda(document.getElementById('pc-valor-metro'))||null : null,
+    valor_kg: _tipoTecido==='malha' ? parseMoeda(document.getElementById('pc-valor-kg'))||null : null,
+    rendimento_kg: _tipoTecido==='malha' ? parseFloat(document.getElementById('pc-rendimento-kg').value)||null : null,
+    custo_tecido_peca: parseResult('pc-custo-tecido-result'),
+    precusto_total: parseResult('pc-total-result'),
+    valor_total_tecido: parseMoeda(document.getElementById('pc-valor-total-tecido'))||null,
+    pecas_recebidas: parseInt(document.getElementById('pc-pecas-recebidas').value)||null,
+    pecas_defeito: parseInt(document.getElementById('pc-pecas-defeito').value)||null,
+    pecas_aproveitaveis: (() => { const r=parseInt(document.getElementById('pc-pecas-recebidas').value)||0; const d=parseInt(document.getElementById('pc-pecas-defeito').value)||0; return r>0?r-d:null; })(),
+    custo_real_tecido_peca: parseResult('pc-custo-real-tecido-result'),
+    custo_real_total_peca: parseResult('pc-custo-real-total-result'),
+  };
+  const { data: pcData, error: pcErr } = await supa.from('precustos').insert(payload).select().single();
+  if (pcErr) { alert('Erro ao salvar: ' + pcErr.message); return; }
+  for (const linha of _itensLinha) {
+    const sel = document.getElementById('pc-item-sel-' + linha.id);
+    const itemId = sel?.value;
+    if (!itemId) continue;
+    const nomeOpt = sel.options[sel.selectedIndex]?.dataset.nome || '';
+    await supa.from('precusto_itens').insert({
+      precusto_id: pcData.id, item_custo_id: itemId,
+      nome_snapshot: nomeOpt,
+      valor_estimado: parseMoeda(document.getElementById('pc-item-val-'+linha.id))||0,
+      valor_real: parseMoeda(document.getElementById('pc-item-real-'+linha.id))||null,
+    });
+  }
+  if (usarNoProduct) {
+    const custoReal = payload.custo_real_total_peca || payload.precusto_total;
+    if (custoReal) {
+      await supa.from('produtos').update({ custo: custoReal, custo_origem: 'producao' }).eq('id', _produtoPC.id);
+      await carregarProdutos();
+      _produtoPC = _produtos.find(x => x.id === _produtoPC.id);
+    }
+  }
+  alert('Pré-custo salvo com sucesso!');
+  document.getElementById('pc-form-wrap').style.display = 'none';
+  carregarHistoricoFabricacao();
+}
+
+function ocultarTodasTelasProdutos() {
+  document.getElementById('produtos-lista').style.display = 'none';
+  ['produtos-desemp','produtos-precusto','produtos-itens'].forEach(id => {
+    document.getElementById(id)?.classList.remove('open');
+  });
+}
+
+const _voltarOriginal = voltarParaLista;
+voltarParaLista = function() {
+  document.getElementById('produtos-lista').style.display = 'block';
+  ['produtos-desemp','produtos-precusto','produtos-itens'].forEach(id => {
+    document.getElementById(id)?.classList.remove('open');
+  });
+  _produtoAtual = null; _produtoPC = null; _historicoAtual = [];
+};
+
 // ============================================================
 function setTema(tema) {
   document.documentElement.setAttribute('data-theme', tema);
@@ -3461,6 +4067,7 @@ registrarAcesso();
   // Carrega configurações e produtos do usuário
   await carregarConfigs();
   await carregarProdutos();
+  await carregarItensCusto();
 })();
 
 function toggleUserMenu() {
