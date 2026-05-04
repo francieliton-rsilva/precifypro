@@ -281,25 +281,13 @@ header {
   max-width: 1100px;
   margin: 0 auto;
   padding: 28px 24px 60px;
-  overflow: hidden;
   width: 100%;
 }
 
-/* Abas de cálculo centralizadas */
-#tab-basico > *,
-#tab-precificador > *,
-#tab-comparar > *,
-#tab-configuracoes > * {
+/* Abas de cálculo — wrapper centralizado */
+.tab-calc-inner {
   max-width: 720px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.tabs {
-  max-width: 720px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 24px;
+  margin: 0 auto;
 }
 
 /* ---- TABS ---- */
@@ -312,6 +300,9 @@ header {
   padding: 4px;
   margin-bottom: 24px;
   overflow-x: auto;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .tab-btn {
@@ -1045,7 +1036,7 @@ select {
   <div class="logo">
     <div class="logo-mark">P$</div>
     <div class="logo-name">Precify<span>Pro</span></div>
-    <div class="version-badge">v1.18</div>
+    <div class="version-badge">v1.19</div>
   </div>
   <div class="user-menu">
     <button class="user-btn" onclick="toggleUserMenu()" id="user-btn">
@@ -1075,6 +1066,7 @@ select {
 
   <!-- TAB BÁSICO -->
   <div id="tab-basico" class="tab-content active">
+    <div class="tab-calc-inner">
 
     <div class="card">
       <div class="section-title">Dados do Produto</div>
@@ -1158,10 +1150,12 @@ select {
       </div>
     </div>
 
+    </div><!-- fim tab-calc-inner -->
   </div><!-- fim tab-basico -->
 
   <!-- TAB PRECIFICADOR (Avançado) -->
   <div id="tab-precificador" class="tab-content">
+    <div class="tab-calc-inner">
 
   <!-- DADOS DO PRODUTO -->
   <div class="card">
@@ -1361,10 +1355,12 @@ select {
     </div>
   </div>
 
+    </div><!-- fim tab-calc-inner -->
   </div><!-- fim tab-precificador -->
 
   <!-- TAB COMPARAR CANAIS -->
   <div id="tab-comparar" class="tab-content">
+    <div class="tab-calc-inner">
 
     <div class="card">
       <div class="section-title">Comparar Margem de Lucro por Canais</div>
@@ -1420,6 +1416,7 @@ select {
     </div>
 
 
+    </div><!-- fim tab-calc-inner -->
   </div><!-- fim tab-comparar -->
 
   <!-- TAB PRODUTOS -->
@@ -1520,6 +1517,7 @@ select {
             <div class="desemp-sku" id="pc-sku-el">—</div>
           </div>
           <div style="display:flex;gap:8px;">
+            <button onclick="abrirTelaItens()" style="height:32px;padding:0 14px;font-size:12px;font-weight:600;font-family:'Sora',sans-serif;background:var(--surface2);color:var(--text);border:1px solid var(--border2);border-radius:var(--radius-sm);cursor:pointer;">Itens de Custo</button>
             <button onclick="abrirHistoricoFabricacao()" style="height:32px;padding:0 14px;font-size:12px;font-weight:600;font-family:'Sora',sans-serif;background:var(--surface2);color:var(--text);border:1px solid var(--border2);border-radius:var(--radius-sm);cursor:pointer;">Histórico</button>
             <button onclick="iniciarNovoPreCusto()" style="height:32px;padding:0 14px;font-size:12px;font-weight:700;font-family:'Sora',sans-serif;background:var(--btn-bg);color:var(--btn-text);border:none;border-radius:var(--radius-sm);cursor:pointer;">+ Novo Pré-Custo</button>
           </div>
@@ -1785,6 +1783,7 @@ select {
   </div>
 
   <div id="tab-configuracoes" class="tab-content">
+    <div class="tab-calc-inner">
 
     <!-- TEMA -->
     <div class="card">
@@ -1998,6 +1997,7 @@ select {
 
     </div>
 
+    </div><!-- fim tab-calc-inner -->
   </div><!-- fim tab-configuracoes -->
 
 </div>
