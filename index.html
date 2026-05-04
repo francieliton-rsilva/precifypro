@@ -1036,7 +1036,7 @@ select {
   <div class="logo">
     <div class="logo-mark">P$</div>
     <div class="logo-name">Precify<span>Pro</span></div>
-    <div class="version-badge">v1.28</div>
+    <div class="version-badge">v1.29</div>
   </div>
   <div class="user-menu">
     <button class="user-btn" onclick="toggleUserMenu()" id="user-btn">
@@ -2420,7 +2420,8 @@ async function salvarRegistroDesemp() {
 
 // Aplicar máscaras nos campos do modal de produto
 document.addEventListener('DOMContentLoaded', () => {
-  ['prod-custo','prod-preco-cheio','prod-preco-promo','prod-embalagem','desemp-preco'].forEach(id => {
+  ['prod-custo','prod-preco-cheio','prod-preco-promo','prod-embalagem','desemp-preco',
+   'pc-valor-metro','pc-valor-kg','pc-valor-total-tecido'].forEach(id => {
     const el = document.getElementById(id);
     if (el) aplicarMascaraMonetaria(el);
   });
@@ -2768,12 +2769,24 @@ function calcularCustoTecido() {
   const consumo = parseFloat(document.getElementById('pc-consumo-tecido').value) || 0;
   const el = document.getElementById('pc-custo-tecido-result');
   let custo = 0;
+
+  // Helper que lê rawValue ou faz parse direto do value
+  const lerValor = (id) => {
+    const campo = document.getElementById(id);
+    if (!campo) return 0;
+    if (campo.dataset.rawValue && campo.dataset.rawValue !== '') {
+      return parseFloat(campo.dataset.rawValue) || 0;
+    }
+    // Fallback: parse direto removendo formatação BR
+    return parseFloat(campo.value.replace(/\./g,'').replace(',','.')) || 0;
+  };
+
   if (_tipoTecido === 'malha') {
-    const valorKg = parseMoeda(document.getElementById('pc-valor-kg'));
+    const valorKg = lerValor('pc-valor-kg');
     const rend = parseFloat(document.getElementById('pc-rendimento-kg').value) || 0;
     if (valorKg > 0 && rend > 0 && consumo > 0) custo = (valorKg / rend) * consumo;
   } else {
-    const valorMetro = parseMoeda(document.getElementById('pc-valor-metro'));
+    const valorMetro = lerValor('pc-valor-metro');
     if (valorMetro > 0 && consumo > 0) custo = valorMetro * consumo;
   }
   el.textContent = custo > 0 ? 'R$ ' + fmt(custo) : '—';
