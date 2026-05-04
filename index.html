@@ -1036,7 +1036,7 @@ select {
   <div class="logo">
     <div class="logo-mark">P$</div>
     <div class="logo-name">Precify<span>Pro</span></div>
-    <div class="version-badge">v1.25</div>
+    <div class="version-badge">v1.26</div>
   </div>
   <div class="user-menu">
     <button class="user-btn" onclick="toggleUserMenu()" id="user-btn">
@@ -2735,89 +2735,7 @@ async function excluirPreCusto(id) {
   await carregarHistoricoFabricacao();
 }
 
-// Override do salvarPreCusto para suportar edição
-const _salvarPreCustoOriginal = salvarPreCusto;
-salvarPreCusto = async function(usarNoProduct) {
-  const wrap = document.getElementById('pc-form-wrap');
-  const editandoId = wrap?.dataset.editandoId;
-  const modoEdicao = wrap?.dataset.modoEdicao === 'true';
-
-  if (modoEdicao && editandoId) {
-    // UPDATE
-    await _salvarComUpdate(editandoId, usarNoProduct);
-    // Restaurar botões
-    const btnSalvar = document.querySelector('[onclick="salvarPreCusto(false)"]');
-    const btnUsarCusto = document.querySelector('[onclick="salvarPreCusto(true)"]');
-    if (btnSalvar) btnSalvar.textContent = 'Salvar Pré-Custo';
-    if (btnUsarCusto) btnUsarCusto.textContent = '✓ Usar Custo Real no Produto';
-    wrap.dataset.editandoId = '';
-    wrap.dataset.modoEdicao = 'false';
-  } else {
-    await _salvarPreCustoOriginal(usarNoProduct);
-  }
-};
-
-async function _salvarComUpdate(id, usarNoProduct) {
-  const { data: { session } } = await supa.auth.getSession();
-  if (!session) return;
-  const parseResult = (elId) => {
-    const t = document.getElementById(elId)?.textContent || '';
-    const v = parseFloat(t.replace('R$ ','').replace(/\./g,'').replace(',','.'));
-    return isNaN(v) ? null : v;
-  };
-  const payload = {
-    tipo_tecido: _tipoTecido,
-    comprimento_encaixe: parseFloat(document.getElementById('pc-comprimento').value)||null,
-    pecas_grade: parseInt(document.getElementById('pc-grade').value)||null,
-    margem_seguranca: parseFloat(document.getElementById('pc-margem-seg').value)||5,
-    consumo_peca: parseFloat(document.getElementById('pc-consumo-tecido').value)||null,
-    valor_metro: _tipoTecido==='plano' ? parseMoeda(document.getElementById('pc-valor-metro'))||null : null,
-    valor_kg: _tipoTecido==='malha' ? parseMoeda(document.getElementById('pc-valor-kg'))||null : null,
-    rendimento_kg: _tipoTecido==='malha' ? parseFloat(document.getElementById('pc-rendimento-kg').value)||null : null,
-    custo_tecido_peca: parseResult('pc-custo-tecido-result'),
-    precusto_total: parseResult('pc-total-result'),
-    valor_total_tecido: parseMoeda(document.getElementById('pc-valor-total-tecido'))||null,
-    pecas_recebidas: parseInt(document.getElementById('pc-pecas-recebidas').value)||null,
-    pecas_defeito: parseInt(document.getElementById('pc-pecas-defeito').value)||null,
-    pecas_aproveitaveis: (() => { const r=parseInt(document.getElementById('pc-pecas-recebidas').value)||0; const d=parseInt(document.getElementById('pc-pecas-defeito').value)||0; return r>0?r-d:null; })(),
-    custo_real_tecido_peca: parseResult('pc-custo-real-tecido-result'),
-    custo_real_total_peca: parseResult('pc-custo-real-total-result'),
-  };
-
-  const { error } = await supa.from('precustos').update(payload).eq('id', id);
-  if (error) { alert('Erro ao salvar: ' + error.message); return; }
-
-  // Atualizar itens — deleta os antigos e insere novos
-  await supa.from('precusto_itens').delete().eq('precusto_id', id);
-  for (const linha of _itensLinha) {
-    const sel = document.getElementById('pc-item-sel-' + linha.id);
-    const itemId = sel?.value;
-    if (!itemId) continue;
-    const nomeOpt = sel.options[sel.selectedIndex]?.dataset.nome || '';
-    await supa.from('precusto_itens').insert({
-      precusto_id: id, item_custo_id: itemId,
-      nome_snapshot: nomeOpt,
-      valor_estimado: parseMoeda(document.getElementById('pc-item-val-'+linha.id))||0,
-      valor_real: parseMoeda(document.getElementById('pc-item-real-'+linha.id))||null,
-    });
-  }
-
-  if (usarNoProduct && _produtoPC) {
-    const custoReal = payload.custo_real_total_peca || payload.precusto_total;
-    if (custoReal) {
-      await supa.from('produtos').update({ custo: custoReal, custo_origem: 'producao' }).eq('id', _produtoPC.id);
-      await carregarProdutos();
-      _produtoPC = _produtos.find(x => x.id === _produtoPC.id);
-    }
-  }
-
-  alert('Pré-custo atualizado com sucesso!');
-  document.getElementById('pc-form-wrap').style.display = 'none';
-  carregarHistoricoFabricacao();
-}
-  _tipoTecido = tipo;
-  document.getElementById('pc-btn-malha').classList.toggle('pc-tipo-sel', tipo === 'malha');
-  document.getElementById('pc-btn-plano').classList.toggle('pc-tipo-sel', tipo === 'plano');
+function setTipoTecido(tipo) {
   document.getElementById('pc-campos-malha').style.display = tipo === 'malha' ? 'block' : 'none';
   document.getElementById('pc-campos-plano').style.display = tipo === 'plano' ? 'block' : 'none';
   calcularCustoTecido();
@@ -2969,13 +2887,19 @@ async function salvarPreCusto(usarNoProduct) {
   if (!_produtoPC) return;
   const { data: { session } } = await supa.auth.getSession();
   if (!session) return;
-  const parseResult = (id) => {
-    const t = document.getElementById(id)?.textContent || '';
+
+  // Verifica se está em modo edição
+  const wrap = document.getElementById('pc-form-wrap');
+  const editandoId = wrap?.dataset.editandoId || '';
+  const modoEdicao = wrap?.dataset.modoEdicao === 'true' && editandoId;
+
+  const parseResult = (elId) => {
+    const t = document.getElementById(elId)?.textContent || '';
     const v = parseFloat(t.replace('R$ ','').replace(/\./g,'').replace(',','.'));
     return isNaN(v) ? null : v;
   };
+
   const payload = {
-    produto_id: _produtoPC.id, usuario_id: session.user.id,
     tipo_tecido: _tipoTecido,
     comprimento_encaixe: parseFloat(document.getElementById('pc-comprimento').value)||null,
     pecas_grade: parseInt(document.getElementById('pc-grade').value)||null,
@@ -2993,21 +2917,40 @@ async function salvarPreCusto(usarNoProduct) {
     custo_real_tecido_peca: parseResult('pc-custo-real-tecido-result'),
     custo_real_total_peca: parseResult('pc-custo-real-total-result'),
   };
-  const { data: pcData, error: pcErr } = await supa.from('precustos').insert(payload).select().single();
-  if (pcErr) { alert('Erro ao salvar: ' + pcErr.message); return; }
+
+  let pcId = editandoId;
+
+  if (modoEdicao) {
+    // UPDATE
+    const { error } = await supa.from('precustos').update(payload).eq('id', editandoId);
+    if (error) { alert('Erro ao salvar: ' + error.message); return; }
+    // Deleta itens antigos e reinsere
+    await supa.from('precusto_itens').delete().eq('precusto_id', editandoId);
+  } else {
+    // INSERT
+    payload.produto_id = _produtoPC.id;
+    payload.usuario_id = session.user.id;
+    const { data: pcData, error } = await supa.from('precustos').insert(payload).select().single();
+    if (error) { alert('Erro ao salvar: ' + error.message); return; }
+    pcId = pcData.id;
+  }
+
+  // Salvar itens
   for (const linha of _itensLinha) {
     const sel = document.getElementById('pc-item-sel-' + linha.id);
     const itemId = sel?.value;
     if (!itemId) continue;
     const nomeOpt = sel.options[sel.selectedIndex]?.dataset.nome || '';
     await supa.from('precusto_itens').insert({
-      precusto_id: pcData.id, item_custo_id: itemId,
+      precusto_id: pcId, item_custo_id: itemId,
       nome_snapshot: nomeOpt,
       valor_estimado: parseMoeda(document.getElementById('pc-item-val-'+linha.id))||0,
       valor_real: parseMoeda(document.getElementById('pc-item-real-'+linha.id))||null,
     });
   }
-  if (usarNoProduct) {
+
+  // Usar custo no produto
+  if (usarNoProduct && _produtoPC) {
     const custoReal = payload.custo_real_total_peca || payload.precusto_total;
     if (custoReal) {
       await supa.from('produtos').update({ custo: custoReal, custo_origem: 'producao' }).eq('id', _produtoPC.id);
@@ -3015,7 +2958,15 @@ async function salvarPreCusto(usarNoProduct) {
       _produtoPC = _produtos.find(x => x.id === _produtoPC.id);
     }
   }
-  alert('Pré-custo salvo com sucesso!');
+
+  // Resetar modo edição
+  if (wrap) { wrap.dataset.editandoId = ''; wrap.dataset.modoEdicao = 'false'; }
+  const btnSalvar = document.querySelector('[onclick="salvarPreCusto(false)"]');
+  const btnUsarCusto = document.querySelector('[onclick="salvarPreCusto(true)"]');
+  if (btnSalvar) btnSalvar.textContent = 'Salvar Pré-Custo';
+  if (btnUsarCusto) btnUsarCusto.textContent = '✓ Usar Custo Real no Produto';
+
+  alert(modoEdicao ? 'Pré-custo atualizado!' : 'Pré-custo salvo com sucesso!');
   document.getElementById('pc-form-wrap').style.display = 'none';
   carregarHistoricoFabricacao();
 }
