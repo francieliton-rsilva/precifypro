@@ -1036,7 +1036,7 @@ select {
   <div class="logo">
     <div class="logo-mark">P$</div>
     <div class="logo-name">Precify<span>Pro</span></div>
-    <div class="version-badge">v1.23</div>
+    <div class="version-badge">v1.24</div>
   </div>
   <div class="user-menu">
     <button class="user-btn" onclick="toggleUserMenu()" id="user-btn">
@@ -2005,6 +2005,7 @@ select {
 // ============================================================
 let _produtos = [];
 let _produtoAtual = null;
+let _userPlano = null; // cache do plano — evita query extra a cada carregamento
 let _historicoAtual = [];
 let _fotoBase64 = null;
 let _fotoNomeArquivo = null;
@@ -2024,29 +2025,22 @@ async function carregarProdutos() {
     const { data: { session } } = await supa.auth.getSession();
     if (!session) return;
 
-    // Verificar plano do usuário
-    const { data: userRow } = await supa
-      .from('usuarios')
-      .select('plano')
-      .eq('id', session.user.id)
-      .single();
+    // Usa plano do cache — sem query extra
+    const isPro = _userPlano === 'pro';
 
-    const isPro = userRow?.plano === 'pro';
-
-    // Controle visual Free vs Pro
-    const lockBanner    = document.getElementById('prod-lock-banner');
-    const btnNovo       = document.getElementById('btn-novo-produto');
-    const tabelaWrap    = document.getElementById('prod-tabela-wrap');
+    const lockBanner = document.getElementById('prod-lock-banner');
+    const btnNovo    = document.getElementById('btn-novo-produto');
+    const tabelaWrap = document.getElementById('prod-tabela-wrap');
 
     if (isPro) {
-      lockBanner.style.display  = 'none';
-      btnNovo.style.display     = 'inline-flex';
-      tabelaWrap.style.display  = 'block';
+      lockBanner.style.display = 'none';
+      btnNovo.style.display    = 'inline-flex';
+      tabelaWrap.style.display = 'block';
     } else {
-      lockBanner.style.display  = 'flex';
-      btnNovo.style.display     = 'none';
-      tabelaWrap.style.display  = 'none';
-      return; // não carrega produtos para free
+      lockBanner.style.display = 'flex';
+      btnNovo.style.display    = 'none';
+      tabelaWrap.style.display = 'none';
+      return;
     }
 
     const { data } = await supa.from('produtos')
@@ -4137,10 +4131,14 @@ registrarAcesso();
   document.getElementById('user-nome').textContent = nome.split(' ')[0];
   document.getElementById('user-email-dd').textContent = user.email;
 
-  // Carrega configurações e produtos do usuário
-  await carregarConfigs();
-  await carregarProdutos();
-  await carregarItensCusto();
+  // Busca plano UMA VEZ e armazena em cache
+  try {
+    const { data: ur } = await supa.from('usuarios').select('plano').eq('id', user.id).single();
+    _userPlano = ur?.plano || 'free';
+  } catch(e) { _userPlano = 'free'; }
+
+  // Carrega tudo em paralelo
+  await Promise.all([carregarConfigs(), carregarProdutos(), carregarItensCusto()]);
 })();
 
 function toggleUserMenu() {
