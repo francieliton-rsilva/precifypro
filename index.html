@@ -1036,7 +1036,7 @@ select {
   <div class="logo">
     <div class="logo-mark">P$</div>
     <div class="logo-name">Precify<span>Pro</span></div>
-    <div class="version-badge">v1.22</div>
+    <div class="version-badge">v1.23</div>
   </div>
   <div class="user-menu">
     <button class="user-btn" onclick="toggleUserMenu()" id="user-btn">
@@ -2692,11 +2692,29 @@ function calcularCustoReal() {
 }
 
 function adicionarLinhaItem() {
-  _itensLinha.push({ id: Date.now() });
+  // Salva valores atuais antes de adicionar nova linha
+  _itensLinha.forEach(linha => {
+    const sel = document.getElementById('pc-item-sel-' + linha.id);
+    const val = document.getElementById('pc-item-val-' + linha.id);
+    const real = document.getElementById('pc-item-real-' + linha.id);
+    if (sel) linha.itemId = sel.value;
+    if (val) { linha.valorEst = val.value; linha.rawEst = val.dataset.rawValue; }
+    if (real) { linha.valorReal = real.value; linha.rawReal = real.dataset.rawValue; }
+  });
+  _itensLinha.push({ id: Date.now(), itemId: '', valorEst: '', rawEst: '', valorReal: '', rawReal: '' });
   renderLinhasItens();
 }
 
 function removerLinhaItem(id) {
+  // Salva valores antes de remover
+  _itensLinha.forEach(linha => {
+    const sel = document.getElementById('pc-item-sel-' + linha.id);
+    const val = document.getElementById('pc-item-val-' + linha.id);
+    const real = document.getElementById('pc-item-real-' + linha.id);
+    if (sel) linha.itemId = sel.value;
+    if (val) { linha.valorEst = val.value; linha.rawEst = val.dataset.rawValue; }
+    if (real) { linha.valorReal = real.value; linha.rawReal = real.dataset.rawValue; }
+  });
   _itensLinha = _itensLinha.filter(l => l.id !== id);
   renderLinhasItens();
   calcularTotal();
@@ -2726,12 +2744,31 @@ function renderLinhasItens() {
       </div>
     </div>
   `).join('');
+
+  // Restaurar valores salvos e aplicar máscara
   _itensLinha.forEach(linha => {
+    const sel = document.getElementById('pc-item-sel-' + linha.id);
     const ev = document.getElementById('pc-item-val-' + linha.id);
     const er = document.getElementById('pc-item-real-' + linha.id);
-    if (ev) aplicarMascaraMonetaria(ev);
-    if (er) aplicarMascaraMonetaria(er);
+
+    if (sel && linha.itemId) sel.value = linha.itemId;
+    if (ev) {
+      aplicarMascaraMonetaria(ev);
+      if (linha.valorEst) {
+        ev.value = linha.valorEst;
+        ev.dataset.rawValue = linha.rawEst || '';
+      }
+    }
+    if (er) {
+      aplicarMascaraMonetaria(er);
+      if (linha.valorReal) {
+        er.value = linha.valorReal;
+        er.dataset.rawValue = linha.rawReal || '';
+      }
+    }
   });
+
+  calcularTotal();
 }
 
 async function salvarPreCusto(usarNoProduct) {
