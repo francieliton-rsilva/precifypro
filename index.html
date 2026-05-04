@@ -1036,7 +1036,7 @@ select {
   <div class="logo">
     <div class="logo-mark">P$</div>
     <div class="logo-name">Precify<span>Pro</span></div>
-    <div class="version-badge">v1.19</div>
+    <div class="version-badge">v1.20</div>
   </div>
   <div class="user-menu">
     <button class="user-btn" onclick="toggleUserMenu()" id="user-btn">
@@ -1425,13 +1425,10 @@ select {
     <!-- LISTA DE PRODUTOS -->
     <div id="produtos-lista">
       <div class="card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-          <div class="section-title" style="margin-bottom:0;border-bottom:none;padding-bottom:0;">Meus Produtos <span id="prod-count" style="font-weight:400;color:var(--muted);"></span></div>
-          <div style="display:flex;gap:8px;">
-          <button onclick="abrirTelaItens()" style="height:32px;padding:0 14px;font-size:12px;font-weight:600;font-family:'Sora',sans-serif;background:var(--surface2);color:var(--text);border:1px solid var(--border2);border-radius:var(--radius-sm);cursor:pointer;">Itens de Custo</button>
-          <button id="btn-novo-produto" onclick="abrirModalProduto()" style="height:32px;padding:0 14px;font-size:12px;font-weight:700;font-family:'Sora',sans-serif;background:var(--btn-bg);color:var(--btn-text);border:none;border-radius:var(--radius-sm);cursor:pointer;white-space:nowrap;line-height:32px;">+ Novo Produto</button>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border);">
+          <div style="font-size:13px;font-weight:700;color:var(--text);">Meus Produtos <span id="prod-count" style="font-weight:400;color:var(--muted);font-size:12px;"></span></div>
+          <button id="btn-novo-produto" onclick="abrirModalProduto()" style="height:32px;padding:0 14px;font-size:12px;font-weight:700;font-family:'Sora',sans-serif;background:var(--btn-bg);color:var(--btn-text);border:none;border-radius:var(--radius-sm);cursor:pointer;white-space:nowrap;">+ Novo Produto</button>
         </div>
-        <div style="border-bottom:1px solid var(--border);margin-bottom:12px;"></div>
         <div id="prod-lock-banner" class="lock-banner" style="display:none;margin-bottom:16px;">
           <div class="lock-banner-icon">🔒</div>
           <div class="lock-banner-text">
@@ -2511,26 +2508,35 @@ function abrirPreCusto(id) {
   _produtoPC = _produtos.find(x => x.id === id);
   if (!_produtoPC) return;
   const p = _produtoPC;
+
+  // 1. Preencher cabeçalho
   const fotoEl = document.getElementById('pc-foto-el');
   fotoEl.innerHTML = p.foto_url
     ? `<img src="${p.foto_url}" style="width:52px;height:52px;object-fit:cover;border-radius:var(--radius-sm);">`
     : '<span style="font-size:10px;color:var(--muted);">sem foto</span>';
   document.getElementById('pc-nome-el').textContent = p.nome;
-  document.getElementById('pc-sku-el').textContent = `SKU: ${p.codigo_sku || '—'}`;
-  // Esconde form e historico antes de carregar
-  document.getElementById('pc-form-wrap').style.display = 'none';
-  document.getElementById('pc-historico-wrap').style.display = 'none';
+  document.getElementById('pc-sku-el').textContent = 'SKU: ' + (p.codigo_sku || '—');
+
+  // 2. Ocultar lista e mostrar tela de pré-custo
   ocultarTodasTelasProdutos();
   document.getElementById('produtos-precusto').classList.add('open');
-  // Sempre inicia o form e tenta carregar histórico em paralelo
+
+  // 3. Mostrar o formulário (sempre visível ao abrir)
+  document.getElementById('pc-historico-wrap').style.display = 'none';
+  document.getElementById('pc-form-wrap').style.display = 'block';
+
+  // 4. Resetar campos do formulário
   iniciarNovoPreCusto();
+
+  // 5. Tentar carregar histórico em background (não bloqueia)
   carregarHistoricoFabricacao();
 }
 
 function iniciarNovoPreCusto() {
+  // Limpa campos
   ['pc-comprimento','pc-grade','pc-valor-kg','pc-rendimento-kg','pc-valor-metro',
-   'pc-consumo-tecido','pc-valor-total-tecido','pc-pecas-recebidas','pc-pecas-defeito'].forEach(id => {
-    const el = document.getElementById(id);
+   'pc-consumo-tecido','pc-valor-total-tecido','pc-pecas-recebidas','pc-pecas-defeito'].forEach(elId => {
+    const el = document.getElementById(elId);
     if (el) { el.value = ''; if (el.dataset) el.dataset.rawValue = ''; }
   });
   document.getElementById('pc-margem-seg').value = '5';
@@ -2543,6 +2549,7 @@ function iniciarNovoPreCusto() {
   _itensLinha = [];
   renderLinhasItens();
   setTipoTecido('plano');
+  // Mostra form, esconde histórico
   document.getElementById('pc-historico-wrap').style.display = 'none';
   document.getElementById('pc-form-wrap').style.display = 'block';
 }
