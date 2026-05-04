@@ -1036,7 +1036,7 @@ select {
   <div class="logo">
     <div class="logo-mark">P$</div>
     <div class="logo-name">Precify<span>Pro</span></div>
-    <div class="version-badge">v1.29</div>
+    <div class="version-badge">v1.30</div>
   </div>
   <div class="user-menu">
     <button class="user-btn" onclick="toggleUserMenu()" id="user-btn">
@@ -2861,8 +2861,16 @@ function renderLinhasItens() {
   if (!wrap) return;
   if (_itensLinha.length === 0) { wrap.innerHTML = ''; return; }
   const opts = _itensCusto.map(i => `<option value="${i.id}" data-nome="${i.nome}">${i.nome}</option>`).join('');
-  wrap.innerHTML = _itensLinha.map(linha => `
-    <div class="pc-item-row">
+
+  const header = `<div style="display:grid;grid-template-columns:1fr 140px 140px 34px;gap:8px;padding:0 0 6px;margin-bottom:2px;border-bottom:.5px solid var(--border);">
+    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);">Item</div>
+    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);">Valor Estimado</div>
+    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);">Valor Real</div>
+    <div></div>
+  </div>`;
+
+  const linhas = _itensLinha.map(linha => `
+    <div style="display:grid;grid-template-columns:1fr 140px 140px 34px;gap:8px;align-items:center;padding:5px 0;border-bottom:.5px solid var(--border);">
       <select class="pc-item-sel" id="pc-item-sel-${linha.id}" onchange="calcularTotal()">
         <option value="">Selecione...</option>${opts}
       </select>
@@ -2870,37 +2878,29 @@ function renderLinhasItens() {
         <span class="pre">R$</span>
         <input type="text" inputmode="numeric" id="pc-item-val-${linha.id}" placeholder="0,00" class="has-pre" oninput="calcularTotal()">
       </div>
-      <button class="pc-del-btn" onclick="removerLinhaItem(${linha.id})">×</button>
-    </div>
-    <div style="margin-bottom:8px;">
-      <div style="font-size:10px;color:var(--muted);margin-bottom:3px;">Valor real (se diferente do estimado):</div>
-      <div class="input-wrap" style="max-width:180px;">
+      <div class="input-wrap" style="margin-bottom:0;">
         <span class="pre">R$</span>
         <input type="text" inputmode="numeric" id="pc-item-real-${linha.id}" placeholder="—" class="has-pre" oninput="calcularCustoReal()">
       </div>
+      <button class="pc-del-btn" onclick="removerLinhaItem(${linha.id})">×</button>
     </div>
   `).join('');
+
+  wrap.innerHTML = header + linhas;
 
   // Restaurar valores salvos e aplicar máscara
   _itensLinha.forEach(linha => {
     const sel = document.getElementById('pc-item-sel-' + linha.id);
-    const ev = document.getElementById('pc-item-val-' + linha.id);
-    const er = document.getElementById('pc-item-real-' + linha.id);
-
+    const ev  = document.getElementById('pc-item-val-' + linha.id);
+    const er  = document.getElementById('pc-item-real-' + linha.id);
     if (sel && linha.itemId) sel.value = linha.itemId;
     if (ev) {
       aplicarMascaraMonetaria(ev);
-      if (linha.valorEst) {
-        ev.value = linha.valorEst;
-        ev.dataset.rawValue = linha.rawEst || '';
-      }
+      if (linha.valorEst) { ev.value = linha.valorEst; ev.dataset.rawValue = linha.rawEst || ''; }
     }
     if (er) {
       aplicarMascaraMonetaria(er);
-      if (linha.valorReal) {
-        er.value = linha.valorReal;
-        er.dataset.rawValue = linha.rawReal || '';
-      }
+      if (linha.valorReal) { er.value = linha.valorReal; er.dataset.rawValue = linha.rawReal || ''; }
     }
   });
 
