@@ -1036,7 +1036,7 @@ select {
   <div class="logo">
     <div class="logo-mark">P$</div>
     <div class="logo-name">Precify<span>Pro</span></div>
-    <div class="version-badge">v1.27</div>
+    <div class="version-badge">v1.28</div>
   </div>
   <div class="user-menu">
     <button class="user-btn" onclick="toggleUserMenu()" id="user-btn">
@@ -2651,7 +2651,14 @@ async function _preencherFormComPC(pc) {
     if (pc.valor_metro) setMoeda('pc-valor-metro', pc.valor_metro);
   }
 
-  // Recalcula tecido
+  // Garante que oninput dos campos de tecido dispare o recálculo
+  const camposTecido = ['pc-valor-metro', 'pc-valor-kg', 'pc-rendimento-kg', 'pc-consumo-tecido'];
+  camposTecido.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.dispatchEvent(new Event('input'));
+  });
+
+  // Recalcula explicitamente
   calcularCustoTecido();
 
   // Custo real
