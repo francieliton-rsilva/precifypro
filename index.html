@@ -1036,7 +1036,7 @@ select {
   <div class="logo">
     <div class="logo-mark">P$</div>
     <div class="logo-name">Precify<span>Pro</span></div>
-    <div class="version-badge">v1.26</div>
+    <div class="version-badge">v1.27</div>
   </div>
   <div class="user-menu">
     <button class="user-btn" onclick="toggleUserMenu()" id="user-btn">
@@ -2736,6 +2736,9 @@ async function excluirPreCusto(id) {
 }
 
 function setTipoTecido(tipo) {
+  _tipoTecido = tipo;
+  document.getElementById('pc-btn-malha').classList.toggle('pc-tipo-sel', tipo === 'malha');
+  document.getElementById('pc-btn-plano').classList.toggle('pc-tipo-sel', tipo === 'plano');
   document.getElementById('pc-campos-malha').style.display = tipo === 'malha' ? 'block' : 'none';
   document.getElementById('pc-campos-plano').style.display = tipo === 'plano' ? 'block' : 'none';
   calcularCustoTecido();
@@ -2744,7 +2747,8 @@ function setTipoTecido(tipo) {
 function calcularConsumoPeca() {
   const comp = parseFloat(document.getElementById('pc-comprimento').value);
   const grade = parseFloat(document.getElementById('pc-grade').value);
-  const margem = parseFloat(document.getElementById('pc-margem-seg').value) || 5;
+  const margemEl = document.getElementById('pc-margem-seg').value;
+  const margem = margemEl === '' ? 5 : parseFloat(margemEl); // 0% é válido
   const el = document.getElementById('pc-consumo-result');
   if (!comp || !grade || grade <= 0) { el.textContent = '—'; return; }
   const consumo = (comp * (1 + margem / 100)) / grade;
