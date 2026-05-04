@@ -285,20 +285,21 @@ header {
   width: 100%;
 }
 
-/* Abas de cálculo ficam centralizadas com largura menor */
-#tab-basico .card,
-#tab-precificador .card,
-#tab-comparar .card,
-#tab-configuracoes .card {
-  max-width: 780px;
+/* Abas de cálculo centralizadas */
+#tab-basico,
+#tab-precificador,
+#tab-comparar,
+#tab-configuracoes {
+  max-width: 680px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .tabs {
-  max-width: 780px;
+  max-width: 680px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 24px;
 }
 
 /* ---- TABS ---- */
@@ -1048,7 +1049,7 @@ select {
   <div class="logo">
     <div class="logo-mark">P$</div>
     <div class="logo-name">Precify<span>Pro</span></div>
-    <div class="version-badge">v1.14</div>
+    <div class="version-badge">v1.16</div>
   </div>
   <div class="user-menu">
     <button class="user-btn" onclick="toggleUserMenu()" id="user-btn">
@@ -2517,10 +2518,13 @@ function abrirPreCusto(id) {
     : '<span style="font-size:10px;color:var(--muted);">sem foto</span>';
   document.getElementById('pc-nome-el').textContent = p.nome;
   document.getElementById('pc-sku-el').textContent = `SKU: ${p.codigo_sku || '—'}`;
+  // Esconde form e historico antes de carregar
   document.getElementById('pc-form-wrap').style.display = 'none';
   document.getElementById('pc-historico-wrap').style.display = 'none';
   ocultarTodasTelasProdutos();
   document.getElementById('produtos-precusto').classList.add('open');
+  // Sempre inicia o form e tenta carregar histórico em paralelo
+  iniciarNovoPreCusto();
   carregarHistoricoFabricacao();
 }
 
@@ -2562,7 +2566,7 @@ async function carregarHistoricoFabricacao() {
     if (!tbody) return;
     if (lista.length === 0) {
       tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--muted);font-size:13px;">Nenhuma fabricação registrada ainda.</td></tr>';
-      iniciarNovoPreCusto();
+      // Não chamar iniciarNovoPreCusto aqui — já foi chamado em abrirPreCusto
       return;
     }
     tbody.innerHTML = lista.map((pc, idx) => {
