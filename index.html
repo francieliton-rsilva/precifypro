@@ -278,14 +278,34 @@ header {
 
 /* ---- LAYOUT ---- */
 .page {
-  max-width: 780px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 28px 24px 60px;
   overflow: hidden;
   width: 100%;
 }
 
+/* Abas de cálculo ficam centralizadas com largura menor */
+#tab-basico .card,
+#tab-precificador .card,
+#tab-comparar .card,
+#tab-configuracoes .card {
+  max-width: 780px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tabs {
+  max-width: 780px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* ---- TABS ---- */
+.tabs-container {
+  max-width: 780px;
+  margin: 0 auto 0;
+}
 .tabs {
   display: flex;
   gap: 2px;
@@ -1028,7 +1048,7 @@ select {
   <div class="logo">
     <div class="logo-mark">P$</div>
     <div class="logo-name">Precify<span>Pro</span></div>
-    <div class="version-badge">v1.13</div>
+    <div class="version-badge">v1.14</div>
   </div>
   <div class="user-menu">
     <button class="user-btn" onclick="toggleUserMenu()" id="user-btn">
