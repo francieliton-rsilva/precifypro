@@ -286,27 +286,23 @@ header {
 }
 
 /* Abas de cálculo centralizadas */
-#tab-basico,
-#tab-precificador,
-#tab-comparar,
-#tab-configuracoes {
-  max-width: 680px;
+#tab-basico > *,
+#tab-precificador > *,
+#tab-comparar > *,
+#tab-configuracoes > * {
+  max-width: 720px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .tabs {
-  max-width: 680px;
+  max-width: 720px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 24px;
 }
 
 /* ---- TABS ---- */
-.tabs-container {
-  max-width: 780px;
-  margin: 0 auto 0;
-}
 .tabs {
   display: flex;
   gap: 2px;
@@ -1049,7 +1045,7 @@ select {
   <div class="logo">
     <div class="logo-mark">P$</div>
     <div class="logo-name">Precify<span>Pro</span></div>
-    <div class="version-badge">v1.16</div>
+    <div class="version-badge">v1.18</div>
   </div>
   <div class="user-menu">
     <button class="user-btn" onclick="toggleUserMenu()" id="user-btn">
@@ -2324,9 +2320,12 @@ async function abrirDesempenho(id) {
 }
 
 function voltarParaLista() {
-  document.getElementById('produtos-desemp').classList.remove('open');
+  ['produtos-desemp','produtos-precusto','produtos-itens'].forEach(id => {
+    document.getElementById(id)?.classList.remove('open');
+  });
   document.getElementById('produtos-lista').style.display = 'block';
   _produtoAtual = null;
+  _produtoPC = null;
   _historicoAtual = [];
 }
 
@@ -2774,15 +2773,6 @@ function ocultarTodasTelasProdutos() {
     document.getElementById(id)?.classList.remove('open');
   });
 }
-
-const _voltarOriginal = voltarParaLista;
-voltarParaLista = function() {
-  document.getElementById('produtos-lista').style.display = 'block';
-  ['produtos-desemp','produtos-precusto','produtos-itens'].forEach(id => {
-    document.getElementById(id)?.classList.remove('open');
-  });
-  _produtoAtual = null; _produtoPC = null; _historicoAtual = [];
-};
 
 // ============================================================
 function setTema(tema) {
